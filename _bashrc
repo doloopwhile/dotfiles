@@ -196,7 +196,7 @@ fi
 alias ls='ls -B -v ${LS_OPTIONS}'
 alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
 
-if [ -f ~/.dircolors ]; then
+if [ -f ~/.dircolors ] && which dircolors 2> /dev/null; then
   eval $(dircolors ~/.dircolors)
 fi
 
