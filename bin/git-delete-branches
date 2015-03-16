@@ -1,0 +1,38 @@
+#!/bin/bash
+set -o pipefail
+set -e
+
+EXIT_ERROR=2
+EXIT_NOT_FOUND=1
+usage_exit() {
+  echo "Usage: $0 [-D] [-h|--help]" 1>&2
+  exit EXIT_ERROR
+}
+
+for OPT in "$@"; do
+  case $OPT in
+    '-h'|'--help' )
+      usage_exit
+      ;;
+    '-D' )
+      FLAG_D=1
+      ;;
+    * )
+      usage_exit
+      ;;
+  esac
+  shift
+done
+
+BRANCHES=$(git branch -v | peco | cut -b 3- | cut -d ' ' -f 1)
+if [ "$?" -ne 0 -o -z "$BRANCHES" ]; then
+  exit 1
+fi
+
+if [ -n "$FLAG_D" ]; then
+  Flags="-d"
+else
+  Flags="-D"
+fi
+
+git branch $Flags ${BRANCHES[@]}

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+dir=$(go-import-to-path $1)
+name=$(basename ${dir})
+
+if [ -e "${dir}/${name}.go" ]; then
+  echo ${dir}/${name}.go
+  exit 0
+fi
+
+for f in $(find "${dir}" -name "*.go" | sort); do
+  echo $f
+  exit 0
+done
+
+exit 1

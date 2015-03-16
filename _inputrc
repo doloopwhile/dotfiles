@@ -1,0 +1,5 @@
+ set bell-style visible
+ set visible-stats on
+ set show-all-if-ambiguous on
+ set show-all-if-unmodified on
+"\e[": skip-csi-sequence

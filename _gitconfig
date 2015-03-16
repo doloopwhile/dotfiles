@@ -1,0 +1,76 @@
+[include]
+    path = ~/.gitconfig.local
+[color]
+    ui = auto
+[alias]
+    br = branch -v
+    cf = config --edit --global
+    chx = cherry-pick -x
+    ci = commit
+    cin = commit --no-verify
+    co = checkout
+    d = diff
+    dv = !sh -c 'git diff "$@" | ~/dotfiles/bin/save-tempfile -c gvim' -
+    dc = diff --cached
+    dr = diff --color-words --word-diff-regex='\\w+|[^[:space:]]'
+    getbranch = symbolic-ref --short HEAD
+    gr = grep --ignore-case -n
+    grl = grep --ignore-case -n --name-only
+    he = hook edit pre-commit
+    hi = hook install pre-commit
+    ht = hook test pre-commit
+    hu = hook update pre-commit
+    hl = hook show pre-commit
+  lo = log --pretty=format:'%C(auto)%H%C(reset) %s'
+    graph = log --graph --pretty=format:'%C(auto)%h %C(auto)%d %C(auto)%an %C(reset) %s' --abbrev-commit
+    mylog = log --author='OMOTO Kenji'
+    reba = rebase --abort
+    rebc = rebase --continue
+    root = rev-parse --show-toplevel
+    st = status -s
+    showf = show --name-only
+  delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+  now=commit -a -m tmp --no-verify
+  updated=commit -a -m updated
+  vimdiff=difftool --tool=gvimdiff
+  dt=difftool --tool=meld -y
+
+  mt=mergetool -y
+
+  f = remote update
+	pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
+	fp = fixup-peco
+	rp = rebase-i-peco
+  ; bl = !sh -c 'git blame --date=short $1 | sed -e "s/^\(\S*\) \S*\s*/\1 /" | less'
+  ; bl = !sh -c 'git blame "$@"' -
+
+[core]
+    autocrlf = input
+	excludesfile = ~/.gitignore
+[push]
+    default = current
+[rebase]
+  autosquash = true
+[diff "po"]
+        textconv=msgcat --no-location --no-wrap --sort-output
+[merge]
+	tool = meld
+[diff]
+	tool = meld
+	algorithm = histogram
+
+[mergetool]
+  keepBackup = false
+[status]
+  showUntrackedFiles = all
+[grep]
+	lineNumber = true
+[hooker]
+	disableinrebase = true
+	skipinrebase = true
+[blame]
+  showName = false
+[ghq]
+	root = ~/gocode/src
+[tag]
+	sort = version:refname

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -o pipefail
+set -e
+HASH=$(git log --oneline | peco | cut -d " " -f 1)
+if [ "$?" -ne 0 -o -z "$HASH" ]; then
+  exit 1
+fi
+git commit --fixup "$HASH" $@
+
+# install:
+# * first, install peco if needed
+#
+# $ mkdir -p ~/bin && cd ~/bin
+# $ wget https://gist.githubusercontent.com/doloopwhile/fba6a6b4748b740f7b0a/raw/git-fixup-peco
+# $ chmod +x ~/bin/git-fixup-peco
+# $ git config --global alias.fp fixup-peco

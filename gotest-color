@@ -1,0 +1,18 @@
+#!/bin/bash
+go test "$@" | while read line; do
+  if [[ "$line" =~ RUN ]]; then
+    # bold
+    echo -e "\033[01m$line\033[0m"
+  elif [[ "$line" =~ PASS ]]; then
+    # bold green
+    echo -e "\033[01;32m$line\033[0m"
+  elif [[ "$line" =~ SKIP ]]; then
+    # bold cyan
+    echo -e "\033[01;36m$line\033[0m"
+  elif [[ "$line" =~ FAIL ]]; then
+    # bold red
+    echo -e "\033[01;31m$line\033[0m"
+  else
+    echo "$line"
+  fi
+done

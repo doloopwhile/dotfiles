@@ -1,0 +1,482 @@
+source /etc/profile
+
+# 分割した設定ファイルの読み込み
+for f in `find -L ~/.bash.d/ -type f`; do
+  source $f
+done
+
+# Lang
+export LAMG=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+
+# PS1の設定
+HOST_COLOR=0
+if [[ 0 < "${#MY_HOST_NAMES[@]}" ]]; then
+  for (( i=0; i < ${#MY_HOST_NAMES[@]}; i++ )); do
+    if [ $(hostname -s) = ${MY_HOST_NAMES[$i]} ]; then
+      export HOST_COLOR=${MY_HOST_COLORS[$i]}
+      break
+    fi
+  done
+fi
+
+
+function C() {
+  case $1 in
+  black)    echo -e -n "\033[1;30m";;
+  red)      echo -e -n "\033[1;31m";;
+  green)    echo -e -n "\033[1;32m";;
+  yellow)   echo -e -n "\033[1;33m";;
+  blue)     echo -e -n "\033[1;34m";;
+  magenta)  echo -e -n "\033[1;35m";;
+  cyan)     echo -e -n "\033[1;36m";;
+  white)    echo -e -n "\033[1;37m";;
+  *) echo -e -n "\033[0m";;
+  esac
+}
+
+function ps1_info() {
+  local END_CODE=$?
+  if which pyenv >& /dev/null; then
+    local PY_VERSION_NAME=$(pyenv version-name)
+    if [ "$PY_VERSION_NAME" != 'system' -a "$PY_VERSION_NAME" != '' ]; then
+      echo -n "(${PY_VERSION_NAME})"
+    fi
+  fi
+
+  echo -n "${USER}@"
+  echo -n -e "\033[${HOST_COLOR}m$(hostname -s)\033[0m "
+
+  echo -n `date +'%F %H:%M:%S'`
+  echo -n ' '
+
+  echo -n '$?='
+  if [ 0 -ne ${END_CODE} ]; then
+    echo -n "$(C red)${END_CODE}$(C reset)"
+  else
+    echo -n 0
+  fi
+
+  echo -n ' '
+
+  if git status 2>/dev/null 1>&2; then
+    echo -n 'git['
+
+    local modified=0
+    local cached=0
+    local untracked=0
+
+    while read line; do
+      if [ "$line" = '_?_?_' ]; then
+        untracked=1
+        continue
+      fi
+
+      if [[ "$line" =~ ^_[^[:space:]]_.?_ ]]; then
+        cached=1
+      fi
+
+      if [[ "$line" =~ ^_._[^[:space:]]_ ]]; then
+        modified=1
+      fi
+    done < <(git st | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
+
+    if [ $modified -ne 0 ]; then
+      echo -n "$(C red)M$(C reset)"
+    fi
+
+    if [ $cached -ne 0 ]; then
+      echo -n "$(C green)C$(C reset)"
+    fi
+
+    if [ $untracked -ne 0 ]; then
+      echo -n "$(C red)?$(C reset)"
+    fi
+
+    echo -n ']='
+
+    local branch=$(git branch 2>/dev/null | grep "^*" | sed -e "s/^* //")
+    if [[ "${branch}" =~ ^bug- ]]; then
+      C green
+    elif [[ "${branch}" =~ ^atc- ]]; then
+      C cyan
+    elif [[ "${branch}" =~ ^tmp ]]; then
+      C magenta
+    elif [[ "${branch}" = "(detached from hde/master)" ]]; then
+      C yellow
+    else
+      C white
+    fi
+    echo -n "${branch}"
+    C reset
+  else
+    echo -n 'git[]'
+  fi
+  echo
+  echo -n ' '
+
+  pwd | sed -e "s|^${HOME%/}|~|"
+}
+
+PS1='$(ps1_info)'
+
+if [ "$(id -u)" -eq 0 ]; then
+  PS1="$PS1\n\\[\033[1;31m\\]#\\[\033[0m\\] " # rootの場合はシャープ
+else
+  PS1="$PS1\n\\[\033[1;${HOST_COLOR}m\\]$\\[\033[0m\\] " # 非rootユーザの場合はドル
+fi
+
+export PS1
+
+
+# vimをカラフルにする
+export TERM=xterm-256color
+
+# export PATH=~/vim/bin:$PATH
+# エディタ関連
+export EDITOR=vi
+if which vim &> /dev/null; then
+  alias vim='vim -p'
+  alias vi='vim -p'
+  alias gvim=~/dotfiles/open-gvim
+fi
+
+# Ctrl+S を無効
+if [ $(hostname) = "omoto-xubuntu" ]; then
+  stty stop undef
+fi
+
+
+#git関連
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
+export PATH=$HOME/.git-hooker/bin:$PATH
+export GITHUB_USER=doloopwhile
+if which hub > /dev/null 2>&1; then
+  eval "$(hub alias -s)"
+fi
+
+function dev() {
+  if [[ "$(pwd)" =~ ^$HOME/v?dev([0-9]+) ]]; then
+    ssh "dev${BASH_REMATCH[1]}"
+    return $?
+  else
+    echo "Not in $HOME/v?dev([0-9]+)" >&2
+    return 1
+  fi
+}
+
+function vdev() {
+  if [[ "$(pwd)" =~ ^$HOME/v?dev([0-9]+) ]]; then
+    ssh "vdev${BASH_REMATCH[1]}"
+    return $?
+  else
+    echo "Not in $HOME/v?dev([0-9]+)" >&2
+    return 1
+  fi
+}
+
+# Python関連
+export PYTHONSTARTUP=~/.pythonstartup
+
+if [[ -s ~/.pythonz/etc/bashrc ]]; then
+  source ~/.pythonz/etc/bashrc
+fi
+
+# 便利なコマンド
+LS_OPTIONS=''
+
+if ls --color &> /dev/null; then
+  LS_OPTIONS="${LS_OPTIONS} --color=auto"
+fi
+
+if ls --group-directories-first &> /dev/null; then
+  LS_OPTIONS="${LS_OPTIONS} --group-directories-first"
+fi
+
+alias ls='ls -B -v ${LS_OPTIONS}'
+alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
+
+if [ -f ~/.dircolors ]; then
+  eval $(dircolors ~/.dircolors)
+fi
+
+function now() {
+  date +'%F %T'
+}
+
+function mkcd() {
+  mkdir -p $1 && cd $_
+}
+
+alias d='dirs -v'
+alias cdpwd='cd $(pwd -P)'
+alias gr='egrep --ignore-case --color=auto --line-number --with-filename --binary-files=without-match'
+alias diff2html='~/dotfiles/diff2html/diff2html.py'
+alias html2browse='~/dotfiles/diff2html/html2browse.py'
+alias d2b='diff2html | html2browse'
+alias nob='diff2html | html2browse'
+alias escape='python ~/dotfiles/escape.py'
+alias mime='~/dotfiles/mime.py'
+alias savetemp='~/dotfiles/save-tempfile/save-tempfile.py'
+alias save-tempfile='~/dotfiles/save-tempfile/save-tempfile.py'
+
+function te {
+  cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
+}
+
+alias colorize='python3 ~/dotfiles/colorize.py'
+alias findall='~/dotfiles/findall'
+
+# 存在するファイルのみをフィルタリング
+function fexists() {
+  cat - | while read line; do
+    if [ -e ${line} ]; then
+      echo ${line}
+    fi
+  done
+}
+
+
+
+# function update_terminal_title() {
+#   printf "\033]0;%s:%s\007" "${HOSTNAME%%.*}" "$(echo "${PWD/#$HOME/~}" | sed -e 's|/.*/|**/|')"
+# }
+
+function title() {
+  echo -en "\033]0;$@\007"
+}
+
+# コマンド履歴の共有
+function share_history {
+  history -a
+  history -c
+  history -r
+}
+
+PROMPT_COMMAND='share_history;title "${USER}@${HOSTNAME%%.*}"'
+shopt -u histappend
+export HISTSIZE=1000
+
+# シェルの細かい設定
+set -o emacs
+set mark-directories on
+set show-all-if-ambiguous on
+set visible-status on
+
+# Packer
+export PATH=$PATH:~/packer
+
+# direnv
+if which direnv &> /dev/null; then
+  eval "$(direnv hook bash)"
+fi
+
+# rbenv
+export PATH=$PATH:~/.rbenv/bin
+export PATH=$PATH:~/.gem/ruby/2.1.0/bin
+if which rbenv &> /dev/null; then
+  eval "$(rbenv init -)"
+fi
+
+# if [ -s $HOME/.pythonz/etc/bashrc ]; then
+#   source $HOME/.pythonz/etc/bashrc
+#   for v in CPython-2.7.6 CPython-3.2.5 CPython-3.3.5 CPython-3.4.1; do
+#     export PATH=~/.pythonz/pythons/$v/bin:$PATH
+#   done
+# fi
+#
+# export PATH=~/python/bin:$PATH
+# export GIT_HOOKER_PYTHON=~/python/bin/python
+
+alias pbcopy='xsel --clipboard --input'
+
+export PATH=${PATH}:${HOME}/node_modules/.bin
+
+if [ -z "$GOPATH" ]; then
+  export GOPATH=~/gocode
+  export PATH=${PATH}:/usr/local/go/bin:$GOPATH/bin
+fi
+
+function ghql() {
+  p=$(ghq list | peco)
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+  ghq look "$p"
+}
+
+function gb() {
+  local b="$(git br | peco | cut -b 3- | cut -d ' ' -f 1)"
+  if [ "${PIPESTATUS[@]}" = "0 0 0 0" ]; then
+    exit 1
+  fi
+  cd "$d"
+}
+
+function unique_ever_seen() {
+  cat - | python -c '
+import sys
+import fileinput
+
+seen = set()
+for line in fileinput.input():
+    if line not in seen:
+        sys.stdout.write(line)
+        seen.add(line)
+' "$@"
+}
+
+function gt() {
+  PGUSER=postgres go test "$@" |\
+    colorize RUN --bold |\
+    colorize PASS -f green --bold |\
+    colorize SKIP -f cyan --bold
+}
+
+function color16() {
+  # http://qiita.com/soramugi/items/46117274419665e601fa
+  echo -e "
+  # Attribute codes:
+  # 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+  # Text color codes:
+  # 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+  # Background color codes:
+  # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+  状態番号
+  \033[00m デフォルト状態 00 \033[00m
+  \033[01m 強調           01 \033[00m
+  \033[04m 下線           04 \033[00m
+  \033[05m 点滅           05 \033[00m
+  \033[07m 色反転         07 \033[00m
+  \033[08m 塗りつぶし     08 \033[00m(塗りつぶし     08)
+
+  色番号
+  \033[30m 黒               30 \033[00m \033[40m 40 \033[00m \033[31;40m 31;40 \033[00m \033[32;00;40m 32;00;40 \033[00m
+  \033[31m 赤               31 \033[00m \033[41m 41 \033[00m \033[32;41m 32;41 \033[00m \033[33;01;41m 33;01;41 \033[00m
+  \033[32m 緑               32 \033[00m \033[42m 42 \033[00m \033[33;42m 33;42 \033[00m \033[34;04;42m 34;04;42 \033[00m
+  \033[33m 黄(または茶)     33 \033[00m \033[43m 43 \033[00m \033[34;43m 34;43 \033[00m \033[35;05;43m 35;05;43 \033[00m
+  \033[34m 青               34 \033[00m \033[44m 44 \033[00m \033[35;44m 35;44 \033[00m \033[36;07;44m 36;07;44 \033[00m
+  \033[35m 紫               35 \033[00m \033[45m 45 \033[00m \033[36;45m 36;45 \033[00m \033[37;00;45m 37;00;45 \033[00m
+  \033[36m シアン           36 \033[00m \033[46m 46 \033[00m \033[37;46m 37;46 \033[00m \033[30;01;46m 30;01;46 \033[00m
+  \033[37m 白(またはグレー) 37 \033[00m \033[47m 47 \033[00m \033[30;47m 30;47 \033[00m \033[31;04;47m 31;04;47 \033[00m
+  "
+}
+
+function color256(){
+#http://qiita.com/soramugi/items/ab82f30a5906851472cc
+  echo '
+256色
+前: 38;05;色番号
+背: 48;05;色番号
+  '
+  for i in {0..255} ; do
+    printf "\x1b[38;05;${i}m 38;05;${i} "
+  done
+  echo ''
+  for i in {0..255} ; do
+    printf "\x1b[48;05;${i}m 48;05;${i} "
+  done
+  echo ''
+}
+
+function ge() {
+  ~/dotfiles/open-gvim $(cat - | sed -e 's/\(^.*\):[[:digit:]]\+:.*/\1/' | sort -u)
+}
+
+
+gotest-color() {
+  colorize --bold -f green '\bPASS\b' | \
+    colorize --bold -f cyan '\bRUN\b' | \
+    colorize --bold -f red '\bFAIL\b'
+}
+
+clean-meld() {
+  paths=$(find . \
+    -name '*.BACKUP.*' -or \
+    -name '*.BASE.*'   -or \
+    -name '*.LOCAL.*'  -or \
+    -name '*.REMOTE.*'
+  )
+
+  if [ -z "${paths[@]}" ]; then
+    return 0
+  fi
+
+  for f in ${paths[@]}; do
+    echo $f
+  done
+
+  echo -n "delete these files? [y/N] " >&2
+  read input
+  if [ "${input}" = "y" ]; then
+    rm ${paths[@]} || return 1
+    return 0
+  fi
+  return 2
+}
+
+
+get_backup_name() {
+  local b="${1}.bak"
+  if ! [ -e ${b} ];then
+    echo "${b}"
+    return 0
+  fi
+
+  for i in `seq 2 100`; do
+    local b="${1}.bak.${i}"
+    if ! git_branch_exists "${b}"; then
+      echo "${b}"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+bak() {
+  for f in "$@"; do
+    local name=$(get_backup_name "${f}")
+    if [ $? -ne 0 ]; then
+      return 1
+    fi
+    mv ${f} ${name}
+    if [ $? -ne 0 ]; then
+      return 1
+    fi
+  done
+  return 0
+}
+
+if which peco &> /dev/null; then
+  _replace_by_history() {
+    local l=$(HISTTIMEFORMAT= history | tac | sed -e 's/^\s*[0-9]\+\s*//' | uniq-everseen | peco --query "$READLINE_LINE")
+    READLINE_LINE="$l"
+    READLINE_POINT=${#l}
+  }
+  bind -x '"\C-r": _replace_by_history'
+  bind    '"\C-xr": reverse-search-history'
+fi
+
+export PATH=$PATH:/usr/local/haskell/ghc-7.8.3-x86_64/bin/
+
+yaml2json() {
+  ruby -ryaml -rjson -e "print YAML.load(STDIN).to_json" -
+}
+
+json2yaml() {
+  ruby -ryaml -rjson -e "print JSON.load(STDIN).to_yaml" -
+}
+
+export PATH=$PATH:~/.cabal/bin
+export PATH=$PATH:~/.local/bin
+
+export PATH=$PATH:~/dotfiles/bin
+
+alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+echo "~/.bashrc loaded" >&2

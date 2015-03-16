@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+from subprocess import check_output, check_call
+import sys
+
+git_branch = check_output(['git', 'branch', '-q']).decode('utf-8')
+
+branches = []
+for line in git_branch.splitlines():
+    branches.append(line[2:].strip())
+
+for line in git_branch.splitlines():
+    if line.startswith('*'):
+        current_branch = line[2:].strip()
+        break
+else:
+    sys.exit('Failed to get current branch name')
+
+backup_branch = 'bak-{}'.format(current_branch)
+if backup_branch in branches:
+    for i in range(2, 100):
+        backup_branch = 'bak-{}-{}'.format(current_branch, i)
+        if backup_branch not in branches:
+            break
+    else:
+        sys.exit('Could not allocate backup name for branch "{}"'.format(repr(current_branch)))
+
+check_call(['git', 'branch', backup_branch])
+
+print('Created backup branch "{}"'.format(backup_branch))

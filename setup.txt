@@ -1,0 +1,28 @@
+
+
+wget http://www.python.org/ftp/python/3.2.3/Python-3.2.3.tgz
+tar xf Python-3.2.3
+cd Python-3.2.3
+./configure --prefix=$HOME
+make
+make install
+
+
+sudo yum install ncurses-devel
+wget http://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2
+tar xf vim-7.3.tar.bz
+vim-7.3
+./configure \
+    --with-feautures=huge \
+    --enable-multibyte  \
+    --with-tlib=ncurses \
+    --prefix=$HOME
+make
+make install
+
+
+sudo rpm -i http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el5.rf.x86_64.rpm
+sudo sed -e '/enabled\s*=\s*0/enabled = 1/' -i /etc/yum.repos.d/rpmforge.repo
+sudo yum install --enablerepo=rpmforge --disablerepo=base xerces-c
+sudo yum install --enablerepo=rpmforge phc
+

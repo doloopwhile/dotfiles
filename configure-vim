@@ -1,0 +1,15 @@
+./configure \
+  --with-features=huge\
+  --prefix=$HOME \
+  --enable-fail-if-missing \
+  --enable-perlinterp \
+  --enable-pythoninterp \
+  --enable-python3interp \
+  --enable-rubyinterp \
+  --enable-luainterp \
+  --enable-gui=gnome2 \
+  --with-tlib=ncurses \
+  --disable-darwin \
+  --disable-selinux \
+  --enable-fontset \
+  --prefix=$HOME/usr/local/vim

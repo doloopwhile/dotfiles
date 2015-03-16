@@ -1,0 +1,15 @@
+[submodule "diff2html"]
+	path = diff2html
+	url = git://github.com/doloopwhile/diff2html.git
+[submodule "save-tempfile"]
+	path = save-tempfile
+	url = git://github.com/doloopwhile/save-tempfile.git
+[submodule "_vim/neobundle"]
+	path = _vim/neobundle
+	url = git://github.com/Shougo/neobundle.vim.git
+[submodule "ghp-import"]
+	path = ghp-import
+	url = https://github.com/davisp/ghp-import
+[submodule "vrename"]
+	path = vrename
+	url = ssh://git@github.com/doloopwhile/vrename.git

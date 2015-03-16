@@ -1,0 +1,22 @@
+import os
+import sys
+import re
+from imp import reload
+from pprint import pprint as pp
+
+try:
+    import atexit
+    import os
+    import readline
+    import rlcompleter
+except ImportError:
+    pass
+else:
+    readline.parse_and_bind('tab: complete')
+    histfile = os.path.join(os.environ['HOME'], '.pythonhistory')
+    try:
+        readline.read_history_file(histfile)
+    except IOError:
+        pass
+    atexit.register(readline.write_history_file, histfile)
+    del os, histfile, readline, rlcompleter, atexit

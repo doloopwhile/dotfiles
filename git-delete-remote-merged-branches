@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 remote [remote [remote [...]]]"
+  exit 1
+fi
+
+for r in "$@"; do
+  git remote update --prune $r
+  branches=$(git branch --remote --merged \
+    | sed -e 's|^ *||' \
+    | sed -e 's| *$||' \
+    | grep '^$r/' \
+    | sed -e 's|$r/||' \
+    | grep -v '^master$'
+  )
+  if [ ${#branches[@]} -ne 0 ]; then
+    git push --delete $r ${branches[@]}
+  fi
+done
+
+

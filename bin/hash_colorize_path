@@ -1,0 +1,307 @@
+#!/usr/bin/env python3
+import os
+import sys
+import zlib
+
+COLOR_HEX_STRINGS = '''
+    000000
+    CD0000
+    00CD00
+    CDCD00
+    0000EE
+    CD00CD
+    00CDCD
+    E5E5E5
+    7F7F7F
+    FF0000
+    00FF00
+    FFFF00
+    5C5CFF
+    FF00FF
+    00FFFF
+    FFFFFF
+    373737
+    37375F
+    373787
+    3737AF
+    3737D7
+    3737FF
+    375F37
+    375F5F
+    375F87
+    375FAF
+    375FD7
+    375FFF
+    378737
+    37875F
+    378787
+    3787AF
+    3787D7
+    3787FF
+    37AF37
+    37AF5F
+    37AF87
+    37AFAF
+    37AFD7
+    37AFFF
+    37D737
+    37D75F
+    37D787
+    37D7AF
+    37D7D7
+    37D7FF
+    37FF37
+    37FF5F
+    37FF87
+    37FFAF
+    37FFD7
+    37FFFF
+    5F3737
+    5F375F
+    5F3787
+    5F37AF
+    5F37D7
+    5F37FF
+    5F5F37
+    5F5F5F
+    5F5F87
+    5F5FAF
+    5F5FD7
+    5F5FFF
+    5F8737
+    5F875F
+    5F8787
+    5F87AF
+    5F87D7
+    5F87FF
+    5FAF37
+    5FAF5F
+    5FAF87
+    5FAFAF
+    5FAFD7
+    5FAFFF
+    5FD737
+    5FD75F
+    5FD787
+    5FD7AF
+    5FD7D7
+    5FD7FF
+    5FFF37
+    5FFF5F
+    5FFF87
+    5FFFAF
+    5FFFD7
+    5FFFFF
+    873737
+    87375F
+    873787
+    8737AF
+    8737D7
+    8737FF
+    875F37
+    875F5F
+    875F87
+    875FAF
+    875FD7
+    875FFF
+    878737
+    87875F
+    878787
+    8787AF
+    8787D7
+    8787FF
+    87AF37
+    87AF5F
+    87AF87
+    87AFAF
+    87AFD7
+    87AFFF
+    87D737
+    87D75F
+    87D787
+    87D7AF
+    87D7D7
+    87D7FF
+    87FF37
+    87FF5F
+    87FF87
+    87FFAF
+    87FFD7
+    87FFFF
+    AF3737
+    AF375F
+    AF3787
+    AF37AF
+    AF37D7
+    AF37FF
+    AF5F37
+    AF5F5F
+    AF5F87
+    AF5FAF
+    AF5FD7
+    AF5FFF
+    AF8737
+    AF875F
+    AF8787
+    AF87AF
+    AF87D7
+    AF87FF
+    AFAF37
+    AFAF5F
+    AFAF87
+    AFAFAF
+    AFAFD7
+    AFAFFF
+    AFD737
+    AFD75F
+    AFD787
+    AFD7AF
+    AFD7D7
+    AFD7FF
+    AFFF37
+    AFFF5F
+    AFFF87
+    AFFFAF
+    AFFFD7
+    AFFFFF
+    D73737
+    D7375F
+    D73787
+    D737AF
+    D737D7
+    D737FF
+    D75F37
+    D75F5F
+    D75F87
+    D75FAF
+    D75FD7
+    D75FFF
+    D78737
+    D7875F
+    D78787
+    D787AF
+    D787D7
+    D787FF
+    D7AF37
+    D7AF5F
+    D7AF87
+    D7AFAF
+    D7AFD7
+    D7AFFF
+    D7D737
+    D7D75F
+    D7D787
+    D7D7AF
+    D7D7D7
+    D7D7FF
+    D7FF37
+    D7FF5F
+    D7FF87
+    D7FFAF
+    D7FFD7
+    D7FFFF
+    FF3737
+    FF375F
+    FF3787
+    FF37AF
+    FF37D7
+    FF37FF
+    FF5F37
+    FF5F5F
+    FF5F87
+    FF5FAF
+    FF5FD7
+    FF5FFF
+    FF8737
+    FF875F
+    FF8787
+    FF87AF
+    FF87D7
+    FF87FF
+    FFAF37
+    FFAF5F
+    FFAF87
+    FFAFAF
+    FFAFD7
+    FFAFFF
+    FFD737
+    FFD75F
+    FFD787
+    FFD7AF
+    FFD7D7
+    FFD7FF
+    FFFF37
+    FFFF5F
+    FFFF87
+    FFFFAF
+    FFFFD7
+    FFFFFF
+    080808
+    121212
+    1C1C1C
+    262626
+    303030
+    3A3A3A
+    444444
+    4E4E4E
+    585858
+    626262
+    6C6C6C
+    767676
+    808080
+    8A8A8A
+    949494
+    9E9E9E
+    A8A8A8
+    B2B2B2
+    BCBCBC
+    C6C6C6
+    D0D0D0
+    DADADA
+    E4E4E4
+    EEEEEE
+'''.split()
+
+
+def terminal_256_color_rgbs():
+    for h in COLOR_HEX_STRINGS:
+        r = int(h[0:2], 16)
+        g = int(h[2:4], 16)
+        b = int(h[4:6], 16)
+        yield (r, g, b)
+
+
+def available_indexes():
+    for i, (r, g, b) in enumerate(terminal_256_color_rgbs()):
+        if r + g + b > 16 * 25:
+            yield i
+
+
+def list_mod_get(alist, i):
+    return alist[i % len(alist)]
+
+
+def main():
+    from os.path import (
+        abspath,
+        normcase,
+        realpath,
+        expanduser,
+    )
+
+    indexes = list(available_indexes())
+
+    def colorize(s, h, indexes):
+        return "\033[01;38;05;{color_code}m{s}\033[0m".format(
+            color_code=list_mod_get(indexes, h), s=s)
+
+    for path in sys.argv[1:]:
+        normalized_path = normcase(abspath(realpath(expanduser(path))))
+
+        h = zlib.adler32(normalized_path.encode('utf-8'))
+        tokens = path.split(os.sep)
+        print(os.sep.join(map(lambda t: colorize(t, h, indexes), tokens)))
+
+
+if __name__ == '__main__':
+    main()

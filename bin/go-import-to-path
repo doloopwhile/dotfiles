@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+function realpath {
+  echo $(cd $(dirname $1); pwd)/$(basename $1);
+}
+
+for gopath in $(echo $GOPATH | tr ':' ' ');do
+  p="$gopath/src/$1"
+  if [ -d "$p" ]; then
+    echo "$p"
+    exit 0
+  fi
+done
+
+exit 1

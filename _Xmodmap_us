@@ -1,0 +1,18 @@
+keycode 47 = colon semicolon
+
+keycode 133 = Alt_L
+keycode 64  = Super_L
+remove mod1 = Alt_L
+remove mod4 = Alt_L
+remove mod1 = Super_L
+remove mod4 = Super_L
+add mod1 = Alt_L
+add mod4 = Super_L
+
+! remove mod4 = Super_R
+remove mod1 = Alt_R
+keycode 108 = F13
+keycode 134 = Alt_R
+
+
+add mod4 = Alt_R
