@@ -1,7 +1,7 @@
 set nocompatible
 set nolazyredraw
 
-set runtimepath+=~/.vim/neobundle/
+set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 
 let g:neobundle#types#git#default_protocol = 'git'
@@ -47,7 +47,7 @@ set clipboard=unnamed,unnamedplus,autoselect
 " Other editing
 set backspace=start,eol,indent "普通のエディタ風のBackSpace
 set wildmode=list:longest " ファイル名補完をreadline風にする
-autocmd BufWritePre * :%s/\s\+$//e " Delete tailing spaces at exit
+" autocmd BufWritePre * :%s/\s\+$//e " Delete tailing spaces at exit
 
 " Visual
 set notitle

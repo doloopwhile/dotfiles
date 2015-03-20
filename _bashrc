@@ -288,7 +288,9 @@ fi
 # export PATH=~/python/bin:$PATH
 # export GIT_HOOKER_PYTHON=~/python/bin/python
 
-alias pbcopy='xsel --clipboard --input'
+if ! which pbcopy &> /dev/null; then
+  alias pbcopy='xsel --clipboard --input'
+fi
 
 export PATH=${PATH}:${HOME}/node_modules/.bin
 
@@ -451,10 +453,15 @@ bak() {
 
 if which peco &> /dev/null; then
   _replace_by_history() {
-    local l=$(HISTTIMEFORMAT= history | tac | sed -e 's/^\s*[0-9]\+\s*//' | uniq-everseen | peco --query "$READLINE_LINE")
+    local sed=sed
+    if which gsed &> /dev/null; then
+      sed=gsed
+    fi
+    local l=$(HISTTIMEFORMAT= history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | peco --query "$READLINE_LINE")
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
   }
+
   bind -x '"\C-r": _replace_by_history'
   bind    '"\C-xr": reverse-search-history'
 fi
