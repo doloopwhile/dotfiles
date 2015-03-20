@@ -16,7 +16,6 @@ names=(
   irbrc
   percol.d
   pythonstartup
-  rbenv
   tmux.conf
   vim
   vimrc
