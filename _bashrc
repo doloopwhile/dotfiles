@@ -486,4 +486,9 @@ alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+
+if which boot2docker &>/dev/null; then
+  eval "$(boot2docker shellinit | grep -v Writing)"
+fi
+
 echo "~/.bashrc loaded" >&2
