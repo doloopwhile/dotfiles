@@ -109,8 +109,6 @@ function ps1_info() {
     fi
     echo -n "${branch}"
     C reset
-  else
-    echo -n 'git[]'
   fi
   echo
   echo -n ' '
@@ -139,6 +137,7 @@ if which vim &> /dev/null; then
   alias vim='vim -p'
   alias vi='vim -p'
   alias gvim=~/dotfiles/open-gvim
+  export SVN_EDITOR=vim
 fi
 
 # Ctrl+S を無効
@@ -487,8 +486,22 @@ alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 
-if which boot2docker &>/dev/null; then
-  eval "$(boot2docker shellinit | grep -v Writing)"
+## boot2docker
+# if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
+#   eval "$(boot2docker shellinit | grep -v Writing)"
+# fi
+
+## Enable GNU command in OSX
+if which gsed &> /dev/null; then
+  alias sed=gsed
 fi
 
-echo "~/.bashrc loaded" >&2
+
+# bash-completion by HomeBrew
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
+if [ -e "/Applications/MacVim.app" ]; then
+  alias macvim='open -a /Applications/MacVim.app'
+fi

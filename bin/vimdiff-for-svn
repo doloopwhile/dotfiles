@@ -1,0 +1,7 @@
+#!/bin/sh
+macvimdiff=/Applications/MacVim.app/Contents/MacOS/vimdiff
+if [ -e "${macvimdiff}" ]; then
+  $macvimdiff $6 $7
+else
+  vimdiff $6 $7
+fi

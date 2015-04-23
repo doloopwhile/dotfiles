@@ -47,7 +47,7 @@ set clipboard=unnamed,unnamedplus,autoselect
 " Other editing
 set backspace=start,eol,indent "普通のエディタ風のBackSpace
 set wildmode=list:longest " ファイル名補完をreadline風にする
-" autocmd BufWritePre * :%s/\s\+$//e " Delete tailing spaces at exit
+autocmd BufWritePre * :%s/\s\+$//e " Delete tailing spaces at exit
 
 " Visual
 set notitle
@@ -379,16 +379,16 @@ command! -nargs=0 NewGuake call system('guake -n NEW && guake -e "cd `pwd`" && g
 command! -nargs=0 NewTerminal call system('nohup xfce4-terminal --working-directory `pwd` &')
 
 " Jump to Go-lang package source
-function! GfGoImportFile()
-  let path = expand('<cfile>')
-  let path = system("go-import-jump " . path)
-  return {
-  \   'path': path,
-  \   'line': 0,
-  \   'col': 0,
-  \ }
-endfunction
-call gf#user#extend('GfGoImportFile', 1000)
+" function! GfGoImportFile()
+"   let path = expand('<cfile>')
+"   let path = system("go-import-jump " . path)
+"   return {
+"   \   'path': path,
+"   \   'line': 0,
+"   \   'col': 0,
+"   \ }
+" endfunction
+" call gf#user#extend('GfGoImportFile', 1000)
 
 " Display syntax highlighting under the cursor
 function! s:get_syn_id(transparent)

@@ -9,14 +9,19 @@ try:
     import os
     import readline
     import rlcompleter
-except ImportError:
-    pass
+except ImportError as e:
+    sys.stderr.write(e + "\n")
+    sys.stderr.write("readline is disabled")
 else:
-    readline.parse_and_bind('tab: complete')
+    if readline.__doc__.find('libedit') >= 0:
+        readline.parse_and_bind("bind ^I rl_complete")
+    else:
+        readline.parse_and_bind('tab: complete')
     histfile = os.path.join(os.environ['HOME'], '.pythonhistory')
     try:
         readline.read_history_file(histfile)
-    except IOError:
-        pass
+    except IOError as e:
+        sys.stderr.write(e + "\n")
+        sys.stderr.write("readline is disabled")
     atexit.register(readline.write_history_file, histfile)
     del os, histfile, readline, rlcompleter, atexit

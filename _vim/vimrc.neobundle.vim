@@ -78,3 +78,6 @@ NeoBundle 'szw/vim-tags'
 
 " gist
 NeoBundle 'mattn/gist-vim'
+
+" Recent used files
+NeoBundle 'mru.vim'
