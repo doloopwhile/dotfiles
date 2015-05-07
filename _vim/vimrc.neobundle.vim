@@ -81,3 +81,8 @@ NeoBundle 'mattn/gist-vim'
 
 " Recent used files
 NeoBundle 'mru.vim'
+
+
+" Text object
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-textobj-function'
