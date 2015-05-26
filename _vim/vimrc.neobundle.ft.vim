@@ -11,7 +11,10 @@ NeoBundle 'cespare/vim-toml'
 NeoBundle "ekalinin/Dockerfile.vim"
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'lambdatoast/elm.vim'
+NeoBundle 'syngan/vim-pukiwiki'
+NeoBundle 'derekwyatt/vim-scala'
 
+exe "set rtp+=".globpath($HOME, "/gocode/src/github.com/nsf/gocode/vim")
 augroup vimrcGo
   autocmd!
   autocmd FileType go highlight goErr ctermfg=214 guifg=#ffaf00

@@ -1,5 +1,8 @@
 source /etc/profile
 
+# brewなどでインストールしたコマンドを優先
+export PATH=/usr/local/bin:$PATH
+
 # 分割した設定ファイルの読み込み
 for f in `find -L ~/.bash.d/ -type f`; do
   source $f
@@ -9,13 +12,17 @@ done
 export LAMG=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
 
+if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+  source $(brew --prefix)/etc/bash_completion
+fi
+
 # vimをカラフルにする
 export TERM=xterm-256color
 
-# export PATH=~/vim/bin:$PATH
 # エディタ関連
 export EDITOR=vi
 if which vim &> /dev/null; then
+  export EDITOR=vim
   alias vim='vim -p'
   alias vi='vim -p'
   alias gvim=~/dotfiles/open-gvim
@@ -32,7 +39,7 @@ done
 
 #git関連
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
-export PATH=$HOME/.git-hooker/bin:$PATH
+export PATH=$PATH:$HOME/.git-hooker/bin
 export GITHUB_USER=doloopwhile
 if which hub &> /dev/null; then
   eval "$(hub alias -s)"
@@ -144,9 +151,6 @@ set -o emacs
 set mark-directories on
 set show-all-if-ambiguous on
 set visible-status on
-
-# Packer
-export PATH=$PATH:~/packer
 
 # direnv
 if which direnv &> /dev/null; then
@@ -390,3 +394,4 @@ if [ -e "/Applications/MacVim.app" ]; then
 fi
 
 alias vrename=~/dotfiles/vrename/vrename.py
+export PATH=$PATH:$HOME/xsvutils/bin

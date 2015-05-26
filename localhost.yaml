@@ -1,0 +1,27 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  sudo: no
+  vars:
+    homebrew_packages_taps:
+      - homebrew/binary
+      - homebrew/dupes
+    homebrew_packages_packages:
+      - { name: readline }
+      - { name: libnotify }
+      - { name: openssl, state: linked }
+      - { name: ansible }
+      - { name: direnv }
+      - { name: docker }
+      - { name: git }
+      - { name: jq }
+      - { name: hub }
+      - { name: imagemagick }
+      - { name: mercurial }
+      - { name: python }
+      - { name: tmux }
+      - { name: vim }
+      - { name: wget }
+      - { name: zsh, install_options: disable-etcdir }
+  roles:
+    - hnakamur.homebrew-packages

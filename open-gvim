@@ -1,6 +1,6 @@
 #!/bin/bash
 if which mvim > /dev/null; then
-  mvim "$@"
+  exec mvim "$@"
 fi
 
 vim --serverlist 2> /dev/null \

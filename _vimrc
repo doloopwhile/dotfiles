@@ -40,7 +40,7 @@ set noswapfile " do not create temp files
 set nobackup " do not create temp files
 
 " Preview on autocompletion
-set completeopt-=preview
+set completeopt-=preview,menu
 " Clipboard
 set clipboard=unnamed,unnamedplus,autoselect
 

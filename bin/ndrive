@@ -1,0 +1,10 @@
+#!/bin/sh
+for line in "$@"; do
+  echo "$line"
+  echo "$line" | sed -e 's|\\|/|g' -e 's|N:|/Volumes/FileServer/|g'
+done
+
+while read -r line; do
+  echo "$line"
+  echo "$line" | sed -e 's|\\|/|g' -e 's|N:|/Volumes/FileServer/|g'
+done

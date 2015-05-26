@@ -102,6 +102,7 @@ function ps1_info() {
     while read line; do
       if [ "${line}" = '?' ]; then
         untracked=1
+        continue
       fi
       if [ -n "${line}" ]; then
         modified=1
