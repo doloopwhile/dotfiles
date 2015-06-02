@@ -390,7 +390,13 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 if [ -e "/Applications/MacVim.app" ]; then
-  alias macvim='open -a /Applications/MacVim.app'
+  function mvim() {
+    if [ $# -eq 0 ]; then
+      /Applications/MacVim.app/Contents/MacOS/mvim
+    else
+      /Applications/MacVim.app/Contents/MacOS/mvim --remote-tab-silent "$@"
+    fi
+  }
 fi
 
 alias vrename=~/dotfiles/vrename/vrename.py

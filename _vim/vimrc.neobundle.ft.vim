@@ -13,6 +13,7 @@ NeoBundle 'slim-template/vim-slim'
 NeoBundle 'lambdatoast/elm.vim'
 NeoBundle 'syngan/vim-pukiwiki'
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'mustache/vim-mustache-handlebars'
 
 exe "set rtp+=".globpath($HOME, "/gocode/src/github.com/nsf/gocode/vim")
 augroup vimrcGo
