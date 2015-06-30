@@ -1,5 +1,5 @@
-imap <C-S-V> <ESC>"*pa
-imap <C-S-C> y
+"inoremap <C-S-V> <ESC>"*pa
+"inoremap <C-S-C> y
 
 " ツールバーとメニューを削除
 set guioptions-=Tm

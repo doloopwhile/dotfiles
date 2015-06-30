@@ -41,3 +41,24 @@ function! s:format_css()
     call setpos(".", cursor)
     unlet cursor
 endfunction
+
+
+" ShellScript
+au BufNewFile,BufRead *.envrc setf sh
+
+
+"******************************************************************************
+" Filetype
+"******************************************************************************
+augroup MyPHP
+  autocmd!
+  autocmd BufEnter *.mod set ft=php
+  autocmd BufEnter *.inc set ft=php
+  autocmd BufEnter *.cnf set ft=php
+  autocmd BufEnter *.check set ft=php
+  autocmd BufEnter *.edit set ft=php
+  autocmd BufEnter *.view set ft=php
+  autocmd BufEnter *.hlp set ft=php
+
+  autocmd FileType php set completeopt-=preview
+augroup END

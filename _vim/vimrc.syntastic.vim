@@ -29,3 +29,8 @@ NeoBundle 'tpope/vim-unimpaired'
 
 " let g:syntastic_mode_map = { 'mode': 'passive',
 "             \ 'active_filetypes': ['ruby'] }
+"
+
+let g:syntastic_sh_shellcheck_args = '-e SC2002'
+
+let g:syntastic_java_checkers=[]

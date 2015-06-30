@@ -1,7 +1,13 @@
 #!/bin/bash
-if which mvim > /dev/null; then
-  exec mvim "$@"
+if [ -e "/Applications/MacVim.app" ]; then
+  if [ $# -eq 0 ]; then
+    /Applications/MacVim.app/Contents/MacOS/mvim
+  else
+    /Applications/MacVim.app/Contents/MacOS/mvim --remote-tab-silent "$@"
+  fi
+  exit $?
 fi
+
 
 vim --serverlist 2> /dev/null \
   | grep GVIM > /dev/null && vim -g --servername GVIM --remote-expr 'foreground()' || vim --servername GVIM -g 2> /dev/null

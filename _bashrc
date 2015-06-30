@@ -1,19 +1,20 @@
+#!/bin/bash
 source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
 export PATH=/usr/local/bin:$PATH
 
 # 分割した設定ファイルの読み込み
-for f in `find -L ~/.bash.d/ -type f`; do
-  source $f
-done
+while read f; do
+  source "$f"
+done < <(find -L ~/.bash.d/ -type f)
 
 # Lang
 export LAMG=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
 
-if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
-  source $(brew --prefix)/etc/bash_completion
+if which brew &> /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+  source "$(brew --prefix)/etc/bash_completion"
 fi
 
 # vimをカラフルにする
@@ -25,8 +26,14 @@ if which vim &> /dev/null; then
   export EDITOR=vim
   alias vim='vim -p'
   alias vi='vim -p'
-  alias gvim=~/dotfiles/open-gvim
   export SVN_EDITOR=vim
+fi
+
+if [ -e "/Applications/MacVim.app" ]; then
+  alias vi=/Applications/MacVim.app/Contents/MacOS/Vim
+  alias vim=/Applications/MacVim.app/Contents/MacOS/Vim
+  export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+  export SVN_EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 fi
 
 # Ctrl+S を無効
@@ -44,26 +51,6 @@ export GITHUB_USER=doloopwhile
 if which hub &> /dev/null; then
   eval "$(hub alias -s)"
 fi
-
-function dev() {
-  if [[ "$(pwd)" =~ ^$HOME/v?dev([0-9]+) ]]; then
-    ssh "dev${BASH_REMATCH[1]}"
-    return $?
-  else
-    echo "Not in $HOME/v?dev([0-9]+)" >&2
-    return 1
-  fi
-}
-
-function vdev() {
-  if [[ "$(pwd)" =~ ^$HOME/v?dev([0-9]+) ]]; then
-    ssh "vdev${BASH_REMATCH[1]}"
-    return $?
-  else
-    echo "Not in $HOME/v?dev([0-9]+)" >&2
-    return 1
-  fi
-}
 
 # Python関連
 export PYTHONSTARTUP=~/.pythonstartup
@@ -87,15 +74,11 @@ alias ls='ls -B -v ${LS_OPTIONS}'
 alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
 
 if [ -f ~/.dircolors ] && which dircolors 2> /dev/null; then
-  eval $(dircolors ~/.dircolors)
+  eval "$(dircolors ~/.dircolors)"
 fi
 
 function now() {
   date +'%F %T'
-}
-
-function mkcd() {
-  mkdir -p $1 && cd $_
 }
 
 alias d='dirs -v'
@@ -111,11 +94,7 @@ alias savetemp='~/dotfiles/save-tempfile/save-tempfile.py'
 alias save-tempfile='~/dotfiles/save-tempfile/save-tempfile.py'
 
 function te {
-  if which mvim > /dev/null; then
-    cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c mvim
-  else
-    cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
-  fi
+  cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
 }
 
 alias colorize='python3 ~/dotfiles/colorize.py'
@@ -124,15 +103,15 @@ alias findall='~/dotfiles/findall'
 # 存在するファイルのみをフィルタリング
 function fexists() {
   cat - | while read line; do
-    if [ -e ${line} ]; then
-      echo ${line}
+    if [ -e "${line}" ]; then
+      echo "${line}"
     fi
   done
 }
 
 
 function title() {
-  echo -en "\033]0;$@\007"
+  echo -en "\033]0;$*\007"
 }
 
 # コマンド履歴の共有
@@ -158,8 +137,7 @@ if which direnv &> /dev/null; then
 fi
 
 # rbenv
-export PATH=$PATH:~/.rbenv/bin
-export PATH=$PATH:~/.gem/ruby/2.1.0/bin
+export PATH=$PATH:/Users/k-omoto/.gem/ruby/2.2.0/bin
 if which rbenv &> /dev/null; then
   eval "$(rbenv init -)"
 fi
@@ -191,14 +169,6 @@ function ghql() {
     exit 1
   fi
   ghq look "$p"
-}
-
-function gb() {
-  local b="$(git br | peco | cut -b 3- | cut -d ' ' -f 1)"
-  if [ "${PIPESTATUS[@]}" = "0 0 0 0" ]; then
-    exit 1
-  fi
-  cd "$d"
 }
 
 function unique_ever_seen() {
@@ -259,17 +229,17 @@ function color256(){
 背: 48;05;色番号
   '
   for i in {0..255} ; do
-    printf "\x1b[38;05;${i}m 38;05;${i} "
+    printf "\x1b[38;05;%sm 38;05;%s " $i $i
   done
   echo ''
   for i in {0..255} ; do
-    printf "\x1b[48;05;${i}m 48;05;${i} "
+    printf "\x1b[48;05;%sm 48;05;%s " $i $i
   done
   echo ''
 }
 
 function ge() {
-  ~/dotfiles/open-gvim $(cat - | sed -e 's/\(^.*\):[[:digit:]]\+:.*/\1/' | sort -u)
+  ~/dotfiles/open-gvim "$(cat - | sed -e 's/\(^.*\):[[:digit:]]\+:.*/\1/' | sort -u)"
 }
 
 
@@ -291,14 +261,14 @@ clean-meld() {
     return 0
   fi
 
-  for f in ${paths[@]}; do
-    echo $f
+  for f in "${paths[@]}"; do
+    echo "$f"
   done
 
   echo -n "delete these files? [y/N] " >&2
   read input
   if [ "${input}" = "y" ]; then
-    rm ${paths[@]} || return 1
+    rm "${paths[@]}" || return 1
     return 0
   fi
   return 2
@@ -307,12 +277,12 @@ clean-meld() {
 
 get_backup_name() {
   local b="${1}.bak"
-  if ! [ -e ${b} ];then
+  if ! [ -e "${b}" ];then
     echo "${b}"
     return 0
   fi
 
-  for i in `seq 2 100`; do
+  for i in $(seq 2 100); do
     local b="${1}.bak.${i}"
     if ! git_branch_exists "${b}"; then
       echo "${b}"
@@ -325,11 +295,12 @@ get_backup_name() {
 
 bak() {
   for f in "$@"; do
-    local name=$(get_backup_name "${f}")
+    local name
+    name="$(get_backup_name "${f}")"
     if [ $? -ne 0 ]; then
       return 1
     fi
-    mv ${f} ${name}
+    mv "${f}" "${name}"
     if [ $? -ne 0 ]; then
       return 1
     fi
@@ -343,7 +314,8 @@ if which peco &> /dev/null; then
     if which gsed &> /dev/null; then
       sed=gsed
     fi
-    local l=$(HISTTIMEFORMAT= history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | peco --query "$READLINE_LINE")
+    local l
+    l=$(HISTTIMEFORMAT='' history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | peco --query "$READLINE_LINE")
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
   }
@@ -372,6 +344,9 @@ alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+fe() {
+  find . -name "${1:-*}" | peco | xargs gvim
+}
 
 ## boot2docker
 # if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
@@ -383,20 +358,9 @@ if which gsed &> /dev/null; then
   alias sed=gsed
 fi
 
-
 # bash-completion by HomeBrew
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
-
-if [ -e "/Applications/MacVim.app" ]; then
-  function mvim() {
-    if [ $# -eq 0 ]; then
-      /Applications/MacVim.app/Contents/MacOS/mvim
-    else
-      /Applications/MacVim.app/Contents/MacOS/mvim --remote-tab-silent "$@"
-    fi
-  }
+if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+  . "$(brew --prefix)/etc/bash_completion"
 fi
 
 alias vrename=~/dotfiles/vrename/vrename.py

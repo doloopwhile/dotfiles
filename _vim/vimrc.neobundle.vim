@@ -87,3 +87,10 @@ NeoBundle 'mru.vim'
 " Text object
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-function'
+
+" ctrlp
+NeoBundle "ctrlpvim/ctrlp.vim"
+let g:ctrlp_map = '<Nop>'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_open_new_file = 't'
+noremap <Leader>p :CtrlPMixed<CR>

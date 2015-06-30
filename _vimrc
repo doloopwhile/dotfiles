@@ -1,22 +1,75 @@
 set nocompatible
 set nolazyredraw
 
+
+let mapleader=" "
+
+"******************************************************************************
+" Basic Configurations
+"******************************************************************************
+
 set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
-
 let g:neobundle#types#git#default_protocol = 'git'
 source ~/.vim/vimrc.neobundle.vim
 source ~/.vim/vimrc.syntastic.vim
 source ~/.vim/vimrc.neobundle.colorscheme.vim
 source ~/.vim/vimrc.neobundle.ft.vim
+source ~/.vim/vimrc.unite.vim
 
 call neobundle#end()
 
+
+"******************************************************************************
+" Highlightings
+"******************************************************************************
+set cursorline
+set nocursorcolumn
+set hlsearch
+
+autocmd CursorMoved syn sync fromstart
+
+augroup MyColorScheme
+  autocmd!
+  " set t_Co=256
+
+  " hi Normal ctermbg=none guifg=#C8E3E6
+
+  autocmd ColorScheme * highlight WhitespaceEOL ctermbg=red guibg=red
+  autocmd ColorScheme match WhitespaceEOL /\s\+$/
+  autocmd WinEnter * match WhitespaceEOL /\s\+$/
+
+  autocmd ColorScheme * hi Search ctermbg=blue ctermfg=white
+  autocmd ColorScheme * hi SpecialKey ctermfg=red  guifg=red
+
+  autocmd ColorScheme * hi WindowsNewLineCode ctermbg=red guibg=red
+  autocmd ColorScheme match  WindowsNewLineCode //
+
+  " 選択されているタブを反転
+  autocmd ColorScheme * hi TabLine cterm=reverse gui=reverse
+
+  " 補完候補の色
+  autocmd ColorScheme * hi Pmenu ctermbg=white ctermfg=black
+  autocmd ColorScheme * hi PmenuSel ctermbg=blue ctermfg=black
+
+  " 行番号の色
+  " autocmd ColorScheme * hi LineNr guifg=#7e8e91
+  autocmd ColorScheme * hi clear CursorLine
+augroup END
+
+
+" 'cursorline' を必要な時にだけ有効にする
+" http://d.hatena.ne.jp/thinca/20090530/1243615055
+" を少し改造、number の highlight は常に有効にする
+
+colorscheme molokai
+
+" Load ftplugins
+filetype plugin indent on
+syntax on
 "******************************************************************************
 " Basic Configurations
 "******************************************************************************
-filetype plugin indent on
-syntax on
 
 " Gui Optimazation
 " set guioptions=aciMrb
@@ -90,64 +143,6 @@ set tags=./.tags;
 " Automatically change current directory
 set autochdir
 
-"******************************************************************************
-" Filetype
-"******************************************************************************
-augroup MyPHP
-  autocmd!
-  autocmd BufEnter *.mod set ft=php
-  autocmd BufEnter *.inc set ft=php
-  autocmd BufEnter *.cnf set ft=php
-  autocmd BufEnter *.check set ft=php
-  autocmd BufEnter *.edit set ft=php
-  autocmd BufEnter *.view set ft=php
-  autocmd BufEnter *.hlp set ft=php
-
-  autocmd FileType php set completeopt-=preview
-augroup END
-"******************************************************************************
-" Highlightings
-"******************************************************************************
-set cursorline
-set nocursorcolumn
-set hlsearch
-
-autocmd CursorMoved syn sync fromstart
-
-augroup MyColorScheme
-  autocmd!
-  " set t_Co=256
-
-  " hi Normal ctermbg=none guifg=#C8E3E6
-
-  autocmd ColorScheme * highlight WhitespaceEOL ctermbg=red guibg=red
-  autocmd ColorScheme match WhitespaceEOL /\s\+$/
-  autocmd WinEnter * match WhitespaceEOL /\s\+$/
-
-  autocmd ColorScheme * hi Search ctermbg=blue ctermfg=white
-  autocmd ColorScheme * hi SpecialKey ctermfg=red  guifg=red
-
-  autocmd ColorScheme * hi WindowsNewLineCode ctermbg=red guibg=red
-  autocmd ColorScheme match  WindowsNewLineCode //
-
-  " 選択されているタブを反転
-  autocmd ColorScheme * hi TabLine cterm=reverse gui=reverse
-
-  " 補完候補の色
-  autocmd ColorScheme * hi Pmenu ctermbg=white ctermfg=black
-  autocmd ColorScheme * hi PmenuSel ctermbg=blue ctermfg=black
-
-  " 行番号の色
-  " autocmd ColorScheme * hi LineNr guifg=#7e8e91
-  autocmd ColorScheme * hi clear CursorLine
-augroup END
-
-
-" 'cursorline' を必要な時にだけ有効にする
-" http://d.hatena.ne.jp/thinca/20090530/1243615055
-" を少し改造、number の highlight は常に有効にする
-
-colorscheme molokai
 "******************************************************************************
 " Key Mappings
 "******************************************************************************
@@ -243,17 +238,21 @@ noremap <C-b> nop
 nnoremap / /\v
 nnoremap ttt <ESC>:tabnew<CR>
 command!-nargs=0 Vimrc tabedit ~/.vimrc
+noremap <Leader>v <ESC>:tabedit ~/.vimrc<CR>
 
 vnoremap z/ <ESC>/\%V
 vnoremap zs <ESC>:s/\%V/
 vnoremap s :s/\v
 
-nnoremap <expr> K ':!grep "' . expand('<cword>') . '" . -R \| more'
+nnoremap <expr>K <ESC>:vim expand("<cword>") `git ls-files`<CR> <ESC>:CtrlPQuickfix<CR>
 
 " emacs-like commandline
 cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
+
+" 貼り付けない
+" inoremap <C-V> <C-V>
 "******************************************************************************
 " Others
 "******************************************************************************
