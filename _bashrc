@@ -73,7 +73,7 @@ fi
 alias ls='ls -B -v ${LS_OPTIONS}'
 alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
 
-if [ -f ~/.dircolors ] && which dircolors 2> /dev/null; then
+if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
   eval "$(dircolors ~/.dircolors)"
 fi
 
@@ -356,11 +356,6 @@ fe() {
 ## Enable GNU command in OSX
 if which gsed &> /dev/null; then
   alias sed=gsed
-fi
-
-# bash-completion by HomeBrew
-if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-  . "$(brew --prefix)/etc/bash_completion"
 fi
 
 alias vrename=~/dotfiles/vrename/vrename.py

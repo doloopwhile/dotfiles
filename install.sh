@@ -15,6 +15,7 @@ function backup() {
 names=(
   SciTEUser.properties
   bashrc
+  bash.d
   dircolors
   direnvrc
   gitconfig
