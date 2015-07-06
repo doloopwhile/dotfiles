@@ -348,6 +348,23 @@ fe() {
   find . -name "${1:-*}" | peco | xargs gvim
 }
 
+projects() {
+  gfind /Users/k-omoto/Documents -maxdepth 1 -type d -printf '%f\n'
+  echo Downloads
+}
+p() {
+  local f
+  f=$(projects | peco | head -1)
+  if [ "$f" = Downloads ]; then
+    f="$HOME/Downloads"
+  else
+    f="$HOME/Documents/$f"
+  fi
+  cd "$f"
+}
+
+alias c='cheat show'
+
 ## boot2docker
 # if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
 #   eval "$(boot2docker shellinit | grep -v Writing)"

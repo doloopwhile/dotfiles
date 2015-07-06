@@ -22,8 +22,8 @@ nmap # <Plug>(anzu-sharp-with-echo)
 
 " 表の整形
 NeoBundle 'godlygeek/tabular'
-noremap <Leader>t :Tabular /\|/<CR>
-noremap <Leader>s :Tabular /^\s*\S\+\zs/l0c1l0<CR>
+noremap ,t :Tabular /\|/<CR>
+noremap ,s :Tabular /^\s*\S\+\zs/l0c1l0<CR>
 " NeoBundle 'thinca/vim-quickrun'
 " let g:quickrun_config = {
 " \   "_" : {
@@ -94,3 +94,8 @@ let g:ctrlp_map = '<Nop>'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_open_new_file = 't'
 noremap <Leader>p :CtrlPMixed<CR>
+
+" Expand region
+NeoBundle "terryma/vim-expand-region"
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)

@@ -28,6 +28,7 @@ names=(
   vim
   vimrc
   zshrc
+  cheatsheets
 )
 
 
