@@ -16,9 +16,14 @@ source ~/.vim/vimrc.syntastic.vim
 source ~/.vim/vimrc.neobundle.colorscheme.vim
 source ~/.vim/vimrc.neobundle.ft.vim
 source ~/.vim/vimrc.unite.vim
-
 call neobundle#end()
 
+" Like ctrlp.vim settings.
+call unite#custom#profile('default', 'context', {
+\   'start_insert': 1,
+\   'winheight': 10,
+\   'direction': 'botright',
+\ })
 
 "******************************************************************************
 " Highlightings
@@ -250,6 +255,14 @@ nnoremap <expr>K <ESC>:vim expand("<cword>") `git ls-files`<CR> <ESC>:CtrlPQuick
 cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
+
+nnoremap <ESC><ESC><ESC> :q<CR>
+noremap <Leader>q :q<CR>
+
+noremap <Leader>s :w<CR>:so %<CR>
+
+nnoremap <C-K> ddkP
+nnoremap <C-J> ddp
 
 " 貼り付けない
 " inoremap <C-V> <C-V>

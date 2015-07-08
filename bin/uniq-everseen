@@ -5,5 +5,5 @@ for line in fileinput.input():
     line = line.strip()
     if (not line) or (line in seen):
         continue
-    print line
+    print(line)
     seen.add(line)

@@ -352,6 +352,7 @@ projects() {
   gfind /Users/k-omoto/Documents -maxdepth 1 -type d -printf '%f\n'
   echo Downloads
 }
+
 p() {
   local f
   f=$(projects | peco | head -1)
@@ -359,6 +360,9 @@ p() {
     f="$HOME/Downloads"
   else
     f="$HOME/Documents/$f"
+    if [ -d "$f/trunk" ]; then
+      f="$f/trunk"
+    fi
   fi
   cd "$f"
 }
@@ -379,6 +383,9 @@ fi
 if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   . "$(brew --prefix)/etc/bash_completion"
 fi
+
+# postgres
+export PGDATA=/usr/local/var/postgres
 
 alias vrename=~/dotfiles/vrename/vrename.py
 export PATH=$PATH:$HOME/xsvutils/bin

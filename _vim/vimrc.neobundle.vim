@@ -53,7 +53,7 @@ nmap gf <Plug>(gf-user-<C-w>gf)
 vmap gf <Plug>(gf-user-<C-w>gf)
 
 
-NeoBundle 'tryu/open-browser.vim'
+" NeoBundle 'tryu/open-browser.vim'
 
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
@@ -99,3 +99,19 @@ noremap <Leader>p :CtrlPMixed<CR>
 NeoBundle "terryma/vim-expand-region"
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+
+" Nerdtree
+NeoBundle 'scrooloose/nerdtree'
+noremap <C-n> :NERDTreeToggle<CR>
+
+
+" incsearch
+NeoBundle 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" Align
+NeoBundle 'Align'
+NeoBundle 'SQLUtilities'
+vnoremap <silent>sf        <Plug>SQLU_Formatter<CR>
