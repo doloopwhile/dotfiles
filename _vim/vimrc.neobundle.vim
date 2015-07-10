@@ -88,13 +88,6 @@ NeoBundle 'mru.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-function'
 
-" ctrlp
-NeoBundle "ctrlpvim/ctrlp.vim"
-let g:ctrlp_map = '<Nop>'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_open_new_file = 't'
-noremap <Leader>p :CtrlPMixed<CR>
-
 " Expand region
 NeoBundle "terryma/vim-expand-region"
 vmap v <Plug>(expand_region_expand)
@@ -111,7 +104,4 @@ noremap <C-n> :NERDTreeToggle<CR>
 " map ?  <Plug>(incsearch-backward)
 " map g/ <Plug>(incsearch-stay)
 
-" Align
-NeoBundle 'Align'
-NeoBundle 'SQLUtilities'
-vnoremap <silent>sf        <Plug>SQLU_Formatter<CR>
+NeoBundle 'thinca/vim-fontzoom'

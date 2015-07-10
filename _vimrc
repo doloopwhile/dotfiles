@@ -15,15 +15,8 @@ source ~/.vim/vimrc.neobundle.vim
 source ~/.vim/vimrc.syntastic.vim
 source ~/.vim/vimrc.neobundle.colorscheme.vim
 source ~/.vim/vimrc.neobundle.ft.vim
-source ~/.vim/vimrc.unite.vim
+source ~/.vim/vimrc.ctrlp.vim
 call neobundle#end()
-
-" Like ctrlp.vim settings.
-call unite#custom#profile('default', 'context', {
-\   'start_insert': 1,
-\   'winheight': 10,
-\   'direction': 'botright',
-\ })
 
 "******************************************************************************
 " Highlightings
@@ -69,9 +62,6 @@ augroup END
 
 colorscheme molokai
 
-" Load ftplugins
-filetype plugin indent on
-syntax on
 "******************************************************************************
 " Basic Configurations
 "******************************************************************************
@@ -152,6 +142,9 @@ set autochdir
 " Key Mappings
 "******************************************************************************
 " Normalモード時の移動を無効
+nnoremap ; :
+vnoremap ; :
+
 nmap <Enter> <NOP>
 nmap <BS> <NOP>
 nmap <Space> <NOP>
@@ -215,11 +208,11 @@ noremap  <Leader>/ :<C-u>Migemo<CR>
 "履歴表示の暴発を防ぐ
 " F5キーでコマンド履歴を開く
 " " F6キーで検索履歴を開く
-nnoremap <leader>q: <ESC>q:
-nnoremap <leader>q/ <ESC>q/
-nnoremap <leader>q? <ESC>q?
-nnoremap <leader>q <ESC>q
-nnoremap <leader>Q <ESC>Q
+" nnoremap <leader>q: <ESC>q:
+" nnoremap <leader>q/ <ESC>q/
+" nnoremap <leader>q? <ESC>q?
+" nnoremap <leader>q <ESC>q
+" nnoremap <leader>Q <ESC>Q
 
 vnoremap < <gv
 vnoremap > >gv
@@ -227,7 +220,7 @@ vnoremap > >gv
 noremap 0 ^
 noremap ^ 0
 nnoremap q <Nop>
-nnoremap qqq <ESC>:q<CR>
+nnoremap qq <ESC>:q<CR>
 nnoremap Q <Nop>
 
 noremap <S-Up> Up
@@ -259,7 +252,7 @@ cnoremap <C-B> <Left>
 nnoremap <ESC><ESC><ESC> :q<CR>
 noremap <Leader>q :q<CR>
 
-noremap <Leader>s :w<CR>:so %<CR>
+noremap <Leader>s :w<CR>:so %<CR>:NeoBundleInstall<CR>
 
 nnoremap <C-K> ddkP
 nnoremap <C-J> ddp
@@ -440,3 +433,9 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
+
+" ******************************************************************************
+" ftplugins
+" ******************************************************************************
+filetype plugin indent on
+syntax on
