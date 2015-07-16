@@ -13,3 +13,6 @@
 [submodule "cheat"]
 	path = cheat
 	url = git@github.com:jahendrie/cheat.git
+[submodule "git-ignore"]
+	path = git-ignore
+	url = https://github.com/yuroyoro/git-ignore.git

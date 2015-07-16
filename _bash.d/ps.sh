@@ -1,15 +1,5 @@
 
 # PS1の設定
-HOST_COLOR=0
-if [[ 0 < "${#MY_HOST_NAMES[@]}" ]]; then
-  for (( i=0; i < ${#MY_HOST_NAMES[@]}; i++ )); do
-    if [ $(hostname -s) = ${MY_HOST_NAMES[$i]} ]; then
-      export HOST_COLOR=${MY_HOST_COLORS[$i]}
-      break
-    fi
-  done
-fi
-
 
 function C() {
   case $1 in
@@ -25,15 +15,31 @@ function C() {
   esac
 }
 
+MY_HOST_NAMES=(
+  m3-2015mac03
+)
+MY_HOST_COLORS=(
+  cyan
+)
 
 
 function ps1_info() {
   local END_CODE=$?
 
   echo -n "${USER}@"
-  echo -n -e "\033[${HOST_COLOR}m$(hostname -s)\033[0m "
 
-  echo -n `date +'%F %H:%M:%S'`
+  local HOST_COLOR=
+  if [ 0 -lt "${#MY_HOST_NAMES[@]}" ]; then
+    for (( i=0; i < ${#MY_HOST_NAMES[@]}; i++ )); do
+      if [ "$(hostname -s)" = "${MY_HOST_NAMES[$i]}" ]; then
+        export HOST_COLOR=${MY_HOST_COLORS[$i]}
+        break
+      fi
+    done
+  fi
+  echo -n -e "$(C "${HOST_COLOR}")$(hostname -s)\033[0m "
+
+  echo -n $(date +'%F %H:%M:%S')
   echo -n ' '
 
   echo -n '$?='

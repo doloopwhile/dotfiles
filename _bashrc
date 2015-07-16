@@ -133,7 +133,7 @@ function share_history {
 
 PROMPT_COMMAND='share_history;title "${USER}@${HOSTNAME%%.*}"'
 shopt -u histappend
-export HISTSIZE=1000
+export HISTSIZE=10000
 
 # シェルの細かい設定
 set -o emacs

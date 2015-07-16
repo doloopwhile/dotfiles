@@ -279,7 +279,7 @@ autocmd FileType *
 " autocmd BufReadPost * loadview
 
 " カーソル下のキーワードをバッファ内全体で置換する
-nnoremap <expr> s* ':%substitute/\<' . expand('<cword>') . '\>/'
+nnoremap <expr> s* ':%substitue/\<' . expand('<cword>') . '\>/'
 set tabpagemax=100
 
 "******************************************************************************
@@ -433,6 +433,16 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
+
+function! s:clone(name)
+  :execute ':silent !cp % ' . a:name | :execute ':tabedit ' . a:name
+endfunction
+
+nmap ,c :<C-u>Clone <C-R>%
+command! -nargs=1 Clone call <SID>clone(<f-args>)
+command! Trash :execute ':!trash %' | :execute ':q!'
+command! Rm :execute ':!trash %' | :execute ':q!'
+command! -nargs=1 -complete=file Rename f <args> | call delete(expand('#'))
 
 " ******************************************************************************
 " ftplugins
