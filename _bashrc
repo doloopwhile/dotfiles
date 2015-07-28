@@ -134,6 +134,7 @@ function share_history {
 PROMPT_COMMAND='share_history;title "${USER}@${HOSTNAME%%.*}"'
 shopt -u histappend
 export HISTSIZE=10000
+export HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 
 # シェルの細かい設定
 set -o emacs

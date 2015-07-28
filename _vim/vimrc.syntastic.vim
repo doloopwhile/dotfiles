@@ -1,4 +1,4 @@
-NeoBundle 'scrooloose/syntastic'
+" NeoBundle 'scrooloose/syntastic'
 " phpcs
 let Vimphpcs_Standard='~/phpcs/Tapirus'
 " command! P :execute 'CodeSniff'
@@ -23,7 +23,7 @@ noremap <Leader>l :ll<CR>
 
 let g:syntastic_json_checkers=['jsonlint']
 " syntastic で [q ]qのジャンプを使う
-NeoBundle 'tpope/vim-unimpaired'
+" NeoBundle 'tpope/vim-unimpaired'
 " NeoBundle 'vim-scripts/QuickFixCurrentNumber'
 
 

@@ -138,6 +138,9 @@ set tags=./.tags;
 " Automatically change current directory
 set autochdir
 
+
+set visualbell t_vb=
+
 "******************************************************************************
 " Key Mappings
 "******************************************************************************
@@ -214,13 +217,15 @@ noremap  <Leader>/ :<C-u>Migemo<CR>
 " nnoremap <leader>q <ESC>q
 " nnoremap <leader>Q <ESC>Q
 
-vnoremap < <gv
-vnoremap > >gv
+vnoremap <nowait> < 0<gv
+vnoremap <nowait> > 0>gv
+nnoremap <nowait> < <<
+nnoremap <nowait> > >>
 
 noremap 0 ^
 noremap ^ 0
 nnoremap q <Nop>
-nnoremap qq <ESC>:q<CR>
+nnoremap <silent> qq :q<CR>
 nnoremap Q <Nop>
 
 noremap <S-Up> Up
@@ -279,7 +284,7 @@ autocmd FileType *
 " autocmd BufReadPost * loadview
 
 " カーソル下のキーワードをバッファ内全体で置換する
-nnoremap <expr> s* ':%substitue/\<' . expand('<cword>') . '\>/'
+nnoremap <expr> s* ':%s/\<' . expand('<cword>') . '\>/'
 set tabpagemax=100
 
 "******************************************************************************
@@ -438,12 +443,13 @@ function! s:clone(name)
   :execute ':silent !cp % ' . a:name | :execute ':tabedit ' . a:name
 endfunction
 
-nmap ,c :<C-u>Clone <C-R>%
 command! -nargs=1 Clone call <SID>clone(<f-args>)
 command! Trash :execute ':!trash %' | :execute ':q!'
 command! Rm :execute ':!trash %' | :execute ':q!'
 command! -nargs=1 -complete=file Rename f <args> | call delete(expand('#'))
 
+nmap ,c :<C-u>Clone <C-R>%
+nmap ,r :<C-u>Rename <C-R>%
 " ******************************************************************************
 " ftplugins
 " ******************************************************************************
