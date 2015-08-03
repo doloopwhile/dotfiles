@@ -95,7 +95,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 
 " Nerdtree
 NeoBundle 'scrooloose/nerdtree'
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <Leader>n :NERDTreeToggle<CR>
 
 " incsearch
 " NeoBundle 'haya14busa/incsearch.vim'
@@ -105,9 +105,11 @@ noremap <C-n> :NERDTreeToggle<CR>
 
 NeoBundle 'thinca/vim-fontzoom'
 let g:fontzoom_no_default_key_mappings=1
-nnoremap <C-ScrollWheelUp> <Plug>(fontzoom-larger)
-nnoremap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
-nnoremap <silent> <C-0> :Fontzoom!
+nmap ,= <Plug>(fontzoom-larger)
+nmap ,- <Plug>(fontzoom-smaller)
+nmap <C-ScrollWheelUp> <Plug>(fontzoom-larger)
+nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
+nmap ,0 :<C-u>Fontzoom!<CR>
 
 NeoBundle 'Yggdroot/indentLine'
 let g:indentLine_faster = 1

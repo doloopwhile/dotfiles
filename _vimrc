@@ -219,8 +219,8 @@ noremap  <Leader>/ :<C-u>Migemo<CR>
 
 vnoremap <nowait> < 0<gv
 vnoremap <nowait> > 0>gv
-nnoremap <nowait> < <<
-nnoremap <nowait> > >>
+nnoremap <nowait> < 1<<
+nnoremap <nowait> > 1>>
 
 noremap 0 ^
 noremap ^ 0
@@ -261,7 +261,6 @@ noremap <Leader>s :w<CR>:so %<CR>:NeoBundleInstall<CR>
 
 nnoremap <C-K> ddkP
 nnoremap <C-J> ddp
-
 " 貼り付けない
 " inoremap <C-V> <C-V>
 "******************************************************************************

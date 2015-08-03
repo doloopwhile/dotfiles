@@ -1,7 +1,7 @@
 " ctrlp
 NeoBundle "ctrlpvim/ctrlp.vim"
 " NeoBundle 'DavidEGx/ctrlp-smarttabs'
-let g:ctrlp_map = '<Nop>'
+let g:ctrlp_map = ''
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_open_new_file = 't'
 let g:ctrlp_extensions = ['smarttabs']
