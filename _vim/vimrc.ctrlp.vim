@@ -9,7 +9,7 @@ let g:ctrlp_extensions = ['smarttabs']
 nnoremap <Leader>p :CtrlPMixed<CR>
 nnoremap <Leader>t :CtrlPSmartTabs<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
-nnoremap <Leader>l :Unite line<CR>
+nnoremap <Leader>l :CtrlPLine<CR>
 
 let g:ctrlp_prompt_mappings = {
 \ 'PrtBS()':              ['<bs>', '<c-]>'],
