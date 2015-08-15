@@ -149,6 +149,7 @@ fi
 
 # rbenv
 export PATH=$PATH:/Users/k-omoto/.gem/ruby/2.2.0/bin
+export PATH=$PATH:$HOME/.rbenv/bin
 if which rbenv &> /dev/null; then
   eval "$(rbenv init -)"
 fi
