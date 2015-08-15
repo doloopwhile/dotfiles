@@ -1,7 +1,6 @@
 set nocompatible
 set nolazyredraw
 
-
 let mapleader=" "
 
 "******************************************************************************
@@ -219,8 +218,8 @@ noremap  <Leader>/ :<C-u>Migemo<CR>
 
 vnoremap <nowait> < 0<gv
 vnoremap <nowait> > 0>gv
-nnoremap <nowait> < <<
-nnoremap <nowait> > >>
+nnoremap <nowait> < 1<<
+nnoremap <nowait> > 1>>
 
 noremap 0 ^
 noremap ^ 0
@@ -235,13 +234,15 @@ noremap <S-Right> Right
 " noremap gf <C-w>gf
 noremap <C-z> <NOP>
 noremap <Insert> <NOP>
-nnoremap <Space>h 0
-nnoremap <Space>l $
+nnoremap ,h 0
+nnoremap ,l $
 noremap <C-b> nop
 nnoremap / /\v
 nnoremap ttt <ESC>:tabnew<CR>
 command!-nargs=0 Vimrc tabedit ~/.vimrc
 noremap <Leader>v <ESC>:tabedit ~/.vimrc<CR>
+noremap <Leader>b <ESC>:tabedit ~/.bashrc<CR>
+noremap <Leader>g <ESC>:tabedit ~/.bashrc<CR>
 
 vnoremap z/ <ESC>/\%V
 vnoremap zs <ESC>:s/\%V/
@@ -264,6 +265,8 @@ nnoremap <C-J> ddp
 
 " 貼り付けない
 " inoremap <C-V> <C-V>
+
+command! -nargs=0 Executable :!chmod +x %
 "******************************************************************************
 " Others
 "******************************************************************************
@@ -296,6 +299,17 @@ command! FL :execute 'g/^ *$\|^ *#/d' | 2,$ d
 
 " 別のエディタで開く
 command! EE :execute ':silent !scribes % &' | :execute ':redraw!'
+
+vnoremap <silent> <C-J> :MoveSelectionDown<CR>
+vnoremap <silent> <C-K> :MoveSelectionUp<CR>
+command! -range=% MoveSelectionUp   :silent <line1>,<line2>dl | :silent <line1>-1 | :silent pu! | call SetSelection(<line1>-1, <line2>-1)
+command! -range=% MoveSelectionDown :silent <line1>,<line2>dl | :silent <line1>pu | call SetSelection(<line1>+1,<line2>+1)
+
+fun! SetSelection(first, last)
+    call setpos('.', [0, a:first, 1])
+    normal! V
+    call setpos('.', [0, a:last, 1])
+endf
 
 
 function! s:insert_on_top(str)

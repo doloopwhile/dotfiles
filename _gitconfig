@@ -21,7 +21,7 @@
     ht = hook test pre-commit
     hu = hook update pre-commit
     hl = hook show pre-commit
-  lo = log --pretty=format:'%C(auto)%H%C(reset) %s'
+    # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
     graph = log --graph --pretty=format:'%C(auto)%h %C(auto)%d %C(auto)%an %C(reset) %s' --abbrev-commit
     mylog = log --author='OMOTO Kenji'
     reba = rebase --abort
@@ -76,7 +76,7 @@
 	sort = version:refname
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

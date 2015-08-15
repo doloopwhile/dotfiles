@@ -1,4 +1,4 @@
-" NeoBundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/syntastic'
 " phpcs
 let Vimphpcs_Standard='~/phpcs/Tapirus'
 " command! P :execute 'CodeSniff'
@@ -34,3 +34,4 @@ let g:syntastic_json_checkers=['jsonlint']
 let g:syntastic_sh_shellcheck_args = '-e SC2002'
 
 let g:syntastic_java_checkers=[]
+let g:syntastic_scala_checkers=[]
