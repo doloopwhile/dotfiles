@@ -59,7 +59,7 @@ function gb() {
   {
     git br | cut -b 3- | cut -d ' ' -f 1
     git br -r | cut -d ' ' -f3
-  } | peco | head -1
+  } | fzf | head -1
 }
 
 # Python関連
@@ -175,7 +175,7 @@ if [ -z "$GOPATH" ]; then
 fi
 
 function ghql() {
-  p=$(ghq list | peco)
+  p=$(ghq list | fzf)
   if [ $? -ne 0 ]; then
     exit 1
   fi
@@ -319,14 +319,14 @@ bak() {
   return 0
 }
 
-if which peco &> /dev/null; then
+if which fzf &> /dev/null; then
   _replace_by_history() {
     local sed=sed
     if which gsed &> /dev/null; then
       sed=gsed
     fi
     local l
-    l=$(HISTTIMEFORMAT='' history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | peco --query "$READLINE_LINE")
+    l=$(HISTTIMEFORMAT='' history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | fzf --query "$READLINE_LINE")
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
   }
@@ -356,7 +356,7 @@ alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 fe() {
-  find . -name "${1:-*}" | peco | xargs gvim
+  find . -name "${1:-*}" | fzf | xargs gvim
 }
 
 projects() {
@@ -366,7 +366,7 @@ projects() {
 
 p() {
   local f
-  f=$(projects | peco | head -1)
+  f=$(projects | fzf | head -1)
   if [ "$f" = Downloads ]; then
     f="$HOME/Downloads"
   else
@@ -379,6 +379,19 @@ p() {
 }
 
 alias c='cheat show'
+
+wvi() {
+  local f
+  if [ -n "$1" ]; then
+    which -a "$1" | fzf | xargs gvim
+  else
+    find $(echo "$PATH" | tr ':' ' ') -type f -perm +111 2>/dev/null | fzf | xargs gvim
+  fi
+}
+
+whichvi() {
+  wvi "$@"
+}
 
 ## boot2docker
 # if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
@@ -402,3 +415,6 @@ export PATH="$PATH:$ORACLE_HOME"
 export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
 export NLS_LANG=American_America.JA16EUCTILDE
 export TNS_ADMIN=$ORACLE_HOME/admin/network
+
+# fzf
+export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"

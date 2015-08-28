@@ -22,11 +22,6 @@ function C() {
   esac
 }
 
-if [ -t /dev/stdout ]; then
-  git log --pretty=format:'%h %s' "$@"
-  exit $?
-fi
-
 git log --pretty=format:'%h %s' "$@" | while read line; do
   hash="${line%% *}"
   msg="${line#* }"
@@ -36,5 +31,5 @@ git log --pretty=format:'%h %s' "$@" | while read line; do
   else
     c="$(C white)"
   fi
-  echo "$(C yellow)${hash} ${c}${msg}$(C)"
+  echo "$(C yellow)$hash $c$msg$(C)"
 done | less -R

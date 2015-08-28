@@ -9,7 +9,8 @@ let g:ctrlp_extensions = ['smarttabs']
 nnoremap <Leader>p :CtrlPMixed<CR>
 nnoremap <Leader>t :CtrlPSmartTabs<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
-nnoremap <Leader>l :CtrlPLine<CR>
+nnoremap <Leader>l :execute ':CtrlPLine ' . buffer_name('%')<CR>
+nnoremap <Leader>d :CtrlPDir<CR>
 
 let g:ctrlp_prompt_mappings = {
 \ 'PrtBS()':              ['<bs>', '<c-]>'],
@@ -47,3 +48,5 @@ let g:ctrlp_prompt_mappings = {
 \ 'OpenMulti()':          ['<c-o>'],
 \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
 \ }
+
+NeoBundle 'mattn/ctrlp-veco'

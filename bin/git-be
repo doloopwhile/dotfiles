@@ -1,0 +1,21 @@
+#!/bin/bash
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+if [ "$branch_name" = 'HEAD' ]; then
+  echo 'A non-branch revision is currently checked out.' >&2
+  exit 1
+fi
+
+unset t
+t="$(mktemp "temp.git-be.XXXXXX")"
+trap 'rm -f "$t"' 0 1 2 3 15
+
+echo "$branch_name" >> "$t"
+e="${EDITOR:-vi}"
+"$e" "$t"
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+  echo "Editor $e exited with code $exit_status"
+  exit 1
+fi
+new_branch_name="$(cat "$t")"
+git branch -m "$new_branch_name" || exit 1

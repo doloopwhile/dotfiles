@@ -3,7 +3,7 @@
 [color]
     ui = auto
 [alias]
-    br = branch -v
+    b = branch -v
     cf = config --edit --global
     chx = cherry-pick -x
     ci = commit
@@ -39,7 +39,6 @@
 
   f = remote update
 	pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
-	fp = fixup-peco
 	rp = rebase-i-peco
   ; bl = !sh -c 'git blame --date=short $1 | sed -e "s/^\(\S*\) \S*\s*/\1 /" | less'
   ; bl = !sh -c 'git blame "$@"' -

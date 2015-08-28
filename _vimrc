@@ -236,7 +236,6 @@ noremap <C-z> <NOP>
 noremap <Insert> <NOP>
 nnoremap ,h 0
 nnoremap ,l $
-noremap <C-b> nop
 nnoremap / /\v
 nnoremap ttt <ESC>:tabnew<CR>
 command!-nargs=0 Vimrc tabedit ~/.vimrc
@@ -255,11 +254,9 @@ cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 
-nnoremap <ESC><ESC><ESC> :q<CR>
-noremap <Leader>q :q<CR>
+noremap <Leader>s :w<CR>:so ~/.vimrc<CR>:NeoBundleInstall<CR>
 
-noremap <Leader>s :w<CR>:so %<CR>:NeoBundleInstall<CR>
-
+" 選択行を上下に移動
 nnoremap <C-K> ddkP
 nnoremap <C-J> ddp
 
@@ -267,6 +264,9 @@ nnoremap <C-J> ddp
 " inoremap <C-V> <C-V>
 
 command! -nargs=0 Executable :!chmod +x %
+
+
+nnoremap <ESC><ESC> :noh<CR>
 "******************************************************************************
 " Others
 "******************************************************************************

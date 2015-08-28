@@ -1,0 +1,8 @@
+#!/bin/bash
+set -o pipefail
+set -e
+HASH=$(git log --oneline | fzf | cut -d " " -f 1)
+if [ "$?" -ne 0 -o -z "$HASH" ]; then
+  exit 1
+fi
+git commit --fixup "$HASH" "$@"
