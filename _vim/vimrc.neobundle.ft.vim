@@ -14,8 +14,8 @@ NeoBundle 'lambdatoast/elm.vim'
 NeoBundle 'syngan/vim-pukiwiki'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'mustache/vim-mustache-handlebars'
-NeoBundle 'rbtnn/rabbit-ui.vim'
-NeoBundle 'rbtnn/rabbit-ui-collection.vim'
+" NeoBundle 'rbtnn/rabbit-ui.vim'
+" NeoBundle 'rbtnn/rabbit-ui-collection.vim'
 
 exe "set rtp+=".globpath($HOME, "/gocode/src/github.com/nsf/gocode/vim")
 augroup vimrcGo
