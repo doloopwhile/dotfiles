@@ -23,7 +23,7 @@ noremap <Leader>l :ll<CR>
 
 let g:syntastic_json_checkers=['jsonlint']
 " syntastic で [q ]qのジャンプを使う
-NeoBundle 'tpope/vim-unimpaired'
+" NeoBundle 'tpope/vim-unimpaired'
 " NeoBundle 'vim-scripts/QuickFixCurrentNumber'
 
 
@@ -34,3 +34,4 @@ NeoBundle 'tpope/vim-unimpaired'
 let g:syntastic_sh_shellcheck_args = '-e SC2002'
 
 let g:syntastic_java_checkers=[]
+let g:syntastic_scala_checkers=[]

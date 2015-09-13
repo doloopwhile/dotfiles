@@ -10,3 +10,9 @@
 [submodule "vrename"]
 	path = vrename
 	url = ssh://git@github.com/doloopwhile/vrename.git
+[submodule "cheat"]
+	path = cheat
+	url = git@github.com:jahendrie/cheat.git
+[submodule "git-ignore"]
+	path = git-ignore
+	url = ssh://git@github.com/doloopwhile/git-ignore.git

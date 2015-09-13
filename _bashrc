@@ -50,7 +50,17 @@ export PATH=$PATH:$HOME/.git-hooker/bin
 export GITHUB_USER=doloopwhile
 if which hub &> /dev/null; then
   eval "$(hub alias -s)"
+  alias g=hub
+else
+  alias g=git
 fi
+
+function gb() {
+  {
+    git br | cut -b 3- | cut -d ' ' -f 1
+    git br -r | cut -d ' ' -f3
+  } | fzf | head -1
+}
 
 # Python関連
 export PYTHONSTARTUP=~/.pythonstartup
@@ -123,7 +133,8 @@ function share_history {
 
 PROMPT_COMMAND='share_history;title "${USER}@${HOSTNAME%%.*}"'
 shopt -u histappend
-export HISTSIZE=1000
+export HISTSIZE=10000
+export HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 
 # シェルの細かい設定
 set -o emacs
@@ -138,6 +149,7 @@ fi
 
 # rbenv
 export PATH=$PATH:/Users/k-omoto/.gem/ruby/2.2.0/bin
+export PATH=$PATH:$HOME/.rbenv/bin
 if which rbenv &> /dev/null; then
   eval "$(rbenv init -)"
 fi
@@ -164,7 +176,7 @@ if [ -z "$GOPATH" ]; then
 fi
 
 function ghql() {
-  p=$(ghq list | peco)
+  p=$(ghq list | fzf)
   if [ $? -ne 0 ]; then
     exit 1
   fi
@@ -308,14 +320,14 @@ bak() {
   return 0
 }
 
-if which peco &> /dev/null; then
+if which fzf &> /dev/null; then
   _replace_by_history() {
     local sed=sed
     if which gsed &> /dev/null; then
       sed=gsed
     fi
     local l
-    l=$(HISTTIMEFORMAT='' history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | peco --query "$READLINE_LINE")
+    l=$(HISTTIMEFORMAT='' history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | fzf --query "$READLINE_LINE")
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
   }
@@ -345,7 +357,41 @@ alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 fe() {
-  find . -name "${1:-*}" | peco | xargs gvim
+  find . -name "${1:-*}" | fzf | xargs gvim
+}
+
+projects() {
+  gfind /Users/k-omoto/Documents -maxdepth 1 -type d -printf '%f\n'
+  echo Downloads
+}
+
+p() {
+  local f
+  f=$(projects | fzf | head -1)
+  if [ "$f" = Downloads ]; then
+    f="$HOME/Downloads"
+  else
+    f="$HOME/Documents/$f"
+    if [ -d "$f/trunk" ]; then
+      f="$f/trunk"
+    fi
+  fi
+  cd "$f"
+}
+
+alias c='cheat show'
+
+wvi() {
+  local f
+  if [ -n "$1" ]; then
+    which -a "$1" | fzf | xargs gvim
+  else
+    find $(echo "$PATH" | tr ':' ' ') -type f -perm +111 2>/dev/null | fzf | xargs gvim
+  fi
+}
+
+whichvi() {
+  wvi "$@"
 }
 
 ## boot2docker
@@ -358,5 +404,17 @@ if which gsed &> /dev/null; then
   alias sed=gsed
 fi
 
+# postgres
+export PGDATA=/usr/local/var/postgres
 alias vrename=~/dotfiles/vrename/vrename.py
 export PATH=$PATH:$HOME/xsvutils/bin
+
+# Oracle
+export ORACLE_HOME=$HOME/instantclient_11_2/
+export PATH="$PATH:$ORACLE_HOME"
+export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
+export NLS_LANG=American_America.JA16EUCTILDE
+export TNS_ADMIN=$ORACLE_HOME/admin/network
+
+# fzf
+export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"

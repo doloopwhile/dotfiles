@@ -1,7 +1,6 @@
 set nocompatible
 set nolazyredraw
 
-
 let mapleader=" "
 
 "******************************************************************************
@@ -15,10 +14,8 @@ source ~/.vim/vimrc.neobundle.vim
 source ~/.vim/vimrc.syntastic.vim
 source ~/.vim/vimrc.neobundle.colorscheme.vim
 source ~/.vim/vimrc.neobundle.ft.vim
-source ~/.vim/vimrc.unite.vim
-
+source ~/.vim/vimrc.ctrlp.vim
 call neobundle#end()
-
 
 "******************************************************************************
 " Highlightings
@@ -64,9 +61,6 @@ augroup END
 
 colorscheme molokai
 
-" Load ftplugins
-filetype plugin indent on
-syntax on
 "******************************************************************************
 " Basic Configurations
 "******************************************************************************
@@ -143,10 +137,16 @@ set tags=./.tags;
 " Automatically change current directory
 set autochdir
 
+
+set visualbell t_vb=
+
 "******************************************************************************
 " Key Mappings
 "******************************************************************************
 " Normalモード時の移動を無効
+nnoremap ; :
+vnoremap ; :
+
 nmap <Enter> <NOP>
 nmap <BS> <NOP>
 nmap <Space> <NOP>
@@ -210,19 +210,21 @@ noremap  <Leader>/ :<C-u>Migemo<CR>
 "履歴表示の暴発を防ぐ
 " F5キーでコマンド履歴を開く
 " " F6キーで検索履歴を開く
-nnoremap <leader>q: <ESC>q:
-nnoremap <leader>q/ <ESC>q/
-nnoremap <leader>q? <ESC>q?
-nnoremap <leader>q <ESC>q
-nnoremap <leader>Q <ESC>Q
+" nnoremap <leader>q: <ESC>q:
+" nnoremap <leader>q/ <ESC>q/
+" nnoremap <leader>q? <ESC>q?
+" nnoremap <leader>q <ESC>q
+" nnoremap <leader>Q <ESC>Q
 
-vnoremap < <gv
-vnoremap > >gv
+vnoremap <nowait> < 0<gv
+vnoremap <nowait> > 0>gv
+nnoremap <nowait> < 1<<
+nnoremap <nowait> > 1>>
 
 noremap 0 ^
 noremap ^ 0
 nnoremap q <Nop>
-nnoremap qqq <ESC>:q<CR>
+nnoremap <silent> qq :q<CR>
 nnoremap Q <Nop>
 
 noremap <S-Up> Up
@@ -232,13 +234,14 @@ noremap <S-Right> Right
 " noremap gf <C-w>gf
 noremap <C-z> <NOP>
 noremap <Insert> <NOP>
-nnoremap <Space>h 0
-nnoremap <Space>l $
-noremap <C-b> nop
+nnoremap ,h 0
+nnoremap ,l $
 nnoremap / /\v
 nnoremap ttt <ESC>:tabnew<CR>
 command!-nargs=0 Vimrc tabedit ~/.vimrc
 noremap <Leader>v <ESC>:tabedit ~/.vimrc<CR>
+noremap <Leader>b <ESC>:tabedit ~/.bashrc<CR>
+noremap <Leader>g <ESC>:tabedit ~/.bashrc<CR>
 
 vnoremap z/ <ESC>/\%V
 vnoremap zs <ESC>:s/\%V/
@@ -251,8 +254,19 @@ cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 
+noremap <Leader>s :w<CR>:so ~/.vimrc<CR>:NeoBundleInstall<CR>
+
+" 選択行を上下に移動
+nnoremap <C-K> ddkP
+nnoremap <C-J> ddp
+
 " 貼り付けない
 " inoremap <C-V> <C-V>
+
+command! -nargs=0 Executable :!chmod +x %
+
+
+nnoremap <ESC><ESC> :noh<CR>
 "******************************************************************************
 " Others
 "******************************************************************************
@@ -273,7 +287,7 @@ autocmd FileType *
 " autocmd BufReadPost * loadview
 
 " カーソル下のキーワードをバッファ内全体で置換する
-nnoremap <expr> s* ':%substitute/\<' . expand('<cword>') . '\>/'
+nnoremap <expr> s* ':%s/\<' . expand('<cword>') . '\>/'
 set tabpagemax=100
 
 "******************************************************************************
@@ -285,6 +299,17 @@ command! FL :execute 'g/^ *$\|^ *#/d' | 2,$ d
 
 " 別のエディタで開く
 command! EE :execute ':silent !scribes % &' | :execute ':redraw!'
+
+vnoremap <silent> <C-J> :MoveSelectionDown<CR>
+vnoremap <silent> <C-K> :MoveSelectionUp<CR>
+command! -range=% MoveSelectionUp   :silent <line1>,<line2>dl | :silent <line1>-1 | :silent pu! | call SetSelection(<line1>-1, <line2>-1)
+command! -range=% MoveSelectionDown :silent <line1>,<line2>dl | :silent <line1>pu | call SetSelection(<line1>+1,<line2>+1)
+
+fun! SetSelection(first, last)
+    call setpos('.', [0, a:first, 1])
+    normal! V
+    call setpos('.', [0, a:last, 1])
+endf
 
 
 function! s:insert_on_top(str)
@@ -427,3 +452,20 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
+
+function! s:clone(name)
+  :execute ':silent !cp % ' . a:name | :execute ':tabedit ' . a:name
+endfunction
+
+command! -nargs=1 Clone call <SID>clone(<f-args>)
+command! Trash :execute ':!trash %' | :execute ':q!'
+command! Rm :execute ':!trash %' | :execute ':q!'
+command! -nargs=1 -complete=file Rename f <args> | call delete(expand('#'))
+
+nmap ,c :<C-u>Clone <C-R>%
+nmap ,r :<C-u>Rename <C-R>%
+" ******************************************************************************
+" ftplugins
+" ******************************************************************************
+filetype plugin indent on
+syntax on

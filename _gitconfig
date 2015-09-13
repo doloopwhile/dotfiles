@@ -3,7 +3,7 @@
 [color]
     ui = auto
 [alias]
-    br = branch -v
+    b = branch -v
     cf = config --edit --global
     chx = cherry-pick -x
     ci = commit
@@ -21,7 +21,7 @@
     ht = hook test pre-commit
     hu = hook update pre-commit
     hl = hook show pre-commit
-  lo = log --pretty=format:'%C(auto)%H%C(reset) %s'
+    # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
     graph = log --graph --pretty=format:'%C(auto)%h %C(auto)%d %C(auto)%an %C(reset) %s' --abbrev-commit
     mylog = log --author='OMOTO Kenji'
     reba = rebase --abort
@@ -39,7 +39,6 @@
 
   f = remote update
 	pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
-	fp = fixup-peco
 	rp = rebase-i-peco
   ; bl = !sh -c 'git blame --date=short $1 | sed -e "s/^\(\S*\) \S*\s*/\1 /" | less'
   ; bl = !sh -c 'git blame "$@"' -
@@ -76,7 +75,7 @@
 	sort = version:refname
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

@@ -1,18 +1,28 @@
 NeoBundle 'tomtom/tcomment_vim'
-
-" 賢い「f」キー
-NeoBundle 'rhysd/clever-f.vim'
-let g:clever_f_ignore_case = 1
-let g:clever_f_use_migemo = 1
-let g:clever_f_show_prompt = 1
+"
+" " 賢い「f」キー
+" NeoBundle 'rhysd/clever-f.vim'
+" let g:clever_f_ignore_case = 1
+" let g:clever_f_use_migemo = 1
+" let g:clever_f_show_prompt = 1
 " let g:clever_f_chars_match_any_signs = ';' " ; はすべての記号にマッチする
 
 " , y でヤンク履歴
 " YankRing.vim
 " http://nanasi.jp/articles/vim/yankring_vim.html
 " https://github.com/yuroyoro/dotfiles/blob/master/.vimrc.plugins_setting
-NeoBundle 'YankRing.vim'
-noremap <Leader>y :YRShow<CR>
+" NeoBundle 'YankRing.vim'
+" noremap <Leader>y :YRShow<CR>
+"
+
+NeoBundle 'LeafCage/yankround.vim'
+nnoremap <silent><Leader>y :<C-u>CtrlPYankRound<CR>
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 
 NeoBundle "osyo-manga/vim-anzu"
 nmap n <Plug>(anzu-n-with-echo)
@@ -22,8 +32,8 @@ nmap # <Plug>(anzu-sharp-with-echo)
 
 " 表の整形
 NeoBundle 'godlygeek/tabular'
-noremap <Leader>t :Tabular /\|/<CR>
-noremap <Leader>s :Tabular /^\s*\S\+\zs/l0c1l0<CR>
+noremap ,t :Tabular /\|/<CR>
+noremap ,s :Tabular /^\s*\S\+\zs/l0c1l0<CR>
 " NeoBundle 'thinca/vim-quickrun'
 " let g:quickrun_config = {
 " \   "_" : {
@@ -42,7 +52,7 @@ noremap <Leader>s :Tabular /^\s*\S\+\zs/l0c1l0<CR>
 " \   'command': 'markdown'
 " \ }
 
-" NeoBundle 'jimsei/winresizer'
+NeoBundle 'jimsei/winresizer'
 
 
 " カーソル下にファイル名らしき文字列はないが Git の diff の出力らしきテキストがある場合、
@@ -53,7 +63,7 @@ nmap gf <Plug>(gf-user-<C-w>gf)
 vmap gf <Plug>(gf-user-<C-w>gf)
 
 
-NeoBundle 'tryu/open-browser.vim'
+" NeoBundle 'tryu/open-browser.vim'
 
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
@@ -88,9 +98,33 @@ NeoBundle 'mru.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-function'
 
-" ctrlp
-NeoBundle "ctrlpvim/ctrlp.vim"
-let g:ctrlp_map = '<Nop>'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_open_new_file = 't'
-noremap <Leader>p :CtrlPMixed<CR>
+" Expand region
+NeoBundle "terryma/vim-expand-region"
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+" Nerdtree
+NeoBundle 'scrooloose/nerdtree'
+noremap <Leader>n :NERDTreeToggle<CR>
+
+" incsearch
+NeoBundle 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+NeoBundle 'thinca/vim-fontzoom'
+let g:fontzoom_no_default_key_mappings=1
+nmap ,= <Plug>(fontzoom-larger)
+nmap ,- <Plug>(fontzoom-smaller)
+nmap <C-ScrollWheelUp> <Plug>(fontzoom-larger)
+nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
+nmap ,0 :<C-u>Fontzoom!<CR>
+
+NeoBundle 'Yggdroot/indentLine'
+let g:indentLine_faster = 1
+nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
+
+" True <=> False
+NeoBundle 'AndrewRadev/switch.vim'
+nnoremap <C-b> :Switch<CR>

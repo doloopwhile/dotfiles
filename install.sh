@@ -29,6 +29,8 @@ names=(
   vim
   vimrc
   zshrc
+  cheatsheets
+  peco
 )
 
 

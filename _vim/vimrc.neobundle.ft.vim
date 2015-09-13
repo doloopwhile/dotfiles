@@ -14,6 +14,8 @@ NeoBundle 'lambdatoast/elm.vim'
 NeoBundle 'syngan/vim-pukiwiki'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'mustache/vim-mustache-handlebars'
+NeoBundle 'rbtnn/rabbit-ui.vim'
+NeoBundle 'rbtnn/rabbit-ui-collection.vim'
 
 exe "set rtp+=".globpath($HOME, "/gocode/src/github.com/nsf/gocode/vim")
 augroup vimrcGo
@@ -25,22 +27,22 @@ augroup vimrcGo
 augroup END
 
 " Format css/less/scss
-NeoBundle 'miripiruni/CSScomb-for-Vim'
-
-augroup vimrcCss
-  autocmd!
-  autocmd BufWritePre *.css,*.less call <SID>format_css()
-augroup END
-
-function! s:format_css()
-    let cursor = getpos(".")
-    CSScomb
-    %s/\v(^[ \t]*[a-zA-Z0-9_@-]+:)(|  +)[^ \t]@=/\1 /e
-    %s/\v(\n@<!\n|\n\n\n+)([ \t]*[^ \t]+) *\{/\2 {/e
-    %s/\v *\> */ > /eg
-    call setpos(".", cursor)
-    unlet cursor
-endfunction
+" NeoBundle 'miripiruni/CSScomb-for-Vim'
+"
+" augroup vimrcCss
+"   autocmd!
+"   autocmd BufWritePre *.css,*.less call <SID>format_css()
+" augroup END
+"
+" function! s:format_css()
+"     let cursor = getpos(".")
+"     CSScomb
+"     %s/\v(^[ \t]*[a-zA-Z0-9_@-]+:)(|  +)[^ \t]@=/\1 /e
+"     %s/\v(\n@<!\n|\n\n\n+)([ \t]*[^ \t]+) *\{/\\\2 {/e
+"     %s/\v *\> */ > /eg
+"     call setpos(".", cursor)
+"     unlet cursor
+" endfunction
 
 
 " ShellScript
