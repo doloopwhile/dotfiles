@@ -88,7 +88,7 @@ fi
 alias ls='${LS_COMMAND} ${LS_OPTIONS}'
 alias ll='${LS_COMMAND} -l -h -H -p ${LS_OPTIONS}'
 
-if [ -f ~/.dircolors ] && which dircolors 2> /dev/null; then
+if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
   eval "$(dircolors ~/.dircolors)"
 fi
 
@@ -419,7 +419,6 @@ fi
 
 # postgres
 export PGDATA=/usr/local/var/postgres
-
 alias vrename=~/dotfiles/vrename/vrename.py
 export PATH=$PATH:$HOME/xsvutils/bin
 
