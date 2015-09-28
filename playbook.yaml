@@ -1,0 +1,10 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - 
+      name: install
+      homebrew: name="{{item.name}}" state=present
+      when: ansible_os_family == "Debian"
+      with_items:
+        - name: git
+        - name: vim

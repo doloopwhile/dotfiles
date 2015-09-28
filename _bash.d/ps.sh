@@ -1,4 +1,4 @@
-
+#!/bin/bash
 # PS1の設定
 
 function C() {
@@ -39,7 +39,7 @@ function ps1_info() {
   fi
   echo -n -e "$(C "${HOST_COLOR}")$(hostname -s)\033[0m "
 
-  echo -n $(date +'%F %H:%M:%S')
+  echo -n "$(date +'%F %H:%M:%S')"
   echo -n ' '
 
   echo -n '$?='
@@ -85,7 +85,8 @@ function ps1_info() {
 
     echo -n ']='
 
-    local branch=$(git branch 2>/dev/null | grep "^*" | sed -e "s/^* //")
+    local branch
+    branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
     if [[ "${branch}" =~ ^bug- ]]; then
       C green
     elif [[ "${branch}" =~ ^atc- ]]; then
@@ -124,6 +125,10 @@ function ps1_info() {
       echo -n "$(C red)?$(C reset)"
     fi
     echo -n ']'
+  fi
+
+  if [ -n "${RAILS_ENV-}" ]; then
+    echo -n " RAILS_ENV=$RAILS_ENV"
   fi
 
   echo

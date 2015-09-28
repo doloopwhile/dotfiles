@@ -2,7 +2,7 @@
 source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:$HOME/bin:$PATH
 
 # 分割した設定ファイルの読み込み
 while read f; do
@@ -71,7 +71,7 @@ fi
 
 # 便利なコマンド
 LS_COMMAND=ls
-if which gls > /dev/null; then
+if which gls &> /dev/null; then
   LS_COMMAND=gls
 fi
 
@@ -154,10 +154,17 @@ if which direnv &> /dev/null; then
 fi
 
 # rbenv
-export PATH=$PATH:/Users/k-omoto/.gem/ruby/2.2.0/bin
-export PATH=$PATH:$HOME/.rbenv/bin
+function install_rbenv() {
+  git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+  git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  git clone https://github.com/mislav/rbenv-user-gems.git ~/.rbenv/plugins/rbenv-user-gems
+  git clone https://github.com/tpope/rbenv-readline.git   ~/.rbenv/plugins/rbenv-readline
+  git clone https://github.com/rkh/rbenv-update.git       ~/.rbenv/plugins/rbenv-update
+}
+PATH=$PATH:~/.rbenv/bin
 if which rbenv &> /dev/null; then
   eval "$(rbenv init -)"
+  PROMPT_COMMAND="${PROMPT_COMMAND};rm -f /Users/k-omoto/.rbenv/shims/rubocop"
 fi
 
 # if [ -s $HOME/.pythonz/etc/bashrc ]; then
@@ -417,11 +424,15 @@ alias vrename=~/dotfiles/vrename/vrename.py
 export PATH=$PATH:$HOME/xsvutils/bin
 
 # Oracle
-export ORACLE_HOME=$HOME/instantclient_11_2/
-export PATH="$PATH:$ORACLE_HOME"
-export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
-export NLS_LANG=American_America.JA16EUCTILDE
-export TNS_ADMIN=$ORACLE_HOME/admin/network
+if [ "$(hostname)" = "m3-2015mac03.office.so-netm3.com" ]; then
+  export ORACLE_HOME=$HOME/instantclient_11_2/
+  export PATH="$PATH:$ORACLE_HOME"
+  export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
+  export NLS_LANG=American_America.JA16EUCTILDE
+  export TNS_ADMIN=$ORACLE_HOME/admin/network
+fi
 
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
+
+export ANSIBLE_NOCOWS=1

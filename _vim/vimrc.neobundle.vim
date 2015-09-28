@@ -1,19 +1,19 @@
 NeoBundle 'tomtom/tcomment_vim'
 "
-" " 賢い「f」キー
-" NeoBundle 'rhysd/clever-f.vim'
-" let g:clever_f_ignore_case = 1
-" let g:clever_f_use_migemo = 1
-" let g:clever_f_show_prompt = 1
-" let g:clever_f_chars_match_any_signs = ';' " ; はすべての記号にマッチする
+" 賢い「f」キー
+NeoBundle 'rhysd/clever-f.vim'
+let g:clever_f_ignore_case = 1
+let g:clever_f_use_migemo = 1
+let g:clever_f_show_prompt = 1
+let g:clever_f_chars_match_any_signs = ';' " ; はすべての記号にマッチする
 
 " , y でヤンク履歴
 " YankRing.vim
 " http://nanasi.jp/articles/vim/yankring_vim.html
 " https://github.com/yuroyoro/dotfiles/blob/master/.vimrc.plugins_setting
-" NeoBundle 'YankRing.vim'
-" noremap <Leader>y :YRShow<CR>
-"
+NeoBundle 'YankRing.vim'
+noremap <Leader>y :YRShow<CR>
+
 
 NeoBundle 'LeafCage/yankround.vim'
 nnoremap <silent><Leader>y :<C-u>CtrlPYankRound<CR>
@@ -57,17 +57,18 @@ NeoBundle 'jimsei/winresizer'
 
 " カーソル下にファイル名らしき文字列はないが Git の diff の出力らしきテキストがある場合、
 " diff で示されるファイルを開いて該当する変更箇所までカーソルを移動します。
+let g:gf_user_no_default_key_mappings=1
 NeoBundle 'kana/vim-gf-user'
 NeoBundle 'kana/vim-gf-diff'
 nmap gf <Plug>(gf-user-<C-w>gf)
 vmap gf <Plug>(gf-user-<C-w>gf)
 
 
-" NeoBundle 'tryu/open-browser.vim'
-
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
+" カーソル下のURLを開く
+NeoBundle 'open-browser.vim'
+let g:netrw_nogx = 1
+nmap gb <Plug>(openbrowser-smart-search)
+vmap gb <Plug>(openbrowser-smart-search)
 
 
 " Realtime preview by Vim. (Markdown, textile)
@@ -117,8 +118,6 @@ NeoBundle 'thinca/vim-fontzoom'
 let g:fontzoom_no_default_key_mappings=1
 nmap ,= <Plug>(fontzoom-larger)
 nmap ,- <Plug>(fontzoom-smaller)
-nmap <C-ScrollWheelUp> <Plug>(fontzoom-larger)
-nmap <C-ScrollWheelDown> <Plug>(fontzoom-smaller)
 nmap ,0 :<C-u>Fontzoom!<CR>
 
 NeoBundle 'Yggdroot/indentLine'
@@ -128,3 +127,5 @@ nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
 " True <=> False
 NeoBundle 'AndrewRadev/switch.vim'
 nnoremap <C-b> :Switch<CR>
+
+NeoBundle 'bling/vim-airline'
