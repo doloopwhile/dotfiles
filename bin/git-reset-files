@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+require 'open3'
+require 'shellwords'
+
+out, s = Open3.capture2('git ls-files -m | fzf')
+exit 1 if s.exitstatus == 1
+exit 2 unless s.success?
+
+files = out.lines.map(&:chomp)
+exit 1 if files.empty?
+
+out, s = Open3.capture2(['git', 'checkout', *files].shelljoin)
+exit 2 unless s.success?

@@ -175,6 +175,7 @@ noremap 0 ^
 noremap ^ 0
 nnoremap q <Nop>
 nnoremap <silent> qq :q<CR>
+nnoremap <silent> qo :tabo<CR>
 nnoremap Q <Nop>
 
 noremap <S-Up> Up

@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ "$#" -ne 0 ]; then
+  python -m webbrowser -t file:///var/folders/x5/_p128rvd04x2wszmg7vj__gw0000gp/T/html2browse.tu88orjb.html
+fi

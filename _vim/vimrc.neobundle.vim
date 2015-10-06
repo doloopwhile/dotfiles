@@ -33,7 +33,8 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " 表の整形
 NeoBundle 'godlygeek/tabular'
 noremap ,t :Tabular /\|/<CR>
-noremap ,s :Tabular /^\s*\S\+\zs/l0c1l0<CR>
+noremap ,s :Tabular /^\s*\S\+\zs/l0c1<CR>
+noremap ,f :Tabular /,\zs/l1r0<CR>
 " NeoBundle 'thinca/vim-quickrun'
 " let g:quickrun_config = {
 " \   "_" : {

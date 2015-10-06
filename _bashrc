@@ -5,9 +5,9 @@ source /etc/profile
 export PATH=/usr/local/bin:$HOME/bin:$PATH
 
 # 分割した設定ファイルの読み込み
-while read f; do
+for f in ~/.bash.d/*.sh; do
   source "$f"
-done < <(find -L ~/.bash.d/ -type f)
+done
 
 # Lang
 export LAMG=en_US.UTF-8
@@ -101,7 +101,6 @@ alias d='dirs -v'
 alias cdpwd='cd $(pwd -P)'
 alias gr='egrep --ignore-case --color=auto --line-number --with-filename --binary-files=without-match'
 alias diff2html='~/dotfiles/diff2html/diff2html.py'
-alias html2browse='~/dotfiles/diff2html/html2browse.py'
 alias d2b='diff2html | html2browse'
 alias nob='diff2html | html2browse'
 alias escape='python ~/dotfiles/escape.py'
@@ -151,20 +150,6 @@ set visible-status on
 # direnv
 if which direnv &> /dev/null; then
   eval "$(direnv hook bash)"
-fi
-
-# rbenv
-function install_rbenv() {
-  git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-  git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-  git clone https://github.com/mislav/rbenv-user-gems.git ~/.rbenv/plugins/rbenv-user-gems
-  git clone https://github.com/tpope/rbenv-readline.git   ~/.rbenv/plugins/rbenv-readline
-  git clone https://github.com/rkh/rbenv-update.git       ~/.rbenv/plugins/rbenv-update
-}
-PATH=$PATH:~/.rbenv/bin
-if which rbenv &> /dev/null; then
-  eval "$(rbenv init -)"
-  PROMPT_COMMAND="${PROMPT_COMMAND};rm -f /Users/k-omoto/.rbenv/shims/rubocop"
 fi
 
 # if [ -s $HOME/.pythonz/etc/bashrc ]; then
@@ -406,6 +391,7 @@ wvi() {
 whichvi() {
   wvi "$@"
 }
+
 
 ## boot2docker
 # if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
