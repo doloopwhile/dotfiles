@@ -148,8 +148,8 @@ if which direnv &> /dev/null; then
 fi
 
 # rbenv
-export PATH=$PATH:/Users/k-omoto/.gem/ruby/2.2.0/bin
 export PATH=$PATH:$HOME/.rbenv/bin
+export PATH=$PATH:$HOME/.gem/ruby/2.2.0/bin
 if which rbenv &> /dev/null; then
   eval "$(rbenv init -)"
 fi
