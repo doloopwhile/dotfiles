@@ -1,16 +1,18 @@
 " ctrlp
 NeoBundle "ctrlpvim/ctrlp.vim"
-" NeoBundle 'DavidEGx/ctrlp-smarttabs'
-let g:ctrlp_map = ''
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_open_new_file = 't'
-let g:ctrlp_extensions = ['smarttabs']
+NeoBundle "mattn/ctrlp-mark"
 
+" NeoBundle 'DavidEGx/ctrlp-smarttabs'
 nnoremap <Leader>p :CtrlPMixed<CR>
-nnoremap <Leader>t :CtrlPSmartTabs<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
 nnoremap <Leader>l :execute ':CtrlPLine ' . buffer_name('%')<CR>
 nnoremap <Leader>d :CtrlPDir<CR>
+nnoremap <Leader>m :CtrlPMark<CR>
+
+let g:ctrlp_map = ''
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_open_new_file = 't'
+let g:ctrlp_extensions = ['mark']
 
 let g:ctrlp_prompt_mappings = {
 \ 'PrtBS()':              ['<bs>', '<c-]>'],
@@ -50,3 +52,19 @@ let g:ctrlp_prompt_mappings = {
 \ }
 
 NeoBundle 'mattn/ctrlp-veco'
+
+" function s:grep_in_git_project(pattern)
+"   execute '!git grep "' . a:pattern . '" "$(git rev-parse --show-toplevel)"'
+" end
+"
+" command! -nargs=1 GrepInGitProject call <SID>grep_in_git_project(<f-args>)
+
+
+let g:ctrlsf_default_root='project'
+let g:ctrlsf_mapping = {
+\ 'tab': 't',
+\}
+
+NeoBundle 'dyng/ctrlsf.vim'
+vmap        <Leader>g <Plug>CtrlSFVwordPath
+nmap <expr> <Leader>g ':CtrlSF ' . expand('<cword>')

@@ -2,12 +2,12 @@
 source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:$HOME/bin:$PATH
 
 # 分割した設定ファイルの読み込み
-while read f; do
+for f in ~/.bash.d/*.sh; do
   source "$f"
-done < <(find -L ~/.bash.d/ -type f)
+done
 
 # Lang
 export LAMG=en_US.UTF-8
@@ -145,13 +145,6 @@ set visible-status on
 # direnv
 if which direnv &> /dev/null; then
   eval "$(direnv hook bash)"
-fi
-
-# rbenv
-export PATH=$PATH:$HOME/.rbenv/bin
-export PATH=$PATH:$HOME/.gem/ruby/2.2.0/bin
-if which rbenv &> /dev/null; then
-  eval "$(rbenv init -)"
 fi
 
 # if [ -s $HOME/.pythonz/etc/bashrc ]; then
@@ -410,11 +403,13 @@ alias vrename=~/dotfiles/vrename/vrename.py
 export PATH=$PATH:$HOME/xsvutils/bin
 
 # Oracle
-export ORACLE_HOME=$HOME/instantclient_11_2/
-export PATH="$PATH:$ORACLE_HOME"
-export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
-export NLS_LANG=American_America.JA16EUCTILDE
-export TNS_ADMIN=$ORACLE_HOME/admin/network
+if [ "$(hostname)" = "m3-2015mac03.office.so-netm3.com" ]; then
+  export ORACLE_HOME=$HOME/instantclient_11_2/
+  export PATH="$PATH:$ORACLE_HOME"
+  export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
+  export NLS_LANG=American_America.JA16EUCTILDE
+  export TNS_ADMIN=$ORACLE_HOME/admin/network
+fi
 
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"

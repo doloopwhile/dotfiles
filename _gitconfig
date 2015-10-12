@@ -4,6 +4,7 @@
     ui = auto
 [alias]
     b = branch -v
+    br = branch -v
     cf = config --edit --global
     chx = cherry-pick -x
     ci = commit

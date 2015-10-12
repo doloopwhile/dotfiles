@@ -3,6 +3,7 @@ set nolazyredraw
 
 let mapleader=" "
 
+"
 "******************************************************************************
 " Basic Configurations
 "******************************************************************************
@@ -45,15 +46,18 @@ augroup MyColorScheme
   " 選択されているタブを反転
   autocmd ColorScheme * hi TabLine cterm=reverse gui=reverse
 
+
   " 補完候補の色
   autocmd ColorScheme * hi Pmenu ctermbg=white ctermfg=black
   autocmd ColorScheme * hi PmenuSel ctermbg=blue ctermfg=black
+
+  " autocmd ColorScheme * hi CtrlPMatch ctermfg=yellow
+  " autocmd ColorScheme * hi CtrlPLinePre ctermfg=red
 
   " 行番号の色
   " autocmd ColorScheme * hi LineNr guifg=#7e8e91
   autocmd ColorScheme * hi clear CursorLine
 augroup END
-
 
 " 'cursorline' を必要な時にだけ有効にする
 " http://d.hatena.ne.jp/thinca/20090530/1243615055
@@ -94,7 +98,7 @@ set clipboard=unnamed,unnamedplus,autoselect
 " Other editing
 set backspace=start,eol,indent "普通のエディタ風のBackSpace
 set wildmode=list:longest " ファイル名補完をreadline風にする
-autocmd BufWritePre * :%s/\s\+$//e " Delete tailing spaces at exit
+
 
 " Visual
 set notitle
@@ -150,60 +154,6 @@ vnoremap ; :
 nmap <Enter> <NOP>
 nmap <BS> <NOP>
 nmap <Space> <NOP>
-
-" ファンクションキーを挿入モードで無効化
-imap <F1> <NOP>
-imap <F2> <NOP>
-imap <F3> <NOP>
-imap <F4> <NOP>
-imap <F5> <NOP>
-imap <F6> <NOP>
-imap <F7> <NOP>
-imap <F8> <NOP>
-imap <F9> <NOP>
-imap <F10> <NOP>
-imap <F11> <NOP>
-imap <F12> <NOP>
-imap <F12> <NOP>
-imap <F13> <NOP>
-imap <F14> <NOP>
-imap <F15> <NOP>
-imap <F16> <NOP>
-imap <F17> <NOP>
-imap <F18> <NOP>
-imap <F19> <NOP>
-imap <F20> <NOP>
-imap <F21> <NOP>
-imap <F22> <NOP>
-imap <F23> <NOP>
-imap <F24> <NOP>
-imap <C-F1> <NOP>
-imap <C-F2> <NOP>
-imap <C-F3> <NOP>
-imap <C-F4> <NOP>
-imap <C-F5> <NOP>
-imap <C-F6> <NOP>
-imap <C-F7> <NOP>
-imap <C-F8> <NOP>
-imap <C-F9> <NOP>
-imap <C-F10> <NOP>
-imap <C-F11> <NOP>
-imap <C-F12> <NOP>
-imap <C-F12> <NOP>
-imap <C-F13> <NOP>
-imap <C-F14> <NOP>
-imap <C-F15> <NOP>
-imap <C-F16> <NOP>
-imap <C-F17> <NOP>
-imap <C-F18> <NOP>
-imap <C-F19> <NOP>
-imap <C-F20> <NOP>
-imap <C-F21> <NOP>
-imap <C-F22> <NOP>
-imap <C-F23> <NOP>
-imap <C-F24> <NOP>
-imap <D-Space> <NOP>
-
 " 日本語をローマ字で検索
 noremap  <Leader>/ :<C-u>Migemo<CR>
 
@@ -225,6 +175,7 @@ noremap 0 ^
 noremap ^ 0
 nnoremap q <Nop>
 nnoremap <silent> qq :q<CR>
+nnoremap <silent> qo :tabo<CR>
 nnoremap Q <Nop>
 
 noremap <S-Up> Up
@@ -241,7 +192,6 @@ nnoremap ttt <ESC>:tabnew<CR>
 command!-nargs=0 Vimrc tabedit ~/.vimrc
 noremap <Leader>v <ESC>:tabedit ~/.vimrc<CR>
 noremap <Leader>b <ESC>:tabedit ~/.bashrc<CR>
-noremap <Leader>g <ESC>:tabedit ~/.bashrc<CR>
 
 vnoremap z/ <ESC>/\%V
 vnoremap zs <ESC>:s/\%V/
@@ -265,8 +215,61 @@ nnoremap <C-J> ddp
 
 command! -nargs=0 Executable :!chmod +x %
 
-
 nnoremap <ESC><ESC> :noh<CR>
+
+" カーソル下のキーワードをバッファ内全体で置換する
+nnoremap <expr> s* ':%s/\<' . expand('<cword>') . '\>/'
+set tabpagemax=100
+
+nnoremap  <C-W> wbyeea<C-R><C-R>=" "<CR><C-R>"<ESC>b
+nnoremap ,, I, <ESC>
+
+command! TrimTailingSpace :%s/\s\+$//e " Delete tailing spaces at exit
+nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
+
+"******************************************************************************
+" Mark
+"******************************************************************************
+" 基本マップ
+nnoremap [Mark] <Nop>
+nmap m [Mark]
+
+" 現在位置をマーク
+if !exists('g:markrement_char')
+    let g:markrement_char = [
+    \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    \ ]
+endif
+
+nnoremap <silent>[Mark]m :<C-u>call <SID>AutoMarkrement()<CR>
+
+function! s:AutoMarkrement()
+  if !exists('b:markrement_pos')
+    let b:markrement_pos = 0
+  else
+    let b:markrement_pos = (b:markrement_pos + 1) % len(g:markrement_char)
+  endif
+  execute 'mark' g:markrement_char[b:markrement_pos]
+  echo 'marked' g:markrement_char[b:markrement_pos]
+endfunction
+
+" 次/前のマーク
+nnoremap [Mark]n ]`
+nnoremap [Mark]p [`
+
+" 一覧表示
+" nnoremap [Mark]l :<C-u>marks<CR>
+nnoremap [Mark]l :<C-u>CtrlPMark<CR>
+
+augroup MyMarks
+  autocmd!
+  " 前回終了位置に移動
+  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | exe 'normal g`"' | endif
+  " バッファ読み込み時にマークを初期化
+  autocmd BufReadPost * delmarks!
+augroup END
+
 "******************************************************************************
 " Others
 "******************************************************************************
@@ -285,10 +288,6 @@ autocmd FileType *
 
 " au BufWritePost * mkview
 " autocmd BufReadPost * loadview
-
-" カーソル下のキーワードをバッファ内全体で置換する
-nnoremap <expr> s* ':%s/\<' . expand('<cword>') . '\>/'
-set tabpagemax=100
 
 "******************************************************************************
 " Commands

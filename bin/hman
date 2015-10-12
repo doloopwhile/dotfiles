@@ -1,0 +1,77 @@
+#!/usr/bin/env /bin/bash
+# Bash - man ページを PDF や HTML に変換する - Qiita
+# http://qiita.com/mattintosh4/items/84ee33ae7657f33ceea5
+
+usage="\
+概要：
+    man ページをデフォルトブラウザで表示します。
+
+使用方法：
+    [BODYWIDTH=n] [FAM=fam] [FONTSIZE=n] hman_ [-p] [-r] name|file
+
+オプション：
+    -p  font-family に sans-serif を指定します。（初期値：monospace）
+    -r  黒基調に変更します。
+
+環境変数：
+    BODYWIDTH=n
+        width に n ピクセルを指定します。 (初期値：800)
+    FAM=fam
+        font-family に fam を指定します。（初期値：monospace）
+        -p オプションが使用されている場合はそちらが優先されます。
+    FONTSIZE=n
+        font-size に n ピクセルを指定します。（初期値：16）
+"
+
+while :
+do
+  case ${1} in
+  -p)
+    FAM='sans-serif'
+    ;;
+  -r)
+    bg_color='hsl(  0,  0%,  5%)'
+    fg_color='hsl(  0,  0%, 95%)'
+    an_color='hsl( 80,100%, 50%)'
+    ;;
+  -*)
+    ;;
+  "")
+    /bin/echo -n "${usage}"
+    return
+    ;;
+  *)
+    man -W "${1}" >/dev/null || return
+    break
+    ;;
+  esac
+  shift
+done
+
+tempfile=$(/usr/bin/mktemp -u -t "hman").html
+man -C <(/usr/bin/sed '/^TROFF/s/-Tps/-Thtml -P -r/' /etc/man.conf) -t "${1}" > "${tempfile}"
+cat <<__HTML__ >> "${tempfile}"
+<style type="text/css">
+body {
+  background-color: ${bg_color:-#fff};
+  color           : ${fg_color:-#000};
+  font-family     : ${FAM:-monospace};
+  font-size       : ${FONTSIZE:-14}px;
+  line-height     : 1.4;
+  margin          : 2em auto;
+  width           : ${BODYWIDTH:-800}px;
+}
+a {
+  color           : ${an_color:-#00f};
+}
+h2 {
+  border-bottom   : 1px dashed;
+}
+h2::before {
+  content         : "\\f8ff";
+  letter-spacing  : 1ex;
+}
+</style>
+__HTML__
+
+python -m webbrowser -t "file://${tempfile}"
