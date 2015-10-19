@@ -52,28 +52,22 @@ if [[ -s ~/.pythonz/etc/bashrc ]]; then
 fi
 
 # 便利なコマンド
-LS_COMMAND=ls
-if which gls &> /dev/null; then
-  LS_COMMAND=gls
-fi
+LS_OPTIONS=''
 
-LS_OPTIONS='-B -v'
-
-if $LS_COMMAND --color &> /dev/null; then
+if ls --color &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --color=auto"
 fi
 
-if $LS_COMMAND --group-directories-first &> /dev/null; then
+if ls --group-directories-first &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --group-directories-first"
 fi
 
-alias ls='${LS_COMMAND} ${LS_OPTIONS}'
-alias ll='${LS_COMMAND} -l -h -H -p ${LS_OPTIONS}'
+alias ls='ls -B -v ${LS_OPTIONS}'
+alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
 
 if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
   eval "$(dircolors ~/.dircolors)"
 fi
-
 
 function now() {
   date +'%F %T'
@@ -83,6 +77,7 @@ alias d='dirs -v'
 alias cdpwd='cd $(pwd -P)'
 alias gr='egrep --ignore-case --color=auto --line-number --with-filename --binary-files=without-match'
 alias diff2html='~/dotfiles/diff2html/diff2html.py'
+alias html2browse='~/dotfiles/diff2html/html2browse.py'
 alias d2b='diff2html | html2browse'
 alias nob='diff2html | html2browse'
 alias escape='python ~/dotfiles/escape.py'
@@ -374,7 +369,6 @@ whichvi() {
   wvi "$@"
 }
 
-
 ## boot2docker
 # if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
 #   eval "$(boot2docker shellinit | grep -v Writing)"
@@ -401,5 +395,3 @@ fi
 
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
-
-export ANSIBLE_NOCOWS=1
