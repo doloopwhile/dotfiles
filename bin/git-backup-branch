@@ -1,24 +1,20 @@
 #!/bin/bash
 branch=$(git rev-parse --abbrev-ref HEAD)
 
-# if [[ ! "${branch}" =~ ^[0-9a-zA-Z\-]+$ ]]; then
-#   echo 'Current branch does not seem to be a normal branch' >&2
-#   exit 1
-# fi
-
 function git_branch_exists() {
   git branch | cut -b 3- | grep -q "^${1}$" > /dev/null
 }
 
 function get_tmp_branch_name() {
-  local b="bak_${1}"
-  if ! git_branch_exists ${b} ;then
+  prefix='bak/'
+  local b="${prefix}${1}"
+  if ! git_branch_exists "${b}" ;then
     echo "${b}"
     return 0
   fi
 
-  for i in `seq 2 100`; do
-    local b="bak_${1}_${i}"
+  for i in $(seq 2 100); do
+    b="${prefix}${1}_${i}"
     if ! git_branch_exists "${b}"; then
       echo "${b}"
       return 0

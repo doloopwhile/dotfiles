@@ -144,6 +144,9 @@ set autochdir
 
 set visualbell t_vb=
 
+" 自動改行を無効化
+set formatoptions=q
+
 "******************************************************************************
 " Key Mappings
 "******************************************************************************
@@ -206,9 +209,6 @@ cnoremap <C-B> <Left>
 
 noremap <Leader>s :w<CR>:so ~/.vimrc<CR>:NeoBundleInstall<CR>
 
-" 選択行を上下に移動
-nnoremap <C-K> ddkP
-nnoremap <C-J> ddp
 
 " 貼り付けない
 " inoremap <C-V> <C-V>
@@ -221,8 +221,8 @@ nnoremap <ESC><ESC> :noh<CR>
 nnoremap <expr> s* ':%s/\<' . expand('<cword>') . '\>/'
 set tabpagemax=100
 
-nnoremap  <C-W> wbyeea<C-R><C-R>=" "<CR><C-R>"<ESC>b
-nnoremap ,, I, <ESC>
+" nnoremap  <C-W> wbyeea<C-R><C-R>=" "<CR><C-R>"<ESC>b
+" nnoremap ,, I, <ESC>
 
 command! TrimTailingSpace :%s/\s\+$//e " Delete tailing spaces at exit
 nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
@@ -299,6 +299,9 @@ command! FL :execute 'g/^ *$\|^ *#/d' | 2,$ d
 " 別のエディタで開く
 command! EE :execute ':silent !scribes % &' | :execute ':redraw!'
 
+" 選択行を上下に移動
+nnoremap <C-K> ddkP
+nnoremap <C-J> ddp
 vnoremap <silent> <C-J> :MoveSelectionDown<CR>
 vnoremap <silent> <C-K> :MoveSelectionUp<CR>
 command! -range=% MoveSelectionUp   :silent <line1>,<line2>dl | :silent <line1>-1 | :silent pu! | call SetSelection(<line1>-1, <line2>-1)

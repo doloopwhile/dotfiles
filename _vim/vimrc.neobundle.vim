@@ -130,3 +130,7 @@ NeoBundle 'AndrewRadev/switch.vim'
 nnoremap <C-b> :Switch<CR>
 
 NeoBundle 'bling/vim-airline'
+
+NeoBundle 'terryma/vim-multiple-cursors'
+
+NeoBundle 'tpope/vim-fugitive'

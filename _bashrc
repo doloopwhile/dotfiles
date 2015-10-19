@@ -44,24 +44,6 @@ for h in "omoto-xubuntu" "m3-2015mac03.office.so-netm3.com"; do
 done
 
 
-#git関連
-export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
-export PATH=$PATH:$HOME/.git-hooker/bin
-export GITHUB_USER=doloopwhile
-if which hub &> /dev/null; then
-  eval "$(hub alias -s)"
-  alias g=hub
-else
-  alias g=git
-fi
-
-function gb() {
-  {
-    git br | cut -b 3- | cut -d ' ' -f 1
-    git br -r | cut -d ' ' -f3
-  } | fzf | head -1
-}
-
 # Python関連
 export PYTHONSTARTUP=~/.pythonstartup
 
@@ -152,13 +134,13 @@ if which direnv &> /dev/null; then
   eval "$(direnv hook bash)"
 fi
 
-# if [ -s $HOME/.pythonz/etc/bashrc ]; then
-#   source $HOME/.pythonz/etc/bashrc
-#   for v in CPython-2.7.6 CPython-3.2.5 CPython-3.3.5 CPython-3.4.1; do
-#     export PATH=~/.pythonz/pythons/$v/bin:$PATH
-#   done
-# fi
-#
+if [ -s $HOME/.pythonz/etc/bashrc ]; then
+  source $HOME/.pythonz/etc/bashrc
+  for v in CPython-2.7.6 CPython-3.2.5 CPython-3.3.5 CPython-3.4.1; do
+    export PATH=~/.pythonz/pythons/$v/bin:$PATH
+  done
+fi
+
 # export PATH=~/python/bin:$PATH
 # export GIT_HOOKER_PYTHON=~/python/bin/python
 

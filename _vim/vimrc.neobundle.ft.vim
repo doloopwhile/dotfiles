@@ -18,6 +18,7 @@ NeoBundle 'mustache/vim-mustache-handlebars'
 " NeoBundle 'rbtnn/rabbit-ui.vim'
 " NeoBundle 'rbtnn/rabbit-ui-collection.vim'
 
+NeoBundle "velocity.vim"
 exe "set rtp+=".globpath($HOME, "/gocode/src/github.com/nsf/gocode/vim")
 augroup vimrcGo
   autocmd!
