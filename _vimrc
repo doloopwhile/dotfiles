@@ -192,6 +192,7 @@ nnoremap ,h 0
 nnoremap ,l $
 nnoremap / /\v
 nnoremap ttt <ESC>:tabnew<CR>
+nnoremap ttc <ESC>:%y<CR><ESC>:tabnew<CR>P
 command!-nargs=0 Vimrc tabedit ~/.vimrc
 noremap <Leader>v <ESC>:tabedit ~/.vimrc<CR>
 noremap <Leader>b <ESC>:tabedit ~/.bashrc<CR>

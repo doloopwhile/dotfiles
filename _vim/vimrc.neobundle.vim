@@ -134,3 +134,5 @@ NeoBundle 'bling/vim-airline'
 NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'tpope/vim-fugitive'
+
+NeoBundle 'kana/vim-smartinput'
