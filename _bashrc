@@ -2,12 +2,14 @@
 source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
-export PATH=/usr/local/bin:$HOME/bin:$PATH
+export PATH="/usr/local/bin:$PATH"
 
 # 分割した設定ファイルの読み込み
 for f in ~/.bash.d/*.sh; do
   source "$f"
 done
+
+export PATH="$HOME/bin:$PATH"
 
 # Lang
 export LAMG=en_US.UTF-8
@@ -86,6 +88,9 @@ alias savetemp='~/dotfiles/save-tempfile/save-tempfile.py'
 alias save-tempfile='~/dotfiles/save-tempfile/save-tempfile.py'
 
 function te {
+  cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
+}
+function v {
   cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
 }
 
@@ -295,6 +300,25 @@ bak() {
   return 0
 }
 
+all_projects() {
+  gfind /Users/k-omoto/Documents -maxdepth 1 -type d -printf '%f\n'
+  echo Downloads
+}
+
+cd_project() {
+  local f
+  f=$(all_projects | fzf | head -1)
+  if [ "$f" = Downloads ]; then
+    f="$HOME/Downloads"
+  else
+    f="$HOME/Documents/$f"
+    if [ -d "$f/trunk" ]; then
+      f="$f/trunk"
+    fi
+  fi
+  cd "$f"
+}
+
 if which fzf &> /dev/null; then
   _replace_by_history() {
     local sed=sed
@@ -307,8 +331,13 @@ if which fzf &> /dev/null; then
     READLINE_POINT=${#l}
   }
 
+  _find_and_edit() {
+    fzf | xargs gvim
+  }
+
   bind -x '"\C-r": _replace_by_history'
   bind    '"\C-xr": reverse-search-history'
+  bind -x '"`": _find_and_edit'
 fi
 
 export PATH=$PATH:/usr/local/haskell/ghc-7.8.3-x86_64/bin/
@@ -333,25 +362,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 fe() {
   find . -name "${1:-*}" | fzf | xargs gvim
-}
-
-projects() {
-  gfind /Users/k-omoto/Documents -maxdepth 1 -type d -printf '%f\n'
-  echo Downloads
-}
-
-p() {
-  local f
-  f=$(projects | fzf | head -1)
-  if [ "$f" = Downloads ]; then
-    f="$HOME/Downloads"
-  else
-    f="$HOME/Documents/$f"
-    if [ -d "$f/trunk" ]; then
-      f="$f/trunk"
-    fi
-  fi
-  cd "$f"
 }
 
 alias c='cheat show'
