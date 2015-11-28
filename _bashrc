@@ -129,13 +129,6 @@ if which direnv &> /dev/null; then
   eval "$(direnv hook bash)"
 fi
 
-if [ -s $HOME/.pythonz/etc/bashrc ]; then
-  source $HOME/.pythonz/etc/bashrc
-  for v in CPython-2.7.6 CPython-3.2.5 CPython-3.3.5 CPython-3.4.1; do
-    export PATH=~/.pythonz/pythons/$v/bin:$PATH
-  done
-fi
-
 # export PATH=~/python/bin:$PATH
 # export GIT_HOOKER_PYTHON=~/python/bin/python
 
