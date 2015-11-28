@@ -1,1 +1,10 @@
-../git-ignore/git-ignore
+#!/usr/bin/env python3
+import argparse import ArgumentParser
+
+def main():
+    p = ArgumentParser()
+    p_list = p.add_subparser('list')
+
+    p_add = p.add_subparser('add')
+
+    p_path p.add_subparser('path')

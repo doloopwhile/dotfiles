@@ -191,6 +191,7 @@ nnoremap ,h 0
 nnoremap ,l $
 nnoremap / /\v
 nnoremap ttt <ESC>:tabnew<CR>
+nnoremap ttc <ESC>:%y<CR><ESC>:tabnew<CR>P
 command!-nargs=0 Vimrc tabedit ~/.vimrc
 noremap <Leader>v <ESC>:tabedit ~/.vimrc<CR>
 noremap <Leader>b <ESC>:tabedit ~/.bashrc<CR>
@@ -226,6 +227,14 @@ set tabpagemax=100
 command! TrimTailingSpace :%s/\s\+$//e " Delete tailing spaces at exit
 nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
 
+" カッコの入力補完
+" inoremap " ""<Left>
+" inoremap ' ''<Left>
+" inoremap ` ``<Left>
+" inoremap \| \|\|<Left>
+" inoremap { {}<Left>
+" inoremap [ []<Left>
+" inoremap ( ()<Left>
 "******************************************************************************
 " Mark
 "******************************************************************************
@@ -461,7 +470,7 @@ endfunction
 command! -nargs=1 Clone call <SID>clone(<f-args>)
 command! Trash :execute ':!trash %' | :execute ':q!'
 command! Rm :execute ':!trash %' | :execute ':q!'
-command! -nargs=1 -complete=file Rename f <args> | call delete(expand('#'))
+command! -nargs=1 -complete=file Rename file <args> | call delete(expand('#'))
 
 nmap ,c :<C-u>Clone <C-R>%
 nmap ,r :<C-u>Rename <C-R>%
