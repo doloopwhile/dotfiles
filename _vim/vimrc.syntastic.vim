@@ -10,6 +10,7 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_php_phpcs_args = '--report=csv --standard=/home/kenji.omoto/.hde-phpcs-ruleset/Tapirus'
 
 let g:syntastic_ruby_checkers=['rubocop']
+let g:syntastic_ruby_rubocop_args=['-D']
 
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501'

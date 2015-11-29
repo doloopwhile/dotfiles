@@ -398,3 +398,7 @@ fi
 
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
+
+# function p() {
+#   cd "$HOME/Documents/$(find "$HOME/Documents/" -type d -maxdepth 1 | sed -e 's|.*/||' | sort | fzf)"
+# }

@@ -1,2 +1,6 @@
 AllCops:
   RunRailsCops: true
+Style/Documentation:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false
