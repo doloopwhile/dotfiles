@@ -141,7 +141,6 @@ set tags=./.tags;
 " Automatically change current directory
 set autochdir
 
-
 set visualbell t_vb=
 
 " 自動改行を無効化

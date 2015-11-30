@@ -42,7 +42,7 @@
 
 [core]
     autocrlf = input
-	excludesfile = /Users/k-omoto/.gitignore
+	excludesfile = ~/.gitignore
 [push]
     default = current
 [rebase]

@@ -1,0 +1,2 @@
+#!/bin/bash
+cd "~/Documents/$(find ~/Documents/ -type d -maxdepth 1 | sed -e 's|.*/||' | sort | fzf)"
