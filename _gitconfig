@@ -9,7 +9,6 @@
   chx = cherry-pick -x
   ci = commit
   cin = commit --no-verify
-  co = checkout
   d = diff
   dc = diff --cached
   delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
