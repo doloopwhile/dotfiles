@@ -39,6 +39,7 @@
   updated=commit -a -m updated
   vimdiff=difftool --tool=gvimdiff
 # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
+  r = reset
 
 [core]
     autocrlf = input

@@ -17,7 +17,6 @@ source ~/.vim/vimrc.neobundle.colorscheme.vim
 source ~/.vim/vimrc.neobundle.ft.vim
 source ~/.vim/vimrc.ctrlp.vim
 call neobundle#end()
-
 "******************************************************************************
 " Highlightings
 "******************************************************************************
@@ -474,6 +473,7 @@ command! -nargs=1 -complete=file Rename file <args> | call delete(expand('#'))
 
 nmap ,c :<C-u>Clone <C-R>%
 nmap ,r :<C-u>Rename <C-R>%
+nmap ,d :<C-u>Trash
 " ******************************************************************************
 " ftplugins
 " ******************************************************************************
