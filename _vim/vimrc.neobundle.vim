@@ -136,3 +136,23 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tpope/vim-fugitive'
 
 " NeoBundle 'kana/vim-smartinput'
+
+
+" NeoBundle 'kana/vim-textobj-user'
+" NeoBundle 'tkhren/vim-textobj-numeral'
+" NeoBundle 'kana/vim-submode'
+"
+" set nrformats-=octal
+" function! Increment(step)
+"     let inc_key = a:step > 0 ? '^A' : '^X'
+"     let @z = '"zyadjvad"zp'. abs(a:step) . inc_key
+"     return '@z'
+" endfunction
+"
+" nmap <expr> + Increment(1)
+" nmap <expr> - Increment(-1)
+
+"" 補足1) `^A`と`^X`は、`<C-v><C-a>`それぞれ`<C-v><C-x>`で入力できる特殊文字
+"" 補足2) `ad` は '[-+]?\d+' にマッチするテキストオブジェクト 
+
+NeoBundle 'deris/vim-rengbang'

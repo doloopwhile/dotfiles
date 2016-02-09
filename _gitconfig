@@ -39,6 +39,7 @@
   st = status -s
   updated=commit -a -m updated
   vimdiff=difftool --tool=gvimdiff
+  shallow-clone=clone --depth 1 --single-branch
 # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
 
 [core]

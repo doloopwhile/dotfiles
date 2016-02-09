@@ -19,10 +19,9 @@ let g:syntastic_sql_checkers=['pgsanity']
 " let g:syntastic_sql_checker_args='--ignore=E501,E225'
 
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-noremap <Leader>l :ll<CR>
-
 let g:syntastic_json_checkers=['jsonlint']
 let g:syntastic_sh_shellcheck_args = '-e SC2002'
 
 let g:syntastic_java_checkers=[]
 let g:syntastic_scala_checkers=[]
+

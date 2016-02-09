@@ -27,6 +27,7 @@ export EDITOR=vi
 if which vim &> /dev/null; then
   export EDITOR=vim
   alias vim='vim -p'
+  alias gvim='gvim -p'
   alias vi='vim -p'
   export SVN_EDITOR=vim
 fi
@@ -46,12 +47,6 @@ for h in "omoto-xubuntu" "m3-2015mac03.office.so-netm3.com"; do
 done
 
 
-# Python関連
-export PYTHONSTARTUP=~/.pythonstartup
-
-if [[ -s ~/.pythonz/etc/bashrc ]]; then
-  source ~/.pythonz/etc/bashrc
-fi
 
 # 便利なコマンド
 LS_OPTIONS=''
@@ -138,7 +133,8 @@ fi
 # export GIT_HOOKER_PYTHON=~/python/bin/python
 
 if ! which pbcopy &> /dev/null; then
-  alias pbcopy='xsel --clipboard --input'
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
 fi
 
 export PATH=${PATH}:${HOME}/node_modules/.bin
@@ -399,6 +395,3 @@ fi
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
-# function p() {
-#   cd "$HOME/Documents/$(find "$HOME/Documents/" -type d -maxdepth 1 | sed -e 's|.*/||' | sort | fzf)"
-# }
