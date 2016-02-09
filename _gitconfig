@@ -9,7 +9,6 @@
   chx = cherry-pick -x
   ci = commit
   cin = commit --no-verify
-  co = checkout
   d = diff
   dc = diff --cached
   delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
@@ -41,6 +40,7 @@
   vimdiff=difftool --tool=gvimdiff
   shallow-clone=clone --depth 1 --single-branch
 # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
+  r = reset
 
 [core]
     autocrlf = input

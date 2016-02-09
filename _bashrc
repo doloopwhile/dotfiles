@@ -27,7 +27,6 @@ export EDITOR=vi
 if which vim &> /dev/null; then
   export EDITOR=vim
   alias vim='vim -p'
-  alias gvim='gvim -p'
   alias vi='vim -p'
   export SVN_EDITOR=vim
 fi
@@ -395,3 +394,7 @@ fi
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
+function p() {
+  cd "${HOME}/Documents/$(find ~/Documents/ -type d -maxdepth 1 | sed -e 's|.*/||' | sort | fzf)"
+}
+alias ..='. ~/.bashrc'

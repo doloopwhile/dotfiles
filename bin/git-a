@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ $# -eq 0 ]; then
+  git status -s | cut -b 4- | fzf -m | while read line; do
+    git add "$line"
+  done
+else
+  git add "$@"
+fi
