@@ -24,7 +24,7 @@ for OPT in "$@"; do
   shift
 done
 
-BRANCHES=$(git branch -v | peco | cut -b 3- | cut -d ' ' -f 1)
+BRANCHES=$(git branch -v | fzf -m | cut -b 3- | cut -d ' ' -f 1)
 if [ "$?" -ne 0 -o -z "$BRANCHES" ]; then
   exit 1
 fi

@@ -11,3 +11,11 @@ else
 fi
 
 alias gg='git grep -H --heading --break -I --ignore-case'
+
+# git
+alias g=git
+alias gi=git
+alias gst='git status -s'
+alias gb='git branch'
+alias gbe='git be'
+alias gc='git co'

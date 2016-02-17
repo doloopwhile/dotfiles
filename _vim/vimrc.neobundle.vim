@@ -33,7 +33,7 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " 表の整形
 NeoBundle 'godlygeek/tabular'
 noremap ,t :Tabular /\|/<CR>
-noremap ,s :Tabular /^\s*\S\+\zs/l0c1<CR>
+noremap ,s :Tabular /\s*\S\+\zs/l0c1<CR>
 noremap ,f :Tabular /,\zs/l1r0<CR>
 " NeoBundle 'thinca/vim-quickrun'
 " let g:quickrun_config = {
@@ -106,8 +106,9 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " Nerdtree
-NeoBundle 'scrooloose/nerdtree'
-noremap <Leader>n :NERDTreeToggle<CR>
+" NeoBundle 'scrooloose/nerdtree'
+" noremap <Leader>n :NERDTreeToggle<CR>
+" noremap ,n :NERDTreeToggle<CR>
 
 " incsearch
 NeoBundle 'haya14busa/incsearch.vim'
@@ -136,3 +137,6 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tpope/vim-fugitive'
 
 " NeoBundle 'kana/vim-smartinput'
+NeoBundle 'copypath.vim'
+nnoremap <C-c>p <ESC>:<C-u>CopyPath<CR>
+nnoremap <C-c>f <ESC>:<C-u>CopyFileName<CR>

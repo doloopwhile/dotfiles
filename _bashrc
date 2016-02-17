@@ -137,6 +137,13 @@ fi
 # export PATH=~/python/bin:$PATH
 # export GIT_HOOKER_PYTHON=~/python/bin/python
 
+# git
+alias g=git
+alias gi=git
+
+
+# pbcopy
+
 if ! which pbcopy &> /dev/null; then
   alias pbcopy='xsel --clipboard --input'
 fi
@@ -397,9 +404,10 @@ if [ "$(hostname)" = "m3-2015mac03.office.so-netm3.com" ]; then
 fi
 
 # fzf
-export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16 --bind=space:toggle-down"
+export FZF_DEFAULT_OPTS="--no-sort -i --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
 function p() {
   cd "${HOME}/Documents/$(find ~/Documents/ -type d -maxdepth 1 | sed -e 's|.*/||' | sort | fzf)"
 }
+
 alias ..='. ~/.bashrc'
