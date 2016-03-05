@@ -48,7 +48,7 @@ done
 
 
 # 便利なコマンド
-LS_OPTIONS=''
+LS_OPTIONS='-B -v --time-style=long-iso'
 
 if ls --color &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --color=auto"
@@ -58,8 +58,8 @@ if ls --group-directories-first &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --group-directories-first"
 fi
 
-alias ls='ls -B -v ${LS_OPTIONS}'
-alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
+alias ls='ls ${LS_OPTIONS}'
+alias ll='ls -l -h -H -p ${LS_OPTIONS}'
 
 if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
   eval "$(dircolors ~/.dircolors)"
@@ -395,6 +395,6 @@ fi
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
 function p() {
-  cd "${HOME}/Documents/$(find ~/Documents/ -type d -maxdepth 1 | sed -e 's|.*/||' | sort | fzf)"
+  cd "${HOME}/Documents/$(find ~/Documents/ -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort | fzf)"
 }
 alias ..='. ~/.bashrc'

@@ -67,7 +67,6 @@ colorscheme molokai
 "******************************************************************************
 " Basic Configurations
 "******************************************************************************
-
 " Gui Optimazation
 " set guioptions=aciMrb
 set guioptions=aciM
@@ -479,3 +478,4 @@ nmap ,d :<C-u>Trash
 " ******************************************************************************
 filetype plugin indent on
 syntax on
+set conceallevel=0
