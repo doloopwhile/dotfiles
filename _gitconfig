@@ -2,13 +2,17 @@
     path = ~/.gitconfig.local
 [color]
     ui = auto
+
 [alias]
-  br = branch -v
+
   b = branch -v
+  br = branch -v
   cf = config --edit --global
   chx = cherry-pick -x
   ci = commit
   cin = commit --no-verify
+  co = checkout
+  cb = checkout -b
   d = diff
   dc = diff --cached
   delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
@@ -29,11 +33,13 @@
   mylog = log --author='OMOTO Kenji'
   now=commit -a -m tmp --no-verify
   pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
+  r = reset
   reba = rebase --abort
+  rebi = rebase -i
   rebc = rebase --continue
+  reset-origin-hard = reset --hard origin
   rhh = reset HEAD^
   root = rev-parse --show-toplevel
-  rp = rebase-i-peco
   showf = show --name-only
   st = status -s
   updated=commit -a -m updated

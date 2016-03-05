@@ -131,6 +131,13 @@ fi
 # export PATH=~/python/bin:$PATH
 # export GIT_HOOKER_PYTHON=~/python/bin/python
 
+# git
+alias g=git
+alias gi=git
+
+
+# pbcopy
+
 if ! which pbcopy &> /dev/null; then
   alias pbcopy='xclip -selection clipboard'
   alias pbpaste='xclip -selection clipboard -o'
@@ -397,4 +404,5 @@ export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY>
 function p() {
   cd "${HOME}/Documents/$(find ~/Documents/ -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort | fzf)"
 }
+
 alias ..='. ~/.bashrc'

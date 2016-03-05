@@ -233,6 +233,9 @@ nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
 " inoremap { {}<Left>
 " inoremap [ []<Left>
 " inoremap ( ()<Left>
+
+nnoremap ,q q
+
 "******************************************************************************
 " Mark
 "******************************************************************************
@@ -377,7 +380,7 @@ noremap <silent>,, <ESC>:call s:rotate_in_line()<CR>
 command! -nargs=0 JJ call s:save_as_junk_file()
 
 function! s:save_as_junk_file()
-  let l:junk_dir = $HOME . '/Downloads'
+  let l:junk_dir = $HOME . '/Desktop'
   let l:prefix = 'junk'
 
   if expand('%') !~# '^' . l:junk_dir . '/' . l:prefix
@@ -386,8 +389,7 @@ function! s:save_as_junk_file()
     endif
 
     let l:pattern_to_replace = '\s\|\/'
-    let l:firstline = substitute(getline(1), l:pattern_to_replace, "_", "g")
-    let l:filename = (l:junk_dir . '/' . l:prefix . l:firstline) . strftime('%Y-%m-%d-%H%M%S.txt')
+    let l:filename = (l:junk_dir . '/' . l:prefix) . strftime('%Y-%m-%d-%H%M%S.txt')
     execute 'file ' . l:filename
   end
 
@@ -476,6 +478,6 @@ nmap ,d :<C-u>Trash
 " ******************************************************************************
 " ftplugins
 " ******************************************************************************
-filetype plugin indent on
-syntax on
 set conceallevel=0
+syntax on
+filetype plugin indent on

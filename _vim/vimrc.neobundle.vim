@@ -33,7 +33,7 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " 表の整形
 NeoBundle 'godlygeek/tabular'
 noremap ,t :Tabular /\|/<CR>
-noremap ,s :Tabular /^\s*\S\+\zs/l0c1<CR>
+noremap ,s :Tabular /\s*\S\+\zs/l0c1<CR>
 noremap ,f :Tabular /,\zs/l1r0<CR>
 " NeoBundle 'thinca/vim-quickrun'
 " let g:quickrun_config = {
@@ -106,8 +106,9 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " Nerdtree
-NeoBundle 'scrooloose/nerdtree'
-noremap <Leader>n :NERDTreeToggle<CR>
+" NeoBundle 'scrooloose/nerdtree'
+" noremap <Leader>n :NERDTreeToggle<CR>
+" noremap ,n :NERDTreeToggle<CR>
 
 " incsearch
 NeoBundle 'haya14busa/incsearch.vim'
@@ -129,6 +130,27 @@ NeoBundle 'bling/vim-airline'
 
 NeoBundle 'tpope/vim-fugitive'
 
-NeoBundle 'kana/vim-smartinput'
+" NeoBundle 'kana/vim-smartinput'
+NeoBundle 'copypath.vim'
+nnoremap <C-c>p <ESC>:<C-u>CopyPath<CR>
+nnoremap <C-c>f <ESC>:<C-u>CopyFileName<CR>
+
+
+" NeoBundle 'kana/vim-textobj-user'
+" NeoBundle 'tkhren/vim-textobj-numeral'
+" NeoBundle 'kana/vim-submode'
+"
+" set nrformats-=octal
+" function! Increment(step)
+"     let inc_key = a:step > 0 ? '^A' : '^X'
+"     let @z = '"zyadjvad"zp'. abs(a:step) . inc_key
+"     return '@z'
+" endfunction
+"
+" nmap <expr> + Increment(1)
+" nmap <expr> - Increment(-1)
+
+"" 補足1) `^A`と`^X`は、`<C-v><C-a>`それぞれ`<C-v><C-x>`で入力できる特殊文字
+"" 補足2) `ad` は '[-+]?\d+' にマッチするテキストオブジェクト 
 
 NeoBundle 'deris/vim-rengbang'

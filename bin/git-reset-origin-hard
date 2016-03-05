@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -n "$(git status -s)" ]; then
+  echo "There are files which are not commited" >&2
+  exit 1
+fi
+git reset --hard origin

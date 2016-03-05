@@ -1,9 +1,2 @@
-#!/bin/sh
-if [ $# -eq 0 ]; then
-  {
-    git br | cut -b 3- | cut -d ' ' -f 1
-    git br -r | cut -d ' ' -f3
-  } | peco | head -1 | xargs git checkout
-  exit $?
-fi
-git checkout "$@"
+#!/bin/bash
+git checkout "$(git branch | grep -v '\*' | cut -b 3- | grep -v '^bak/' | fzf)"

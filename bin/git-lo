@@ -23,8 +23,7 @@ function C() {
 }
 
 if [ -t /dev/stdout ]; then
-  git log --pretty=format:'%h %s' "$@"
-  exit $?
+  exec git log --pretty=format:'%h %s' "$@"
 fi
 
 git log --pretty=format:'%h %s' "$@" | while read line; do

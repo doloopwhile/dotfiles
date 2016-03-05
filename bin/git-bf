@@ -1,0 +1,4 @@
+#!/bin/bash
+files=($(fzf))
+[ $? -eq 0 ] || exit 1
+git blame "$@" -- "${files[@]}"
