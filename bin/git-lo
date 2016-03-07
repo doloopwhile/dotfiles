@@ -26,7 +26,7 @@ if [ -t /dev/stdout ]; then
   exec git log --pretty=format:'%h %s' "$@"
 fi
 
-git log --pretty=format:'%h %s' "$@" | while read line; do
+while read line; do
   hash="${line%% *}"
   msg="${line#* }"
 
@@ -36,4 +36,4 @@ git log --pretty=format:'%h %s' "$@" | while read line; do
     c="$(C white)"
   fi
   echo "$(C yellow)${hash} ${c}${msg}$(C)"
-done | less -R
+done < <(git log --pretty=format:'%h %s' "$@";echo) | less -R

@@ -1,0 +1,16 @@
+#!/bin/bash
+#http://qiita.com/soramugi/items/ab82f30a5906851472cc
+echo '
+256色
+前: 38;05;色番号
+背: 48;05;色番号
+'
+
+for i in {0..255} ; do
+  printf "\x1b[38;05;%sm 38;05;%s " $i $i
+done
+echo ''
+for i in {0..255} ; do
+  printf "\x1b[48;05;%sm 48;05;%s " $i $i
+done
+echo ''

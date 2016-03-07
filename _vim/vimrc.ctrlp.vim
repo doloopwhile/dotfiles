@@ -1,6 +1,6 @@
 " ctrlp
 NeoBundle "ctrlpvim/ctrlp.vim"
-NeoBundle "mattn/ctrlp-mark"
+" NeoBundle 'mattn/ctrlp-mark'
 
 " NeoBundle 'DavidEGx/ctrlp-smarttabs'
 nnoremap <Leader>p :CtrlPMixed<CR>
@@ -8,7 +8,7 @@ nnoremap ` :CtrlPMixed<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
 nnoremap <Leader>l :execute ':CtrlPLine ' . buffer_name('%')<CR>
 nnoremap <Leader>d :CtrlPDir<CR>
-nnoremap <Leader>m :CtrlPMark<CR>
+" nnoremap <Leader>m :CtrlPMark<CR>
 
 let g:ctrlp_map = ''
 let g:ctrlp_working_path_mode = 'ra'

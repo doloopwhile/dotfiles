@@ -19,3 +19,9 @@ alias gst='git status -s'
 alias gb='git branch'
 alias gbe='git be'
 alias gc='git co'
+alias c=git-c
+
+
+# export PATH=~/python/bin:$PATH
+# export GIT_HOOKER_PYTHON=~/python/bin/python
+

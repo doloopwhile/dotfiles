@@ -1,0 +1,31 @@
+#!/bin/bash
+get_backup_name() {
+  local b="${1}.bak"
+  if ! [ -e "${b}" ]; then
+    echo "${b}"
+    return 0
+  fi
+
+  for i in $(seq 2 100); do
+    local b="${1}.bak.${i}"
+    if ! [ -e "${b}" ]; then
+      echo "${b}"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+for f in "$@"; do
+  local name
+  name="$(get_backup_name "${f}")"
+  if [ $? -ne 0 ]; then
+    return 1
+  fi
+  mv "${f}" "${name}"
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+done
+exit 0
