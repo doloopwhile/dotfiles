@@ -1,10 +1,10 @@
 #!/bin/bash
 use_python() {
   local version=$1
-  local f
-  f="$(pythonz locate "$version")"
-  if [ $? -ne 0 ]; then
+  local d
+  d="$PYENV_ROOT/versions/$version/bin"
+  if ! [ -d "$d" ]; then
     return 1
   fi
-  PATH_add "$(dirname "$f")"
+  PATH_add "$d"
 }

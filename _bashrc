@@ -43,7 +43,7 @@ done
 
 
 # 便利なコマンド
-LS_OPTIONS=''
+LS_OPTIONS='-B -v --time-style=long-iso'
 
 if ls --color &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --color=auto"
@@ -53,8 +53,8 @@ if ls --group-directories-first &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --group-directories-first"
 fi
 
-alias ls='ls -B -v ${LS_OPTIONS}'
-alias ll='ls -B -v -l -h -H -p ${LS_OPTIONS}'
+alias ls='ls ${LS_OPTIONS}'
+alias ll='ls -l -h -H -p ${LS_OPTIONS}'
 
 if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
   eval "$(dircolors ~/.dircolors)"

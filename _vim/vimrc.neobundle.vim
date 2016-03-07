@@ -122,17 +122,11 @@ nmap ,= <Plug>(fontzoom-larger)
 nmap ,- <Plug>(fontzoom-smaller)
 nmap ,0 :<C-u>Fontzoom!<CR>
 
-NeoBundle 'Yggdroot/indentLine'
-let g:indentLine_faster = 1
-nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
-
 " True <=> False
 NeoBundle 'AndrewRadev/switch.vim'
 nnoremap <C-b> :Switch<CR>
 
 NeoBundle 'bling/vim-airline'
-
-NeoBundle 'terryma/vim-multiple-cursors'
 
 NeoBundle 'tpope/vim-fugitive'
 
