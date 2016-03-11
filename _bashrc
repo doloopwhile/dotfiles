@@ -242,3 +242,4 @@ function d() {
 
 alias ..='. ~/.bashrc'
 alias ...='gvim ~/.bashrc'
+
