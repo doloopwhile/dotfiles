@@ -231,5 +231,14 @@ function p() {
   cd "${HOME}/Documents/$f"
 }
 
+function d() {
+  local f
+  f="$({ echo '..'; find . -type 'd' -maxdepth 1 -mindepth 1 | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
+  if [ -z "$f" ]; then
+    return 1
+  fi
+  cd "$f"
+}
+
 alias ..='. ~/.bashrc'
 alias ...='gvim ~/.bashrc'
