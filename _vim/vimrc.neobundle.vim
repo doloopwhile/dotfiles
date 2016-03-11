@@ -11,11 +11,11 @@ let g:clever_f_chars_match_any_signs = ';' " ; はすべての記号にマッチ
 " YankRing.vim
 " http://nanasi.jp/articles/vim/yankring_vim.html
 " https://github.com/yuroyoro/dotfiles/blob/master/.vimrc.plugins_setting
-NeoBundle 'YankRing.vim'
-noremap <Leader>y :YRShow<CR>
-
+" NeoBundle 'YankRing.vim'
+" noremap <Leader>y :YRShow<CR>
 
 NeoBundle 'LeafCage/yankround.vim'
+let g:yankround_max_history = 100
 nnoremap <silent><Leader>y :<C-u>CtrlPYankRound<CR>
 nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)

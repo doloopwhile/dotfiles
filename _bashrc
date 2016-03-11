@@ -40,29 +40,34 @@ for h in "omoto-xubuntu" "m3-2015mac03.office.so-netm3.com"; do
   fi
 done
 
-
-
 # 便利なコマンド
-LS_OPTIONS='-B -v --time-style=long-iso'
+LS_COMMAND=ls
+if which gls &> /dev/null; then
+  LS_COMMAND=gls
+fi
 
-if ls --color &> /dev/null; then
+LS_OPTIONS='-B -v'
+
+if "${LS_COMMAND}" --time-style=long-iso &> /dev/null; then
+  LS_OPTIONS="${LS_OPTIONS} --time-style=long-iso"
+fi
+
+if "${LS_COMMAND}" --color &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --color=auto"
 fi
 
-if ls --group-directories-first &> /dev/null; then
+if "${LS_COMMAND}" --group-directories-first &> /dev/null; then
   LS_OPTIONS="${LS_OPTIONS} --group-directories-first"
 fi
 
-alias ls='ls ${LS_OPTIONS}'
-alias ll='ls -l -h -H -p ${LS_OPTIONS}'
+# shellcheck disable=SC2139
+alias ls="${LS_COMMAND} ${LS_OPTIONS}"
+# shellcheck disable=SC2139
+alias ll="${LS_COMMAND} -l -h -H -p ${LS_OPTIONS}"
 
 if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
   eval "$(dircolors ~/.dircolors)"
 fi
-
-function now() {
-  date +'%F %T'
-}
 
 alias cdpwd='cd $(pwd -P)'
 alias gr='egrep --ignore-case --color=auto --line-number --with-filename --binary-files=without-match'
@@ -76,10 +81,7 @@ alias savetemp='~/dotfiles/save-tempfile/save-tempfile.py'
 alias save-tempfile='~/dotfiles/save-tempfile/save-tempfile.py'
 
 function te {
-  cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
-}
-function v {
-  cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim
+  cat - | ~/dotfiles/save-tempfile/save-tempfile.py -c gvim "$@"
 }
 
 alias colorize='python3 ~/dotfiles/colorize.py'
@@ -93,7 +95,6 @@ function fexists() {
     fi
   done
 }
-
 
 function title() {
   echo -en "\033]0;$*\007"
@@ -121,7 +122,6 @@ set visible-status on
 if which direnv &> /dev/null; then
   eval "$(direnv hook bash)"
 fi
-
 
 # pbcopy
 if ! which pbcopy &> /dev/null; then
@@ -205,7 +205,8 @@ whichvi() {
   if [ -n "$1" ]; then
     which -a "$1" | fzf | xargs gvim
   else
-    find $(echo "$PATH" | tr ':' ' ') -type f -perm +111 2>/dev/null | fzf | xargs gvim
+    paths=($(echo "$PATH" | tr ':' ' '))
+    find "${paths[@]}" -type f -perm +111 2>/dev/null | fzf | xargs gvim
   fi
 }
 
@@ -213,25 +214,6 @@ whichvi() {
 # if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
 #   eval "$(boot2docker shellinit | grep -v Writing)"
 # fi
-
-## Enable GNU command in OSX
-if which gsed &> /dev/null; then
-  alias sed=gsed
-fi
-
-# postgres
-export PGDATA=/usr/local/var/postgres
-alias vrename=~/dotfiles/vrename/vrename.py
-export PATH=$PATH:$HOME/xsvutils/bin
-
-# Oracle
-if [ "$(hostname)" = "m3-2015mac03.office.so-netm3.com" ]; then
-  export ORACLE_HOME=$HOME/instantclient_11_2/
-  export PATH="$PATH:$ORACLE_HOME"
-  export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
-  export NLS_LANG=American_America.JA16EUCTILDE
-  export TNS_ADMIN=$ORACLE_HOME/admin/network
-fi
 
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
@@ -250,3 +232,4 @@ function p() {
 }
 
 alias ..='. ~/.bashrc'
+alias ...='gvim ~/.bashrc'

@@ -7,7 +7,8 @@ nnoremap <Leader>p :CtrlPMixed<CR>
 nnoremap ` :CtrlPMixed<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
 nnoremap <Leader>l :execute ':CtrlPLine ' . buffer_name('%')<CR>
-nnoremap <Leader>d :CtrlPDir<CR>
+
+" nnoremap <Leader>d :CtrlPDir<CR>
 " nnoremap <Leader>m :CtrlPMark<CR>
 
 let g:ctrlp_map = ''
