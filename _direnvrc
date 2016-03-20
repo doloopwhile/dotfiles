@@ -8,3 +8,5 @@ use_python() {
   fi
   PATH_add "$d"
 }
+
+# pyenv shell 2.7.11 3.5.1 3.2.6 3.3.6 3.4.4
