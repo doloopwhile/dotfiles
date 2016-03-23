@@ -131,6 +131,10 @@ function ps1_info() {
     echo -n " RAILS_ENV=$RAILS_ENV"
   fi
 
+  if [ -n "${DOCKER_MACHINE_NAME}" ]; then
+    echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[$(docker-machine ip "${DOCKER_MACHINE_NAME}")]"
+  fi
+
   echo
   echo -n ' '
 
