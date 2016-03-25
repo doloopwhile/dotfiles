@@ -1,4 +1,5 @@
 #!/bin/bash
 files=($(fzf))
 [ $? -eq 0 ] || exit 1
+echo "${files[@]}"
 git log "$@" -- "${files[@]}"

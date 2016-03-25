@@ -1,4 +1,6 @@
 #!/bin/bash
+. ~/dotfiles/direnv/docker.direnvrc
+
 use_python() {
   local version=$1
   local d

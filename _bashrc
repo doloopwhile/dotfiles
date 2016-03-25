@@ -242,5 +242,3 @@ function d() {
 
 alias ..='. ~/.bashrc'
 alias ...='gvim ~/.bashrc'
-
-eval "$(docker-machine env default)"
