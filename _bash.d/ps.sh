@@ -128,7 +128,13 @@ function ps1_info() {
   fi
 
   if [ -n "${RAILS_ENV-}" ]; then
-    echo -n " RAILS_ENV=$RAILS_ENV"
+    echo -n " RAILS_ENV=$(C white)$RAILS_ENV$(C reset)"
+  fi
+
+  if [ -n "${DOCKER_MACHINE_NAME}" ]; then
+    docker_host_ip="${DOCKER_HOST/tcp:\/\//}"
+    docker_host_ip="${docker_host_ip/:*/}"
+    echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[${docker_host_ip}]"
   fi
 
   echo

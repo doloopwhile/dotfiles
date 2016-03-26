@@ -5,10 +5,12 @@ source /etc/profile
 export PATH="/usr/local/bin:$PATH"
 
 # 分割した設定ファイルの読み込み
-for f in ~/.bash.d/*.sh; do
+shopt -s nullglob
+for f in ~/.bash.d/*.sh ~/dotfiles/_bash.d/*.sh; do
   echo loading "$f" >&2
   source "$f"
 done
+shopt -u nullglob
 
 export PATH="$HOME/bin:$PATH"
 
