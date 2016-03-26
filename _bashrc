@@ -6,6 +6,7 @@ export PATH="/usr/local/bin:$PATH"
 
 # 分割した設定ファイルの読み込み
 for f in ~/.bash.d/*.sh; do
+  echo loading "$f" >&2
   source "$f"
 done
 
@@ -241,4 +242,6 @@ function d() {
 alias ..='. ~/.bashrc'
 alias ...='gvim ~/.bashrc'
 
-eval "$(docker-machine env default)"
+if which gnome-open &> /dev/null; then
+  alias open=gnome-open
+fi
