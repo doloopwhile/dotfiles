@@ -166,12 +166,9 @@ ps1_path() {
 
 function ps1_info() {
   local END_CODE=$?
-  echo
   echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails ps1_docker)"
   ps1_path
   ps1_prompt
 }
 
-PS1='$(ps1_info)'
-
-export PS1
+export PS1='$(ps1_info)'
