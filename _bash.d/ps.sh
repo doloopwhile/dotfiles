@@ -22,133 +22,156 @@ MY_HOST_COLORS=(
   cyan
 )
 
+HOST_COLOR=
+if [ 0 -lt "${#MY_HOST_NAMES[@]}" ]; then
+  for (( i=0; i < ${#MY_HOST_NAMES[@]}; i++ )); do
+    if [ "$(hostname -s)" = "${MY_HOST_NAMES[$i]}" ]; then
+      export HOST_COLOR=${MY_HOST_COLORS[$i]}
+      break
+    fi
+  done
+fi
 
-function ps1_info() {
-  local END_CODE=$?
-
-  echo -n "${USER}@"
-
-  local HOST_COLOR=
-  if [ 0 -lt "${#MY_HOST_NAMES[@]}" ]; then
-    for (( i=0; i < ${#MY_HOST_NAMES[@]}; i++ )); do
-      if [ "$(hostname -s)" = "${MY_HOST_NAMES[$i]}" ]; then
-        export HOST_COLOR=${MY_HOST_COLORS[$i]}
-        break
-      fi
-    done
+ps1_svn() {
+  if ! svn info &> /dev/null; then
+    return
   fi
-  echo -n -e "$(C "${HOST_COLOR}")$(hostname -s)\033[0m "
 
-  echo -n "$(date +'%F %H:%M:%S')"
-  echo -n ' '
+  local modified=0
+  local untracked=0
 
-  echo -n '$?='
-  if [ 0 -ne ${END_CODE} ]; then
+  while read line; do
+    if [ "${line}" = '?' ]; then
+      untracked=1
+      continue
+    fi
+    if [ -n "${line}" ]; then
+      modified=1
+    fi
+  done < <(svn status | cut -b 1)
+
+  echo -n ' svn['
+  if [ $modified -ne 0 ]; then
+    echo -n "$(C red)M$(C reset)"
+  fi
+
+  if [ $untracked -ne 0 ]; then
+    echo -n "$(C red)?$(C reset)"
+  fi
+  echo -n ']'
+}
+
+ps1_rails() {
+  if [ -z "${RAILS_ENV-}" ]; then
+    return
+  fi
+  echo -n " RAILS_ENV=$(C white)$RAILS_ENV$(C reset)"
+}
+
+ps1_login() {
+  echo -n "${USER}@"
+  echo -n -e "$(C "${HOST_COLOR}")$(hostname -s)$(C reset)"
+}
+
+ps1_date() {
+  echo -n " $(date +'%F %H:%M:%S')"
+}
+
+ps1_exit_status() {
+  local END_CODE=$1
+  echo -n ' $?='
+  if [ 0 -ne "${END_CODE}" ]; then
     echo -n "$(C red)${END_CODE}$(C reset)"
   else
     echo -n 0
   fi
+}
 
-  if git status &>/dev/null; then
-    echo -n ' git['
-
-    local modified=0
-    local cached=0
-    local untracked=0
-
-    while read line; do
-      if [ "$line" = '_?_?_' ]; then
-        untracked=1
-        continue
-      fi
-
-      if [[ "$line" =~ ^_[^[:space:]]_.?_ ]]; then
-        cached=1
-      fi
-
-      if [[ "$line" =~ ^_._[^[:space:]]_ ]]; then
-        modified=1
-      fi
-    done < <(git st | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
-
-    if [ $modified -ne 0 ]; then
-      echo -n "$(C red)M$(C reset)"
-    fi
-
-    if [ $cached -ne 0 ]; then
-      echo -n "$(C green)C$(C reset)"
-    fi
-
-    if [ $untracked -ne 0 ]; then
-      echo -n "$(C red)?$(C reset)"
-    fi
-
-    echo -n ']='
-
-    local branch
-    branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
-    if [[ "${branch}" =~ ^bug- ]]; then
-      C green
-    elif [[ "${branch}" =~ ^atc- ]]; then
-      C cyan
-    elif [[ "${branch}" =~ ^tmp ]]; then
-      C magenta
-    elif [[ "${branch}" = "(detached from hde/master)" ]]; then
-      C yellow
-    else
-      C white
-    fi
-    echo -n "${branch}"
-    C reset
+ps1_git() {
+  if ! git status &>/dev/null; then
+    return
   fi
 
-  if svn info &> /dev/null; then
-    local modified=0
-    local untracked=0
+  echo -n ' git['
 
-    while read line; do
-      if [ "${line}" = '?' ]; then
-        untracked=1
-        continue
-      fi
-      if [ -n "${line}" ]; then
-        modified=1
-      fi
-    done < <(svn status | cut -b 1)
+  local modified=0
+  local cached=0
+  local untracked=0
 
-    echo -n ' svn['
-    if [ $modified -ne 0 ]; then
-      echo -n "$(C red)M$(C reset)"
+  while read line; do
+    if [ "$line" = '_?_?_' ]; then
+      untracked=1
+      continue
     fi
 
-    if [ $untracked -ne 0 ]; then
-      echo -n "$(C red)?$(C reset)"
+    if [[ "$line" =~ ^_[^[:space:]]_.?_ ]]; then
+      cached=1
     fi
-    echo -n ']'
+
+    if [[ "$line" =~ ^_._[^[:space:]]_ ]]; then
+      modified=1
+    fi
+  done < <(git st | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
+
+  if [ $modified -ne 0 ]; then
+    echo -n "$(C red)M$(C reset)"
   fi
 
-  if [ -n "${RAILS_ENV-}" ]; then
-    echo -n " RAILS_ENV=$(C white)$RAILS_ENV$(C reset)"
+  if [ $cached -ne 0 ]; then
+    echo -n "$(C green)C$(C reset)"
   fi
 
+  if [ $untracked -ne 0 ]; then
+    echo -n "$(C red)?$(C reset)"
+  fi
+
+  echo -n ']='
+
+  local branch
+  branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
+  if [[ "${branch}" =~ ^bug- ]]; then
+    C green
+  elif [[ "${branch}" =~ ^atc- ]]; then
+    C cyan
+  elif [[ "${branch}" =~ ^tmp ]]; then
+    C magenta
+  elif [[ "${branch}" = "(detached from hde/master)" ]]; then
+    C yellow
+  else
+    C white
+  fi
+  echo -n "${branch}"
+  C reset
+}
+
+function ps1_docker() {
   if [ -n "${DOCKER_MACHINE_NAME}" ]; then
     docker_host_ip="${DOCKER_HOST/tcp:\/\//}"
     docker_host_ip="${docker_host_ip/:*/}"
     echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[${docker_host_ip}]"
   fi
+}
 
+ps1_prompt() {
+  if [ "$(id -u)" -eq 0 ]; then
+    echo -n "$(C red)# $(C reset)"
+  else
+    echo -n "$(C "${HOST_COLOR}")$ $(C reset)"
+  fi
+}
+
+ps1_path() {
+  echo " $(pwd | sed -e "s|^${HOME%/}|~|")"
+}
+
+function ps1_info() {
+  local END_CODE=$?
   echo
-  echo -n ' '
-
-  pwd | sed -e "s|^${HOME%/}|~|"
+  echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails ps1_docker)"
+  ps1_path
+  ps1_prompt
 }
 
 PS1='$(ps1_info)'
-
-if [ "$(id -u)" -eq 0 ]; then
-  PS1="$PS1\n\\[\033[1;31m\\]#\\[\033[0m\\] " # rootの場合はシャープ
-else
-  PS1="$PS1\n\\[\033[1;${HOST_COLOR}m\\]$\\[\033[0m\\] " # 非rootユーザの場合はドル
-fi
 
 export PS1
