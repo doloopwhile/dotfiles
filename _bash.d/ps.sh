@@ -168,7 +168,15 @@ function ps1_info() {
   local END_CODE=$?
   echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails ps1_docker)"
   ps1_path
-  ps1_prompt
 }
 
-export PS1='$(ps1_info)'
+PS1='$(ps1_info)'
+
+# カーソル位置がずれる問題を回避するため、ここの部分だけは文字列連結にする
+if [ "$(id -u)" -eq 0 ]; then
+  PS1="$PS1\n$(C red)#$(C reset) " # rootの場合はシャープ
+else
+  PS1="$PS1\n$(C "${HOST_COLOR}")\$$(C reset) " # 非rootユーザの場合はドル
+fi
+
+export PS1
