@@ -7,7 +7,7 @@ export PATH="/usr/local/bin:$PATH"
 # 分割した設定ファイルの読み込み
 shopt -s nullglob
 for f in ~/.bash.d/*.sh ~/dotfiles/bash/*.sh; do
-  echo loading "$f" >&2
+  # echo loading "$f" >&2
   source "$f"
 done
 shopt -u nullglob
