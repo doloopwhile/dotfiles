@@ -176,7 +176,7 @@ PS1='$(ps1_info)'
 if [ "$(id -u)" -eq 0 ]; then
   PS1="$PS1\n$(C red)#$(C reset) " # rootの場合はシャープ
 else
-  PS1="$PS1\n$(C "${HOST_COLOR}")\$$(C reset) " # 非rootユーザの場合はドル
+  PS1="$PS1\n\[$(C "${HOST_COLOR}")\]\$\[$(C reset)\] " # 非rootユーザの場合はドル
 fi
 
 export PS1
