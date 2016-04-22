@@ -1,0 +1,6 @@
+#!/bin/bash
+{
+  find . -name '*.un~';
+  find . -name '.DS_Store';
+} | xargs rm -f
+find . -type d -exec sh -c '[ -z "$(ls -A "$1")" ] && rmdir $1' {} \;
