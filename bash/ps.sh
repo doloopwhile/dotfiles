@@ -144,8 +144,17 @@ ps1_git() {
   C reset
 }
 
-function ps1_docker() {
+ps1_java() {
+  if [ -n "${JAVA_HOME}" ]; then
+    local version
+    version=$(java -version |& head -1 | grep -o '".*"' | tr -d '"' | grep -o '.\..')
+    echo -n " java=$(C white)${version}$(C reset)"
+  fi
+}
+
+ps1_docker() {
   if [ -n "${DOCKER_MACHINE_NAME}" ]; then
+    local docker_host_ip
     docker_host_ip="${DOCKER_HOST/tcp:\/\//}"
     docker_host_ip="${docker_host_ip/:*/}"
     echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[${docker_host_ip}]"
@@ -166,7 +175,7 @@ ps1_path() {
 
 function ps1_info() {
   local END_CODE=$?
-  echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails ps1_docker)"
+  echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails)$(ps1_java)$(ps1_docker)"
   ps1_path
 }
 

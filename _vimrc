@@ -11,11 +11,11 @@ let mapleader=" "
 set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 let g:neobundle#types#git#default_protocol = 'git'
-source ~/.vim/vimrc.neobundle.vim
-source ~/.vim/vimrc.syntastic.vim
-source ~/.vim/vimrc.neobundle.colorscheme.vim
-source ~/.vim/vimrc.neobundle.ft.vim
-source ~/.vim/vimrc.ctrlp.vim
+" source ~/.vim/vimrc.neobundle.vim
+" source ~/.vim/vimrc.syntastic.vim
+" source ~/.vim/vimrc.neobundle.colorscheme.vim
+" source ~/.vim/vimrc.neobundle.ft.vim
+" source ~/.vim/vimrc.ctrlp.vim
 call neobundle#end()
 "******************************************************************************
 " Highlightings
@@ -144,6 +144,8 @@ set visualbell t_vb=
 " 自動改行を無効化
 set formatoptions=q
 
+" IME
+set imdisable
 "******************************************************************************
 " Key Mappings
 "******************************************************************************
@@ -474,6 +476,7 @@ command! -nargs=1 -complete=file Rename file <args> | call delete(expand('#'))
 nmap ,c :<C-u>Clone <C-R>%
 nmap ,r :<C-u>Rename <C-R>%
 nmap ,d :<C-u>Trash
+
 " ******************************************************************************
 " ftplugins
 " ******************************************************************************

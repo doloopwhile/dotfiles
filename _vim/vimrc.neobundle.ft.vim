@@ -1,6 +1,6 @@
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'JavaScript-syntax'
-NeoBundle 'vim-ruby/vim-ruby'
+" NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-cucumber'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'kannokanno/previm'
