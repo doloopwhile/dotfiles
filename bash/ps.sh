@@ -1,25 +1,27 @@
 #!/bin/bash
 # PS1の設定
 
-function C() {
+C() {
   case $1 in
-  black)    echo -e -n "\033[1;30m";;
-  red)      echo -e -n "\033[1;31m";;
-  green)    echo -e -n "\033[1;32m";;
-  yellow)   echo -e -n "\033[1;33m";;
-  blue)     echo -e -n "\033[1;34m";;
-  magenta)  echo -e -n "\033[1;35m";;
-  cyan)     echo -e -n "\033[1;36m";;
-  white)    echo -e -n "\033[1;37m";;
-  *) echo -e -n "\033[0m";;
+    black)    echo -e -n "\e[1;30m";;
+    red)      echo -e -n "\e[1;31m";;
+    green)    echo -e -n "\e[1;32m";;
+    yellow)   echo -e -n "\e[1;33m";;
+    blue)     echo -e -n "\e[1;34m";;
+    magenta)  echo -e -n "\e[1;35m";;
+    cyan)     echo -e -n "\e[1;36m";;
+    white)    echo -e -n "\e[1;37m";;
+    *) echo -e -n "\e[0m";;
   esac
 }
 
 MY_HOST_NAMES=(
   m3-2015mac03
+  omoto-xubuntu
 )
 MY_HOST_COLORS=(
   cyan
+  green
 )
 
 HOST_COLOR=
@@ -172,11 +174,12 @@ function ps1_info() {
 
 PS1='$(ps1_info)'
 
+
 # カーソル位置がずれる問題を回避するため、ここの部分だけは文字列連結にする
 if [ "$(id -u)" -eq 0 ]; then
-  PS1="$PS1\n$(C red)#$(C reset) " # rootの場合はシャープ
+  PS1="${PS1}\n\[$(C red)\]#\[$(red)\] " # rootの場合はシャープ
 else
-  PS1="$PS1\n$(C "${HOST_COLOR}")\$$(C reset) " # 非rootユーザの場合はドル
+  PS1="${PS1}\n\[$(C ${HOST_COLOR})\]\$\[$(C reset)\] " # 非rootユーザの場合はドル
 fi
 
 export PS1

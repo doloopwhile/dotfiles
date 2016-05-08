@@ -31,6 +31,7 @@ names=(
   zshrc
   cheatsheets
   peco
+  npmrc
 )
 
 

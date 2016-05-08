@@ -3,6 +3,7 @@ source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
 export PATH="/usr/local/bin:$PATH"
+export PATH="$PATH:$HOME/node_modules/bin"
 
 # 分割した設定ファイルの読み込み
 shopt -s nullglob
@@ -219,9 +220,9 @@ whichvi() {
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
-function p() {
+p() {
   local f;
-  f="$({ echo -n 'Downloads'; find "$HOME/Documents/" -type 'd' -maxdepth 1 | sed -e 's|.*/||' | sort ; } | fzf)"
+  f="$({ echo -n 'Downloads'; find -type 'd' -maxdepth 1 "$HOME/Documents/" | sed -e 's|.*/||' | sort ; } | fzf)"
   if [ -z "$f" ]; then
     return 1
   fi
@@ -232,9 +233,9 @@ function p() {
   cd "${HOME}/Documents/$f"
 }
 
-function d() {
+d() {
   local f
-  f="$({ echo '..'; find . -type 'd' -maxdepth 1 -mindepth 1 | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
+  f="$({ echo '..'; find -type 'd' -maxdepth 1 -mindepth 1 . | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
   if [ -z "$f" ]; then
     return 1
   fi
