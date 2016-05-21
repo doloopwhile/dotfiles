@@ -136,7 +136,7 @@ if which fzf &> /dev/null; then
 
   p() {
     local f;
-    f="$({ echo -n 'Downloads'; find -maxdepth 1 -type 'd' "$HOME/Documents/" | sed -e 's|.*/||' | sort ; } | fzf)"
+    f="$({ echo -n 'Downloads'; find "$HOME/Documents/" -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort ; } | fzf)"
     if [ -z "$f" ]; then
       return 1
     fi
@@ -149,7 +149,7 @@ if which fzf &> /dev/null; then
 
   d() {
     local f
-    f="$({ echo '..'; find -type 'd' -maxdepth 1 -mindepth 1 . | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
+    f="$({ echo '..'; find . -maxdepth 1 -mindepth 1 -type 'd' | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
     if [ -z "$f" ]; then
       return 1
     fi
