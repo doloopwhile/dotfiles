@@ -3,9 +3,10 @@ source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
 export PATH="/usr/local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/.cabal/bin"
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/node_modules/bin"
+export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/dotfiles/bin"
 
 # 分割した設定ファイルの読み込み
@@ -36,35 +37,6 @@ for h in "omoto-xubuntu" "m3-2015mac03.office.so-netm3.com"; do
     stty stop undef
   fi
 done
-
-# 便利なコマンド
-LS_COMMAND=ls
-if which gls &> /dev/null; then
-  LS_COMMAND=gls
-fi
-
-LS_OPTIONS='-B -v'
-
-if "${LS_COMMAND}" --time-style=long-iso &> /dev/null; then
-  LS_OPTIONS="${LS_OPTIONS} --time-style=long-iso"
-fi
-
-if "${LS_COMMAND}" --color &> /dev/null; then
-  LS_OPTIONS="${LS_OPTIONS} --color=auto"
-fi
-
-if "${LS_COMMAND}" --group-directories-first &> /dev/null; then
-  LS_OPTIONS="${LS_OPTIONS} --group-directories-first"
-fi
-
-# shellcheck disable=SC2139
-alias ls="${LS_COMMAND} ${LS_OPTIONS}"
-# shellcheck disable=SC2139
-alias ll="${LS_COMMAND} -l -h -H -p ${LS_OPTIONS}"
-
-if [ -f ~/.dircolors ] && which dircolors &> /dev/null; then
-  eval "$(dircolors ~/.dircolors)"
-fi
 
 alias cdpwd='cd $(pwd -P)'
 alias gr='egrep --ignore-case --color=auto --line-number --with-filename --binary-files=without-match'
@@ -112,11 +84,6 @@ set -o emacs
 set mark-directories on
 set show-all-if-ambiguous on
 set visible-status on
-
-# direnv
-if which direnv &> /dev/null; then
-  eval "$(direnv hook bash)"
-fi
 
 # pbcopy
 if ! which pbcopy &> /dev/null; then
@@ -173,6 +140,31 @@ if which fzf &> /dev/null; then
   bind -x '"\C-r": _replace_by_history'
   bind    '"\C-xr": reverse-search-history'
   bind -x '"`": _find_and_edit'
+
+  # fzf
+  export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
+
+  p() {
+    local f;
+    f="$({ echo -n 'Downloads'; find "$HOME/Documents/" -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort ; } | fzf)"
+    if [ -z "$f" ]; then
+      return 1
+    fi
+    if [ "$f" = "Downloads" ]; then
+      cd "$HOME/Downloads"
+      return
+    fi
+    cd "${HOME}/Documents/$f"
+  }
+
+  d() {
+    local f
+    f="$({ echo '..'; find . -maxdepth 1 -mindepth 1 -type 'd' | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
+    if [ -z "$f" ]; then
+      return 1
+    fi
+    cd "$f"
+  }
 fi
 
 export PATH=$PATH:/usr/local/haskell/ghc-7.8.3-x86_64/bin/
@@ -200,37 +192,6 @@ whichvi() {
     find "${paths[@]}" -type f -perm +111 2>/dev/null | fzf | xargs gvim
   fi
 }
-
-## boot2docker
-# if which boot2docker &>/dev/null && [ "$(boot2docker status)" = "running" ] ; then
-#   eval "$(boot2docker shellinit | grep -v Writing)"
-# fi
-
-# fzf
-export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
-
-function p() {
-  local f;
-  f="$({ echo -n 'Downloads'; find "$HOME/Documents/" -type 'd' -maxdepth 1 | sed -e 's|.*/||' | sort ; } | fzf)"
-  if [ -z "$f" ]; then
-    return 1
-  fi
-  if [ "$f" = "Downloads" ]; then
-    cd "$HOME/Downloads"
-    return
-  fi
-  cd "${HOME}/Documents/$f"
-}
-
-function d() {
-  local f
-  f="$({ echo '..'; find . -type 'd' -maxdepth 1 -mindepth 1 | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
-  if [ -z "$f" ]; then
-    return 1
-  fi
-  cd "$f"
-}
-
 alias ..='. ~/.bashrc'
 alias ...='gvim ~/.bashrc'
 
