@@ -1,6 +1,6 @@
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'JavaScript-syntax'
-" NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-cucumber'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'kannokanno/previm'
@@ -14,8 +14,8 @@ NeoBundle 'syngan/vim-pukiwiki'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'mustache/vim-mustache-handlebars'
 NeoBundle 'nblock/vim-dokuwiki'
+NeoBundle 'velocity.vim'
 
-NeoBundle "velocity.vim"
 exe "set rtp+=".globpath($HOME, "/gocode/src/github.com/nsf/gocode/vim")
 augroup vimrcGo
   autocmd!

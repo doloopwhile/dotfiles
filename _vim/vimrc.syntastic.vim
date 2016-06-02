@@ -27,12 +27,15 @@ let g:syntastic_scala_checkers=[]
 
 let g:syntastic_javascript_checkers=['jscs']
 
+" let g:syntastic_markdown_mdl_exec='markdownlint'
+" let g:syntastic_markdown_mdl_args=''
+
 " noremap <silent> <buffer> <expr> j <SID>jk_location_list(v:count1)
 " noremap <silent> <buffer> <expr> k <SID>jk_location_list(-v:count1)
 
 " wrap :cnext/:cprevious and :lnext/:lprevious
 "http://stackoverflow.com/questions/27198612/vim-location-list-how-to-go-to-first-location-if-at-last-location
-noremap [ :call LocationListNextWrap()<CR>
+noremap <silent> ' :call LocationListNextWrap()<CR>
 function! LocationListNextWrap()
   try
     execute "lnext"

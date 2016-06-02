@@ -11,11 +11,11 @@ let mapleader=" "
 set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 let g:neobundle#types#git#default_protocol = 'git'
-" source ~/.vim/vimrc.neobundle.vim
-" source ~/.vim/vimrc.syntastic.vim
-" source ~/.vim/vimrc.neobundle.colorscheme.vim
-" source ~/.vim/vimrc.neobundle.ft.vim
-" source ~/.vim/vimrc.ctrlp.vim
+source ~/.vim/vimrc.neobundle.vim
+source ~/.vim/vimrc.syntastic.vim
+source ~/.vim/vimrc.neobundle.colorscheme.vim
+source ~/.vim/vimrc.neobundle.ft.vim
+source ~/.vim/vimrc.ctrlp.vim
 call neobundle#end()
 "******************************************************************************
 " Highlightings
@@ -237,6 +237,32 @@ nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
 " inoremap ( ()<Left>
 
 nnoremap ,q q
+
+inoremap <D-a> <NOP>
+inoremap <D-b> <NOP>
+inoremap <D-c> <NOP>
+inoremap <D-d> <NOP>
+inoremap <D-e> <NOP>
+inoremap <D-f> <NOP>
+inoremap <D-g> <NOP>
+inoremap <D-h> <NOP>
+inoremap <D-i> <NOP>
+inoremap <D-j> <NOP>
+inoremap <D-k> <NOP>
+inoremap <D-l> <NOP>
+inoremap <D-m> <NOP>
+inoremap <D-n> <NOP>
+inoremap <D-o> <NOP>
+inoremap <D-p> <NOP>
+inoremap <D-q> <NOP>
+inoremap <D-r> <NOP>
+inoremap <D-s> <NOP>
+inoremap <D-t> <NOP>
+inoremap <D-u> <NOP>
+inoremap <D-w> <NOP>
+inoremap <D-x> <NOP>
+inoremap <D-y> <NOP>
+inoremap <D-z> <NOP>
 
 "******************************************************************************
 " Mark

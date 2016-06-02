@@ -3,38 +3,32 @@ source /etc/profile
 
 # brewなどでインストールしたコマンドを優先
 export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$PATH:$HOME/.cabal/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/dotfiles/bin"
 
 # 分割した設定ファイルの読み込み
-shopt -s nullglob
-for f in ~/.bash.d/*.sh ~/dotfiles/bash/*.sh; do
-  # echo loading "$f" >&2
-  source "$f"
-done
-shopt -u nullglob
+source ~/dotfiles/bash/docker.sh
+source ~/dotfiles/bash/git.sh
+source ~/dotfiles/bash/go.sh
+source ~/dotfiles/bash/heroku.sh
+source ~/dotfiles/bash/node.sh
+source ~/dotfiles/bash/oracle.sh
+source ~/dotfiles/bash/osx.sh
+source ~/dotfiles/bash/postgres.sh
+source ~/dotfiles/bash/ps.sh
+source ~/dotfiles/bash/python.sh
+source ~/dotfiles/bash/resin.sh
+source ~/dotfiles/bash/ruby.sh
+source ~/dotfiles/bash/vi.sh
 
-export PATH="$HOME/bin:$PATH"
 
 # Lang
 export LAMG=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
 # vimをカラフルにする
 export TERM=xterm-256color
-
-# エディタ関連
-export EDITOR=vi
-if which vim &> /dev/null; then
-  export EDITOR=vim
-  alias vim='vim -p'
-  alias vi='vim -p'
-  export SVN_EDITOR=vim
-fi
-
-if [ -e "/Applications/MacVim.app" ]; then
-  alias vi=/Applications/MacVim.app/Contents/MacOS/Vim
-  alias vim=/Applications/MacVim.app/Contents/MacOS/Vim
-  export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-  export SVN_EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-fi
 
 # Ctrl+S を無効
 for h in "omoto-xubuntu" "m3-2015mac03.office.so-netm3.com"; do
@@ -191,10 +185,6 @@ json2yaml() {
   ruby -ryaml -rjson -e "print JSON.load(STDIN).to_yaml" -
 }
 
-export PATH=$PATH:~/.cabal/bin
-export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/dotfiles/bin
-
 alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 
 fe() {
@@ -219,7 +209,6 @@ whichvi() {
 # fzf
 export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
-alias b='git br'
 function p() {
   local f;
   f="$({ echo -n 'Downloads'; find "$HOME/Documents/" -type 'd' -maxdepth 1 | sed -e 's|.*/||' | sort ; } | fzf)"
@@ -248,3 +237,4 @@ alias ...='gvim ~/.bashrc'
 if which gnome-open &> /dev/null; then
   alias open=gnome-open
 fi
+export ANSIBLE_NOCOWS=yes

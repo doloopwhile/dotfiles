@@ -142,6 +142,7 @@ ps1_git() {
   fi
   echo -n "${branch}"
   C reset
+  echo -n ":$(git log --pretty=format:'%h' -n 1)"
 }
 
 ps1_java() {
