@@ -6,5 +6,7 @@ if [ $# -ne 1 ]; then
 fi
 
 base="$1"
+echo 'git log ${base}..' >&2
 git log --pretty="%Cgreen+ %Creset%C(auto)%h%Creset %s" "${base}.."
+echo 'git log ..${base}' >&2
 git log --pretty="%Cred- %Creset%C(auto)%h%Creset %s" "..${base}"

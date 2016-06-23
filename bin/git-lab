@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+from argparse import ArgumentParser
+
+def main():
+    parser = ArgumentParser()
+    subparsers = parser.add_subparsers(help='sub-command help')
+
+    subparsers.add_parser('browse')
+
+
+main()

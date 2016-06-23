@@ -9,21 +9,39 @@ export PATH="$PATH:$HOME/node_modules/bin"
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/dotfiles/bin"
 
+# コマンド履歴の共有
+function title() {
+  echo -en "\033]0;$*\007"
+}
+
+function share_history {
+  history -a
+  history -c
+  history -r
+}
+# direnvがPROMPT_COMMANDを使うので、先に定義する必要がある。
+PROMPT_COMMAND='share_history;title "${USER}@${HOSTNAME%%.*}"'
+shopt -u histappend
+export HISTSIZE=10000
+export HISTTIMEFORMAT='%Y-%m-%dT%T%z '
+
 # 分割した設定ファイルの読み込み
+
+source ~/dotfiles/bash/direnv.sh
 source ~/dotfiles/bash/docker.sh
 source ~/dotfiles/bash/git.sh
 source ~/dotfiles/bash/go.sh
 source ~/dotfiles/bash/heroku.sh
+source ~/dotfiles/bash/ls.sh
 source ~/dotfiles/bash/node.sh
 source ~/dotfiles/bash/oracle.sh
 source ~/dotfiles/bash/osx.sh
 source ~/dotfiles/bash/postgres.sh
-source ~/dotfiles/bash/ps.sh
+source ~/dotfiles/bash/ps.sh 
 source ~/dotfiles/bash/python.sh
 source ~/dotfiles/bash/resin.sh
 source ~/dotfiles/bash/ruby.sh
 source ~/dotfiles/bash/vi.sh
-
 
 # Lang
 export LAMG=en_US.UTF-8
@@ -62,22 +80,6 @@ function fexists() {
     fi
   done
 }
-
-function title() {
-  echo -en "\033]0;$*\007"
-}
-
-# コマンド履歴の共有
-function share_history {
-  history -a
-  history -c
-  history -r
-}
-
-PROMPT_COMMAND='share_history;title "${USER}@${HOSTNAME%%.*}"'
-shopt -u histappend
-export HISTSIZE=10000
-export HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 
 # シェルの細かい設定
 set -o emacs

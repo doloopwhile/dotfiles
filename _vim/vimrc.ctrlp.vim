@@ -5,6 +5,7 @@ NeoBundle "ctrlpvim/ctrlp.vim"
 " NeoBundle 'DavidEGx/ctrlp-smarttabs'
 nnoremap <Leader>p :CtrlPMixed<CR>
 nnoremap ` :CtrlPMixed<CR>
+nnoremap <Leader>z :CtrlPClearCache<CR>
 nnoremap <Leader>m :CtrlPMRU<CR>
 nnoremap <Leader>l :execute ':CtrlPLine ' . buffer_name('%')<CR>
 

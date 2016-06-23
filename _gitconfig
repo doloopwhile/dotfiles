@@ -3,6 +3,11 @@
 [color]
     ui = auto
 
+[pager]
+	log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
+
 [alias]
   b = branch -v
   br = branch -v
@@ -37,7 +42,7 @@
   rhh = reset HEAD^
   root = rev-parse --show-toplevel
   showf = show --name-only
-  st = status -s
+  st = status -s --ignore-submodules
   updated=commit -a -m updated
   vimdiff=difftool --tool=gvimdiff
   shallow-clone = clone --depth 1 --single-branch
@@ -61,6 +66,7 @@
 [diff]
 	tool = meld
 	algorithm = histogram
+  compactionHeuristic = true
 
 [mergetool]
   keepBackup = false

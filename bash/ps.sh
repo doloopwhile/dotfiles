@@ -70,6 +70,20 @@ ps1_rails() {
   echo -n " RAILS_ENV=$(C white)$RAILS_ENV$(C reset)"
 }
 
+ps1_play() {
+  if [ -z "${PLAY_ENV-}" ]; then
+    return
+  fi
+  echo -n " PLAY_ENV=$(C white)$PLAY_ENV$(C reset)"
+}
+
+ps1_skinny() {
+  if [ -z "${SKINNY_ENV-}" ]; then
+    return
+  fi
+  echo -n " SKINNY_ENV=$(C white)$SKINNY_ENV$(C reset)"
+}
+
 ps1_login() {
   echo -n "${USER}@"
   echo -n -e "$(C "${HOST_COLOR}")$(hostname -s)$(C reset)"
@@ -90,7 +104,7 @@ ps1_exit_status() {
 }
 
 ps1_git() {
-  if ! git status &>/dev/null; then
+  if ! git status --ignore-submodules &>/dev/null; then
     return
   fi
 
@@ -113,7 +127,7 @@ ps1_git() {
     if [[ "$line" =~ ^_._[^[:space:]]_ ]]; then
       modified=1
     fi
-  done < <(git st | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
+  done < <(git status --ignore-submodules --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
 
   if [ $modified -ne 0 ]; then
     echo -n "$(C red)M$(C reset)"
@@ -125,6 +139,10 @@ ps1_git() {
 
   if [ $untracked -ne 0 ]; then
     echo -n "$(C red)?$(C reset)"
+  fi
+
+  if [ "$(git stash list | wc -l)" -gt 0 ]; then
+    echo -n "$(C cyan)S$(C reset)"
   fi
 
   echo -n ']='
@@ -156,11 +174,19 @@ ps1_java() {
 }
 
 ps1_docker() {
-  if [ -n "${DOCKER_MACHINE_NAME}" ]; then
-    local docker_host_ip
-    docker_host_ip="${DOCKER_HOST/tcp:\/\//}"
-    docker_host_ip="${docker_host_ip/:*/}"
-    echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[${docker_host_ip}]"
+  if [ -z "${DOCKER_MACHINE_NAME}" ]; then
+    return
+  fi
+
+  local docker_host_ip
+  docker_host_ip="${DOCKER_HOST/tcp:\/\//}"
+  docker_host_ip="${docker_host_ip/:*/}"
+  # echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[${docker_host_ip}]"
+  echo -n " docker=[${docker_host_ip}]"
+
+  if [ -n "${COMPOSE_FILE}" ]; then
+    echo -n ","
+    echo -n docker-compose.qa-hosted.yml | sed -e 's/^docker-compose.//' -e 's/.yml$//'
   fi
 }
 
@@ -178,7 +204,7 @@ ps1_path() {
 
 function ps1_info() {
   local END_CODE=$?
-  echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails)$(ps1_java)$(ps1_docker)"
+  echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails)$(ps1_skinny)$(ps1_play)$(ps1_java)$(ps1_docker)"
   ps1_path
 }
 

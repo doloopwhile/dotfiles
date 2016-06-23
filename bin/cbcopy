@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if which pbcopy &> /dev/null; then
+  if [ "$#" -eq 0 ]; then
+    pbcopy < /dev/stdin
+  else
+    cat "$@" | pbcopy
+  fi
+fi

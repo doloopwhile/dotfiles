@@ -11,5 +11,5 @@ use_docker-machine() {
   fi
 
   docker-machine start "$@"
-  eval "$(docker-machine env)"
+  eval "$(docker-machine env "$@")"
 }

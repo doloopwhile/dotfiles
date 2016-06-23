@@ -1,6 +1,7 @@
 #!/bin/bash
 #git関連
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
+export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 export PATH=$PATH:$HOME/.git-hooker/bin
 export GITHUB_USER=doloopwhile
 if which hub &> /dev/null; then
@@ -20,8 +21,3 @@ alias gb='git branch'
 alias gbe='git be'
 alias gc='git co'
 alias c=git-c
-
-
-# export PATH=~/python/bin:$PATH
-# export GIT_HOOKER_PYTHON=~/python/bin/python
-
