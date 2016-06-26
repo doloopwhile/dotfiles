@@ -1,7 +1,7 @@
 #!/bin/sh
 use_docker-machine() {
-  if [ $# -ne 1 ]; then
-    echo "usage: use_docker-machine MACHINE" >&2
+  if [ $# -gt 1 ]; then
+    echo "usage: use_docker-machine [MACHINE]" >&2
     return 1
   fi
 
@@ -10,6 +10,6 @@ use_docker-machine() {
     return 1
   fi
 
-  docker-machine start "$1"
-  eval "$(docker-machine env)"
+  docker-machine start "$@"
+  eval "$(docker-machine env "$@")"
 }

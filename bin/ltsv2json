@@ -1,10 +1,9 @@
 #!/bin/sh
 while read line; do
   echo "$line" | jq -s -R '
-    split("\n")
-    | map(
-      split("\t")
-      | map(split(":") | { "key":.[0], "value":.[1:] | join(":") })
-      | from_entries
-    )'
+    sub("\n$"; "")
+    | split("\t")
+    | map(split(":") | { "key":.[0], "value":.[1:] | join(":") })
+    | from_entries
+  '
 done

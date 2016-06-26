@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+op = OptionParser.new
+options = {
+  directory: nil,
+  branch: nil
+}
+
+op.banner += ' '
+op.on('-d', '--directory PATH', "Directory where check out the repository)")  do |v|
+  opts[:directory] = v
+end
+
+op.on('-d', '--directory PATH', "Directory where check out the repository)")  do |v|
+  opts[:directory] = v
+end
+
+op.
+url=ARGV

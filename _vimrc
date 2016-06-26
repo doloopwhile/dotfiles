@@ -144,6 +144,8 @@ set visualbell t_vb=
 " 自動改行を無効化
 set formatoptions=q
 
+" IME
+set imdisable
 "******************************************************************************
 " Key Mappings
 "******************************************************************************
@@ -235,6 +237,32 @@ nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
 " inoremap ( ()<Left>
 
 nnoremap ,q q
+
+inoremap <D-a> <NOP>
+inoremap <D-b> <NOP>
+inoremap <D-c> <NOP>
+inoremap <D-d> <NOP>
+inoremap <D-e> <NOP>
+inoremap <D-f> <NOP>
+inoremap <D-g> <NOP>
+inoremap <D-h> <NOP>
+inoremap <D-i> <NOP>
+inoremap <D-j> <NOP>
+inoremap <D-k> <NOP>
+inoremap <D-l> <NOP>
+inoremap <D-m> <NOP>
+inoremap <D-n> <NOP>
+inoremap <D-o> <NOP>
+inoremap <D-p> <NOP>
+inoremap <D-q> <NOP>
+inoremap <D-r> <NOP>
+inoremap <D-s> <NOP>
+inoremap <D-t> <NOP>
+inoremap <D-u> <NOP>
+inoremap <D-w> <NOP>
+inoremap <D-x> <NOP>
+inoremap <D-y> <NOP>
+inoremap <D-z> <NOP>
 
 "******************************************************************************
 " Mark
@@ -474,6 +502,7 @@ command! -nargs=1 -complete=file Rename file <args> | call delete(expand('#'))
 nmap ,c :<C-u>Clone <C-R>%
 nmap ,r :<C-u>Rename <C-R>%
 nmap ,d :<C-u>Trash
+
 " ******************************************************************************
 " ftplugins
 " ******************************************************************************

@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require 'csv'
+
+ARGF.each_line do |line|
+  puts CSV.generate_line(line.chomp.split("\t"))
+end

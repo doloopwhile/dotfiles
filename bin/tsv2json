@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'json'
+
+first_line = ARGF.gets
+keys = first_line.chomp.split("\t")
+
+arr = []
+while line = ARGF.gets
+  values = line.chomp.split("\t")
+  arr << keys.zip(values).to_h
+end
+JSON.dump(arr, STDOUT)

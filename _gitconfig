@@ -3,8 +3,12 @@
 [color]
     ui = auto
 
-[alias]
+[pager]
+	log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
 
+[alias]
   b = branch -v
   br = branch -v
   cf = config --edit --global
@@ -12,7 +16,6 @@
   ci = commit
   cin = commit --no-verify
   co = checkout
-  cb = checkout -b
   d = diff
   dc = diff --cached
   delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
@@ -23,14 +26,12 @@
   getbranch = symbolic-ref --short HEAD
   gr = grep --ignore-case -n
   graph = log --graph --pretty=format:'%C(auto)%h %C(auto)%d %C(auto)%an %C(reset) %s' --abbrev-commit
-  grl = grep --ignore-case -n --name-only
   he = hook edit pre-commit
   hi = hook install pre-commit
   hl = hook show pre-commit
   ht = hook test pre-commit
   hu = hook update pre-commit
   mt=mergetool -y
-  mylog = log --author='OMOTO Kenji'
   now=commit -a -m tmp --no-verify
   pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
   r = reset
@@ -41,12 +42,15 @@
   rhh = reset HEAD^
   root = rev-parse --show-toplevel
   showf = show --name-only
-  st = status -s
+  st = status -s --ignore-submodules
   updated=commit -a -m updated
   vimdiff=difftool --tool=gvimdiff
   shallow-clone = clone --depth 1 --single-branch
 # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
   r = reset
+  sh = show
+  p = push
+  pf = push --force-with-lease
 
 [core]
     autocrlf = input
@@ -62,6 +66,7 @@
 [diff]
 	tool = meld
 	algorithm = histogram
+  compactionHeuristic = true
 
 [mergetool]
   keepBackup = false
