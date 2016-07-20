@@ -12,6 +12,8 @@ set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 let g:neobundle#types#git#default_protocol = 'git'
 source ~/.vim/vimrc.neobundle.vim
+source ~/.vim/vimrc.surround.vim
+source ~/.vim/vimrc.nerdtree.vim
 source ~/.vim/vimrc.syntastic.vim
 source ~/.vim/vimrc.neobundle.colorscheme.vim
 source ~/.vim/vimrc.neobundle.ft.vim
@@ -190,6 +192,7 @@ noremap <Insert> <NOP>
 nnoremap ,h 0
 nnoremap ,l $
 nnoremap / /\v
+nnoremap ? /\v<C-R>*
 nnoremap ttt <ESC>:tabnew<CR>
 nnoremap ttc <ESC>:%y<CR><ESC>:tabnew<CR>P
 command!-nargs=0 Vimrc tabedit ~/.vimrc
@@ -238,6 +241,9 @@ nnoremap <Leader>t <ESC>:TrimTailingSpace<CR>
 
 nnoremap ,q q
 
+nnoremap <C-e> <ESC>:tabedit . <CR>
+
+" Mac で誤入力を防ぐ
 inoremap <D-a> <NOP>
 inoremap <D-b> <NOP>
 inoremap <D-c> <NOP>

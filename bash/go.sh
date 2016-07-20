@@ -20,8 +20,8 @@ function ghql() {
 #     colorize SKIP -f cyan --bold
 # }
 
-gotest-color() {
-  colorize --bold -f green '\bPASS\b' | \
-    colorize --bold -f cyan '\bRUN\b' | \
-    colorize --bold -f red '\bFAIL\b'
-}
+# gotest-color() {
+#   colorize --bold -f green '\bPASS\b' | \
+#     colorize --bold -f cyan '\bRUN\b' | \
+#     colorize --bold -f red '\bFAIL\b'
+# }

@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e -u
+if [ $# -ne 1 ]; then
+  echo 'git distance BRANCH' >&2
+  exit 1
+fi
+
+base="$1"
+echo "git log ${base}.." >&2
+git --no-pager log --pretty="%Cgreen+ %Creset%C(auto)%h%Creset %s" "${base}.."
+echo "git log ..${base}" >&2
+git --no-pager log --pretty="%Cred- %Creset%C(auto)%h%Creset %s" "..${base}"

@@ -1,8 +1,19 @@
 #!/bin/bash
+if [ "$#" -eq 0 ]; then
+  echo 'git sed [SED-COMMANDS]' >&2
+  exit 1
+fi
+
 if which gsed > /dev/null; then
   SED=gsed
 else
   SED=sed
 fi
 
-git ls-files | xargs "$SED" -i "$@"
+cmd=()
+while [ "$#" != "0" ]; do
+  cmd=("${cmd[@]}" -e "$1")
+  shift
+done
+
+git ls-files | xargs "$SED" -r -i "${cmd[@]}"

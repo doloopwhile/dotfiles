@@ -53,7 +53,7 @@ noremap ,f :Tabular /,\zs/l1r0<CR>
 " \   'command': 'markdown'
 " \ }
 
-NeoBundle 'jimsei/winresizer'
+" NeoBundle 'jimsei/winresizer'
 
 
 " カーソル下にファイル名らしき文字列はないが Git の diff の出力らしきテキストがある場合、
@@ -105,11 +105,6 @@ NeoBundle "terryma/vim-expand-region"
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-" Nerdtree
-" NeoBundle 'scrooloose/nerdtree'
-" noremap <Leader>n :NERDTreeToggle<CR>
-" noremap ,n :NERDTreeToggle<CR>
-
 " incsearch
 NeoBundle 'haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
@@ -125,6 +120,10 @@ nmap ,0 :<C-u>Fontzoom!<CR>
 " True <=> False
 NeoBundle 'AndrewRadev/switch.vim'
 nnoremap <C-b> :Switch<CR>
+let g:switch_custom_definitions =
+    \ [
+    \   ['pick', 'fixup', 'reword', 'edit', 'squash']
+    \ ]
 
 NeoBundle 'bling/vim-airline'
 

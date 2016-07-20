@@ -11,7 +11,7 @@
 [alias]
   b = branch -v
   br = branch -v
-  cf = config --edit --global
+  globalconfiguration = config --edit --global
   chx = cherry-pick -x
   ci = commit
   cin = commit --no-verify
@@ -51,9 +51,11 @@
   sh = show
   p = push
   pf = push --force-with-lease
+  unstage = reset --
+  rhard = reset --hard
 
 [core]
-    autocrlf = input
+	autocrlf = false
 	excludesfile = ~/.gitignore
 [push]
     default = current
@@ -79,6 +81,7 @@
 	skipinrebase = true
 [blame]
   showName = false
+  date= short
 [ghq]
 	root = ~/gocode/src
 [tag]
@@ -89,3 +92,5 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[fetch]
+	recurseSubmodules = false
