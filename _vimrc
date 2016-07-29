@@ -512,6 +512,8 @@ nmap ,d :<C-u>Trash
 " ******************************************************************************
 " ftplugins
 " ******************************************************************************
-set conceallevel=0
+if has('conceal')
+  set conceallevel=0
+end
 syntax on
 filetype plugin indent on

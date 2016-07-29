@@ -201,3 +201,7 @@ if which gnome-open &> /dev/null; then
   alias open=gnome-open
 fi
 export ANSIBLE_NOCOWS=yes
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi

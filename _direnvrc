@@ -1,5 +1,6 @@
 #!/bin/bash
 . ~/dotfiles/direnv/docker.direnvrc
+. ~/dotfiles/direnv/java.direnvrc
 
 use_python() {
   local version=$1

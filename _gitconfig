@@ -94,3 +94,5 @@
 	trustExitCode = true
 [fetch]
 	recurseSubmodules = false
+[credential]
+	helper = store

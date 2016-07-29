@@ -3,15 +3,15 @@
 
 C() {
   case $1 in
-    black)    echo -e -n "\e[1;30m";;
-    red)      echo -e -n "\e[1;31m";;
-    green)    echo -e -n "\e[1;32m";;
-    yellow)   echo -e -n "\e[1;33m";;
-    blue)     echo -e -n "\e[1;34m";;
-    magenta)  echo -e -n "\e[1;35m";;
-    cyan)     echo -e -n "\e[1;36m";;
-    white)    echo -e -n "\e[1;37m";;
-    *) echo -e -n "\e[0m";;
+    black)    echo -e -n "\033[1;30m";;
+    red)      echo -e -n "\033[1;31m";;
+    green)    echo -e -n "\033[1;32m";;
+    yellow)   echo -e -n "\033[1;33m";;
+    blue)     echo -e -n "\033[1;34m";;
+    magenta)  echo -e -n "\033[1;35m";;
+    cyan)     echo -e -n "\033[1;36m";;
+    white)    echo -e -n "\033[1;37m";;
+    *) echo -e -n "\033[0m";;
   esac
 }
 

@@ -46,3 +46,6 @@ dist/
 
 .envrc
 .direnv
+
+# intellij module file
+*.iml
