@@ -7,4 +7,3 @@ fi
 if which gsed &> /dev/null; then
   alias sed=gsed
 fi
-

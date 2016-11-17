@@ -7,7 +7,7 @@ export PATH="$PATH:$HOME/.cabal/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/node_modules/bin"
 export PATH="$HOME/bin:$PATH"
-export PATH="$PATH:$HOME/dotfiles/bin"
+export PATH="$HOME/dotfiles/bin:$PATH"
 
 # コマンド履歴の共有
 function title() {
@@ -37,7 +37,7 @@ source ~/dotfiles/bash/node.sh
 source ~/dotfiles/bash/oracle.sh
 source ~/dotfiles/bash/osx.sh
 source ~/dotfiles/bash/postgres.sh
-source ~/dotfiles/bash/ps.sh 
+source ~/dotfiles/bash/ps.sh
 source ~/dotfiles/bash/python.sh
 source ~/dotfiles/bash/resin.sh
 source ~/dotfiles/bash/ruby.sh
@@ -66,7 +66,11 @@ alias escape='python ~/dotfiles/escape.py'
 alias mime='~/dotfiles/mime.py'
 
 function te {
-  cat - | ~/dotfiles/bin/save-tempfile -c gvim "$@"
+  cat - \
+    | sed -e "s/\e\\[[0-9;]*m//g" \
+    | col -b -p \
+    | sed -e 's/\t/    /g' \
+    | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix='.txt' --dir="$(pwd)" -c gvim "$@"
 }
 
 alias colorize='python3 ~/dotfiles/colorize.py'
@@ -169,6 +173,12 @@ if which fzf &> /dev/null; then
   }
 fi
 
+t() {
+  local toplevel
+  toplevel="$(git rev-parse --show-toplevel)"
+  [ $? -eq 0 ] && cd "$toplevel"
+}
+
 export PATH=$PATH:/usr/local/haskell/ghc-7.8.3-x86_64/bin/
 
 yaml2json() {
@@ -201,7 +211,3 @@ if which gnome-open &> /dev/null; then
   alias open=gnome-open
 fi
 export ANSIBLE_NOCOWS=yes
-
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi

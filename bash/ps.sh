@@ -16,10 +16,12 @@ C() {
 }
 
 MY_HOST_NAMES=(
+  m3-2015159
   m3-2015mac03
   omoto-xubuntu
 )
 MY_HOST_COLORS=(
+  cyan
   cyan
   green
 )
@@ -90,7 +92,7 @@ ps1_login() {
 }
 
 ps1_date() {
-  echo -n " $(date +'%F %H:%M:%S')"
+  date +'%F %H:%M:%S'
 }
 
 ps1_exit_status() {
@@ -204,8 +206,8 @@ ps1_path() {
 
 function ps1_info() {
   local END_CODE=$?
-  echo "$(ps1_login)$(ps1_date)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails)$(ps1_skinny)$(ps1_play)$(ps1_java)$(ps1_docker)"
-  ps1_path
+  echo "$(ps1_login)$(ps1_exit_status "$END_CODE")$(ps1_git)$(ps1_svn)$(ps1_rails)$(ps1_skinny)$(ps1_play)$(ps1_java)$(ps1_docker)"
+  echo "$(ps1_date)$(ps1_path)"
 }
 
 PS1='$(ps1_info)'

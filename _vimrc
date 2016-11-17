@@ -12,6 +12,7 @@ set runtimepath+=~/.vim/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 let g:neobundle#types#git#default_protocol = 'git'
 source ~/.vim/vimrc.neobundle.vim
+source ~/.vim/vimrc.airline.vim
 source ~/.vim/vimrc.surround.vim
 source ~/.vim/vimrc.nerdtree.vim
 source ~/.vim/vimrc.syntastic.vim
@@ -203,7 +204,8 @@ vnoremap z/ <ESC>/\%V
 vnoremap zs <ESC>:s/\%V/
 vnoremap s :s/\v
 
-nnoremap <expr>K <ESC>:vim expand("<cword>") `git ls-files`<CR> <ESC>:CtrlPQuickfix<CR>
+" nnoremap <expr>K <ESC>:vim expand("<cword>") `git ls-files`<CR> <ESC>:CtrlPQuickfix<CR>
+nnoremap K <ESC><ESC>:move .+1<CR>kJ
 
 " emacs-like commandline
 cnoremap <C-A> <Home>
@@ -343,12 +345,17 @@ command! FL :execute 'g/^ *$\|^ *#/d' | 2,$ d
 command! EE :execute ':silent !scribes % &' | :execute ':redraw!'
 
 " 選択行を上下に移動
-nnoremap <C-K> ddkP
-nnoremap <C-J> ddp
-vnoremap <silent> <C-J> :MoveSelectionDown<CR>
-vnoremap <silent> <C-K> :MoveSelectionUp<CR>
-command! -range=% MoveSelectionUp   :silent <line1>,<line2>dl | :silent <line1>-1 | :silent pu! | call SetSelection(<line1>-1, <line2>-1)
-command! -range=% MoveSelectionDown :silent <line1>,<line2>dl | :silent <line1>pu | call SetSelection(<line1>+1,<line2>+1)
+"
+nnoremap <C-K> <ESC>:move .-2<CR>
+nnoremap <C-J> <ESC>:move .+1<CR>
+vnoremap <C-K> <ESC>:move .-2<CR>
+vnoremap <C-J> <ESC>:move .+1<CR>
+" nnoremap <C-K> ddkP
+" nnoremap <C-J> ddp
+" vnoremap <silent> <C-J> :MoveSelectionDown<CR>
+" vnoremap <silent> <C-K> :MoveSelectionUp<CR>
+" command! -range=% MoveSelectionUp   :silent <line1>,<line2>dl | :silent <line1>-1 | :silent pu! | call SetSelection(<line1>-1, <line2>-1)
+" command! -range=% MoveSelectionDown :silent <line1>,<line2>dl | :silent <line1>pu | call SetSelection(<line1>+1,<line2>+1)
 
 fun! SetSelection(first, last)
     call setpos('.', [0, a:first, 1])

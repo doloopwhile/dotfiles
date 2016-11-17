@@ -125,8 +125,6 @@ let g:switch_custom_definitions =
     \   ['pick', 'fixup', 'reword', 'edit', 'squash']
     \ ]
 
-NeoBundle 'bling/vim-airline'
-
 NeoBundle 'tpope/vim-fugitive'
 
 " NeoBundle 'kana/vim-smartinput'
@@ -152,4 +150,5 @@ nnoremap <C-c>f <ESC>:<C-u>CopyFileName<CR>
 "" 補足1) `^A`と`^X`は、`<C-v><C-a>`それぞれ`<C-v><C-x>`で入力できる特殊文字
 "" 補足2) `ad` は '[-+]?\d+' にマッチするテキストオブジェクト 
 
+" 連番
 NeoBundle 'deris/vim-rengbang'

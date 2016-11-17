@@ -1,0 +1,3 @@
+#!/bin/sh
+breakpoint="$(git log --reverse --pretty='%H' master.. | head -1)"
+git rebase -i "${breakpoint}^"
