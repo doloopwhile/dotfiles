@@ -1,16 +1,10 @@
 #!/bin/bash
-if [ -e "/Applications/MacVim.app" ]; then
-  if [ $# -eq 0 ]; then
-    /Applications/MacVim.app/Contents/MacOS/mvim
-  else
-    /Applications/MacVim.app/Contents/MacOS/mvim --remote-tab-silent "$@"
-  fi
-  exit $?
+
+GVIM="$(which -a gvim | grep -v 'dotfiles/bin/gvim' | head -1)"
+
+if "$GVIM" --serverlist 2> /dev/null | grep '^GVIM$' > /dev/null; then
+  "$GVIM" --servername GVIM --remote-expr 'foreground()'
 fi
-
-
-vim --serverlist 2> /dev/null \
-  | grep GVIM > /dev/null && vim -g --servername GVIM --remote-expr 'foreground()' || vim --servername GVIM -g 2> /dev/null
 
 if [ $# -eq 0 ]; then
   exit
@@ -22,4 +16,4 @@ for f in "$@"; do
   args=(${args[@]} $(echo "$f" | sed -e "s|\(.*\):\([[:digit:]]\+\)|\1|"))
 done
 
-vim -g --servername GVIM --remote-tab-silent ${args[@]}
+"$GVIM" --servername GVIM --remote-tab-silent "${args[@]}"

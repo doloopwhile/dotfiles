@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 from __future__ import print_function
-import tempfile
 from argparse import ArgumentParser
-import fileinput
 from subprocess import call
+import fileinput
 import pipes
+import sys
+import tempfile
+import os.path
+
 
 description = 'Save inputs to temporary file and print name of the temporary file'
 parser = ArgumentParser(description=description)
@@ -20,16 +23,26 @@ parser.add_argument(
     help='Dir in which temporary created')
 parser.add_argument(
     '--command', '-c', action='store', default=None,
-    help='Dir in which temporary created')
+    help='Command to open temporary file after creating it')
+parser.add_argument(
+    '--abort-if-empty', action='store_true',
+    help='Abort if input is empty')
 
 opts = parser.parse_args()
 kw = dict()
 for k in 'suffix prefix dir'.split():
     kw[k] = getattr(opts, k)
 
+wrote = False
 with tempfile.NamedTemporaryFile('w', delete=False, **kw) as fp:
-    fp.writelines(fileinput.input(opts.FILES))
+    for line in fileinput.input(opts.FILES):
+        wrote = True
+        fp.write(line)
     fp.flush()
+
+if opts.abort_if_empty and not wrote:
+    print('{}: no input'.format(os.path.basename(sys.argv[0])), file=sys.stderr)
+    sys.exit(1)
 
 print(fp.name)
 

@@ -1,0 +1,1 @@
+NeoBundle 'bling/vim-airline'

@@ -11,7 +11,7 @@
 [alias]
   b = branch -v
   br = branch -v
-  cf = config --edit --global
+  globalconfiguration = config --edit --global
   chx = cherry-pick -x
   ci = commit
   cin = commit --no-verify
@@ -45,15 +45,16 @@
   st = status -s --ignore-submodules
   updated=commit -a -m updated
   vimdiff=difftool --tool=gvimdiff
-  shallow-clone = clone --depth 1 --single-branch
 # lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
   r = reset
   sh = show
   p = push
   pf = push --force-with-lease
+  unstage = reset --
+  rhard = reset --hard
 
 [core]
-    autocrlf = input
+	autocrlf = false
 	excludesfile = ~/.gitignore
 [push]
     default = current
@@ -63,6 +64,7 @@
         textconv=msgcat --no-location --no-wrap --sort-output
 [merge]
 	tool = meld
+	ff = false
 [diff]
 	tool = meld
 	algorithm = histogram
@@ -79,6 +81,7 @@
 	skipinrebase = true
 [blame]
   showName = false
+  date= short
 [ghq]
 	root = ~/gocode/src
 [tag]
@@ -89,3 +92,7 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[fetch]
+	recurseSubmodules = false
+[credential]
+	helper = store
