@@ -10,7 +10,7 @@ try:
     import readline
     import rlcompleter
 except ImportError as e:
-    sys.stderr.write(e + "\n")
+    sys.stderr.write(str(e) + "\n")
     sys.stderr.write("readline is disabled")
 else:
     if readline.__doc__.find('libedit') >= 0:
