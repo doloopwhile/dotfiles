@@ -1,4 +1,5 @@
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'gcorne/vim-sass-lint'
 " phpcs
 let Vimphpcs_Standard='~/phpcs/Tapirus'
 " command! P :execute 'CodeSniff'
@@ -26,6 +27,8 @@ let g:syntastic_java_checkers=[]
 let g:syntastic_scala_checkers=[]
 
 let g:syntastic_javascript_checkers=['jscs']
+
+let g:syntastic_scss_checkers = ['sasslint']
 
 " let g:syntastic_markdown_mdl_exec='markdownlint'
 " let g:syntastic_markdown_mdl_args=''

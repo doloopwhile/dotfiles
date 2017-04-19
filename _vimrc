@@ -203,6 +203,7 @@ noremap <Leader>b <ESC>:tabedit ~/.bashrc<CR>
 vnoremap z/ <ESC>/\%V
 vnoremap zs <ESC>:s/\%V/
 vnoremap s :s/\v
+vnoremap t :sort<CR>
 
 " nnoremap <expr>K <ESC>:vim expand("<cword>") `git ls-files`<CR> <ESC>:CtrlPQuickfix<CR>
 nnoremap K <ESC><ESC>:move .+1<CR>kJ
@@ -348,7 +349,7 @@ command! EE :execute ':silent !scribes % &' | :execute ':redraw!'
 "
 nnoremap <C-K> <ESC>:move .-2<CR>
 nnoremap <C-J> <ESC>:move .+1<CR>
-vnoremap <C-K> <ESC>:move .-2<CR>
+noremap <C-K> <ESC>:move .-2<CR>
 vnoremap <C-J> <ESC>:move .+1<CR>
 " nnoremap <C-K> ddkP
 " nnoremap <C-J> ddp
