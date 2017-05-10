@@ -1,6 +1,9 @@
 #!/bin/bash
 # エディタ関連
+
 export EDITOR=vi
+
+
 if which vim &> /dev/null; then
   export EDITOR=vim
   alias vim='vim -p'
@@ -14,4 +17,8 @@ if [ -e "/Applications/MacVim.app" ]; then
   alias vim='/Applications/MacVim.app/Contents/MacOS/Vim -p'
   export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
   export SVN_EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+fi
+
+if which micro &> /dev/null; then
+  export EDITOR=micro
 fi

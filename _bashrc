@@ -192,20 +192,20 @@ json2yaml() {
 alias stripcolor="perl -pe 's/\e\[?.*?[\@-~]//g'"
 
 fe() {
-  find . -name "${1:-*}" | fzf | xargs gvim
+  find . -name "${1:-*}" | fzf | xargs $EDITOR
 }
 
 whichvi() {
   local f
   if [ -n "$1" ]; then
-    which -a "$1" | fzf | xargs gvim
+    which -a "$1" | fzf | xargs $EDITOR
   else
     paths=($(echo "$PATH" | tr ':' ' '))
-    find "${paths[@]}" -type f -perm +111 2>/dev/null | fzf | xargs gvim
+    find "${paths[@]}" -type f -perm +111 2>/dev/null | fzf | xargs $EDITOR
   fi
 }
 alias ..='. ~/.bashrc'
-alias ...='gvim ~/.bashrc'
+alias ...='$EDITOR ~/.bashrc'
 
 if which gnome-open &> /dev/null; then
   alias open=gnome-open
