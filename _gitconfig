@@ -49,6 +49,7 @@
   r = reset
   sh = show
   p = push
+  pu = pull
   pf = push --force-with-lease
   unstage = reset --
   rhard = reset --hard
