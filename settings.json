@@ -12,5 +12,6 @@
     "editor.fontFamily": "VL Gothic",
     "editor.fontSize": 16,
     "editor.fontWeight": "300",
-    "workbench.colorTheme": "Solarized Dark"
+    "workbench.colorTheme": "Solarized Dark",
+    "files.autoSave": "onFocusChange"
 }

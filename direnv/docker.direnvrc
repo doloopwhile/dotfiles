@@ -5,11 +5,22 @@ use_docker-machine() {
     return 1
   fi
 
+  if [ $# -eq 0 ]; then
+    machine=default
+  else
+    machine=$1
+  fi
+  
   if ! which docker-machine > /dev/null 2>&1; then
     echo "'docker-machine' command not found in PATH" >&2
     return 1
   fi
 
-  docker-machine start "$@"
-  eval "$(docker-machine env "$@")"
+  status=$(docker-machine status "$machine")
+  if [ $status = "Running" ]; then
+    eval "$(docker-machine env "$machine")"
+  else
+    echo "Docker machine is not running"
+    echo "Please execute `docker-machine start $machine`"
+  fi
 }
