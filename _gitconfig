@@ -21,7 +21,6 @@
   delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
   dr = diff --color-words --word-diff-regex='\\w+|[^[:space:]]'
   dt=difftool --tool=meld -y
-  dv = !sh -c 'git diff "$@" | ~/dotfiles/bin/save-tempfile -c gvim' -
   f = remote update
   getbranch = symbolic-ref --short HEAD
   gr = grep --ignore-case -n
