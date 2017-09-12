@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euC
 if [ "$#" -eq 0 ]; then
   echo 'git sed [SED-COMMANDS]' >&2
   exit 1
@@ -12,8 +13,10 @@ fi
 
 cmd=()
 while [ "$#" != "0" ]; do
-  cmd=("${cmd[@]}" -e "$1")
+  cmd+=(-e "$1")
   shift
 done
 
-git ls-files | xargs "$SED" -r -i "${cmd[@]}"
+git ls-files | while read -r f; do
+  [ -f "$f" ] && [ ! -L "$f" ] && "$SED" -i "${cmd[@]}" "$f"
+done

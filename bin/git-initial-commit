@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ $(git branch | wc -l) = 0 ]; then
+  git commit -m "Initial commit" --allow-empty
+else
+  echo "It seems that there is already some commit" >&2
+  exit 1
+fi

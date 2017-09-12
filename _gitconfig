@@ -33,11 +33,9 @@
   mt=mergetool -y
   now=commit -a -m tmp --no-verify
   pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
-  r = reset
   reba = rebase --abort
   rebi = rebase -i
   rebc = rebase --continue
-  reset-origin-hard = reset --hard origin
   rhh = reset HEAD^
   root = rev-parse --show-toplevel
   showf = show --name-only
@@ -96,3 +94,5 @@
 	recurseSubmodules = false
 [credential]
 	helper = store
+[pull]
+	rebase = true

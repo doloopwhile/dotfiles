@@ -17,10 +17,10 @@ use_docker-machine() {
   fi
 
   status=$(docker-machine status "$machine")
-  if [ $status = "Running" ]; then
+  if [ "$status" = "Running" ]; then
     eval "$(docker-machine env "$machine")"
   else
     echo "Docker machine is not running"
-    echo "Please execute `docker-machine start $machine`"
+    echo "Please execute \`docker-machine start $machine\`"
   fi
 }

@@ -70,7 +70,7 @@ function te {
     | sed -e "s/\e\\[[0-9;]*m//g" \
     | col -b -p \
     | sed -e 's/\t/    /g' \
-    | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix='.txt' --dir="$(pwd)" -c gvim "$@"
+    | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix='.txt' --dir="$(pwd)" -c code
 }
 
 alias colorize='python3 ~/dotfiles/colorize.py'
@@ -140,7 +140,7 @@ if which fzf &> /dev/null; then
   }
 
   _find_and_edit() {
-    fzf | xargs gvim
+    fzf | xargs code
   }
 
   bind -x '"\C-r": _replace_by_history'
@@ -204,6 +204,11 @@ whichvi() {
     find "${paths[@]}" -type f -perm +111 2>/dev/null | fzf | xargs $EDITOR
   fi
 }
+
+generate_password() {
+  /usr/bin/ruby -e 'chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a; puts(32.times.map { chars.sample(1) }.join)'	
+}
+
 alias ..='. ~/.bashrc'
 alias ...='$EDITOR ~/.bashrc'
 
@@ -211,3 +216,4 @@ if which gnome-open &> /dev/null; then
   alias open=gnome-open
 fi
 export ANSIBLE_NOCOWS=yes
+export PATH="$PATH:~/Documents/m3kit/bin"

@@ -7,11 +7,17 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/*.un~": true,
-        "**/.tmp.*": true
+        "**/.tmp.*": true,
+        "**/coverage": true,
+        "**/doc": true
     },
     "editor.fontFamily": "VL Gothic",
     "editor.fontSize": 16,
     "editor.fontWeight": "300",
     "workbench.colorTheme": "Solarized Dark",
-    "files.autoSave": "onFocusChange"
+    "files.autoSave": "onFocusChange",
+    "editor.tabSize": 2,
+    "workbench.editor.enablePreview": false,
+    "window.zoomLevel": 0,
+    "extensions.ignoreRecommendations": false
 }

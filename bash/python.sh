@@ -2,6 +2,7 @@
 # Python関連
 export PYTHONSTARTUP=~/.pythonstartup
 # export PIP_USER=1
+export PYTHONIOENCODING=utf-8
 
 export PATH=~/.pyenv/bin/:$PATH
 

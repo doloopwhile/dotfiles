@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euC
+git fetch origin
+
+usage_and_abort() {
+  echo 'usage: git latest [-f]' >&2
+  exit 1
+}
+
+if [ "$#" -gt 1 ]; then
+  usage_and_abort
+fi
+
+force=false
+if [ "$#" -eq 1 ]; then
+  if [ "$1" = "-f" ]; then
+    force=true
+  else
+    usage_and_abort
+  fi
+fi
+
+r="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}')"
+
+if [ -n "$(git log -n 1 --oneline "$r"..)" ] && [ "$force" != "true" ]; then
+  echo 'There are commits which have not been pushed.' >&2
+  echo 'Please run "git latest -f" when you ignore these commits.' >&2
+  exit 1
+fi
+
+git reset --hard "$r"
