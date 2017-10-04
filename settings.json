@@ -19,5 +19,7 @@
     "editor.tabSize": 2,
     "workbench.editor.enablePreview": false,
     "window.zoomLevel": 0,
-    "extensions.ignoreRecommendations": false
+    "extensions.ignoreRecommendations": false,
+    "files.trimTrailingWhitespace": true,
+    "editor.renderWhitespace": "boundary"
 }

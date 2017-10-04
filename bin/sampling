@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+def usage()
+  "usage: sampling NUMBER"
+end
+
+if ARGV.size != 1
+  abort(usage)
+end
+
+if ARGV[0] !~ /\A[0-9]+\z/
+  abort(usage)
+end
+
+n = ARGV[0].to_i
+if n <= 0
+  abort("specify positive number")
+end
+
+STDIN.each.with_index do |line, i|
+  print(line) if i % n == 0
+end
+
+exit(0)

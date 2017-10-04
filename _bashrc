@@ -27,6 +27,7 @@ export HISTTIMEFORMAT='%Y-%m-%dT%T%z '
 
 # 分割した設定ファイルの読み込み
 
+source ~/dotfiles/bash/code.sh
 source ~/dotfiles/bash/direnv.sh
 source ~/dotfiles/bash/docker.sh
 source ~/dotfiles/bash/git.sh

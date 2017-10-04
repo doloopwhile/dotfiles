@@ -1,0 +1,14 @@
+#!/bin/bash
+code="$(which -a code | grep -v "$0" | head -1)"
+if [ -z "$code" ]; then
+  echo 'code command not found' >&2
+  exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+  wd="$(git rev-parse --show-toplevel || pwd)"
+else
+  wd="$(git -C "$(dirname "$1")" rev-parse --show-toplevel || pwd)"
+fi
+
+"$code" --add "$wd" "$@"

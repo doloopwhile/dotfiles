@@ -14,3 +14,4 @@ if which rbenv &> /dev/null; then
   PROMPT_COMMAND="${PROMPT_COMMAND};rm -f /Users/k-omoto/.rbenv/shims/rubocop"
 fi
 
+export RUBOCOP_OPTS='-D -S -E -P --color' # rubocopのおすすめ設定

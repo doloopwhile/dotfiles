@@ -129,7 +129,7 @@ ps1_git() {
     if [[ "$line" =~ ^_._[^[:space:]]_ ]]; then
       modified=1
     fi
-  done < <(git status --ignore-submodules --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
+  done < <(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
 
   if [ $modified -ne 0 ]; then
     echo -n "$(C red)M$(C reset)"
