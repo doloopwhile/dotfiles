@@ -20,6 +20,9 @@
     "workbench.editor.enablePreview": false,
     "window.zoomLevel": 0,
     "extensions.ignoreRecommendations": false,
-    "files.trimTrailingWhitespace": true,
-    "editor.renderWhitespace": "boundary"
+    "editor.renderWhitespace": "boundary",
+    "editor.autoIndent": false,
+    "[python]": {
+        "editor.tabSize": 4
+    }
 }

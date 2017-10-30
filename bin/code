@@ -6,9 +6,9 @@ if [ -z "$code" ]; then
 fi
 
 if [ "$#" -eq 0 ]; then
-  wd="$(git rev-parse --show-toplevel || pwd)"
+  wd="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 else
-  wd="$(git -C "$(dirname "$1")" rev-parse --show-toplevel || pwd)"
+  wd="$(git -C "$(dirname "$1")" rev-parse --show-toplevel 2>/dev/null  || pwd)"
 fi
 
 "$code" --add "$wd" "$@"

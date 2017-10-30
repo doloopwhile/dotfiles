@@ -9,6 +9,11 @@ export PATH="$PATH:$HOME/node_modules/bin"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/dotfiles/bin:$PATH"
 
+if which micro > /dev/null; then
+  export EDITOR=micro
+  export SVN_EDITOR=micro
+fi
+
 # コマンド履歴の共有
 function title() {
   echo -en "\033]0;$*\007"
@@ -153,20 +158,26 @@ if which fzf &> /dev/null; then
 
   p() {
     local f;
-    f="$({ echo -n 'Downloads'; find "$HOME/Documents/" -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort ; } | fzf)"
+    f="$({ echo 'Documents'; echo -n 'Downloads'; find "$HOME/Documents/" -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort ; } | fzf)"
     if [ -z "$f" ]; then
       return 1
+    fi
+    if [ "$f" = "Documents" ]; then
+      cd "$HOME/Documents"
+      return
     fi
     if [ "$f" = "Downloads" ]; then
       cd "$HOME/Downloads"
       return
     fi
+
     cd "${HOME}/Documents/$f"
   }
 
   d() {
     local f
-    f="$({ echo '..'; find . -maxdepth 1 -mindepth 1 -type 'd' | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
+    f=$()
+    f="$({ echo '..'; find . -maxdepth 1 -mindepth 1 -type 'd' -name '' | grep -v "\/\." | sed -e 's|^./||' -e 's|$|/|' ; } | fzf)"
     if [ -z "$f" ]; then
       return 1
     fi

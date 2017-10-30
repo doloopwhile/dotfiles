@@ -34,7 +34,6 @@
   now=commit -a -m tmp --no-verify
   pr-setup = config --add remote.origin.fetch +refs/pull/*/head:refs/remotes/origin/pr/*
   reba = rebase --abort
-  rebi = rebase -i
   rebc = rebase --continue
   rhh = reset HEAD^
   root = rev-parse --show-toplevel

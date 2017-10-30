@@ -32,3 +32,16 @@ use_venv() {
 
   source "$dir/bin/activate"
 }
+
+use_java() {
+    if [ "$#" -ne 1 ]; then
+    echo "usage: use java VERSION" >&2
+    return 1
+  fi
+  local v
+  v="$1"
+  if [ "$v" -le "8" ]; then
+    v="1.$v"
+  fi
+  export JAVA_HOME="$(/usr/libexec/java_home -v "$v")"
+}
