@@ -9,7 +9,7 @@ export PATH="$PATH:$HOME/node_modules/bin"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/dotfiles/bin:$PATH"
 
-if which micro > /dev/null; then
+if which micro &> /dev/null; then
   export EDITOR=micro
   export SVN_EDITOR=micro
 fi
