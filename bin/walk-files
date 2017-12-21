@@ -1,0 +1,19 @@
+#!/usr/bin/env python3 -u
+import os
+
+def exclude_dir(dir_name):
+  return (
+    dir_name.startswith('.') or
+    dir_name.startswith(',') or
+    dir_name.startswith('__')
+  )
+
+def exclude_file(file_name):
+  return file_name.startswith('.')
+
+top = os.getcwd()
+for root, dirs, files in os.walk(top):
+  for f in files:
+    if not exclude_file(f):
+      print(os.path.relpath(os.path.join(root, f), top))
+  dirs[:] = [d for d in dirs if not exclude_dir(d)]

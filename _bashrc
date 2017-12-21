@@ -146,7 +146,7 @@ if which fzf &> /dev/null; then
   }
 
   _find_and_edit() {
-    fzf | xargs code
+    ~/dotfiles/bin/walk-files | fzf | xargs code
   }
 
   bind -x '"\C-r": _replace_by_history'
@@ -188,7 +188,11 @@ fi
 t() {
   local toplevel
   toplevel="$(git rev-parse --show-toplevel)"
-  [ $? -eq 0 ] && cd "$toplevel"
+  if [ $? -eq 0 ]; then
+    cd "$toplevel" && return 0
+  else
+    return 1
+  fi
 }
 
 export PATH=$PATH:/usr/local/haskell/ghc-7.8.3-x86_64/bin/

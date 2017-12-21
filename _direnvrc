@@ -25,12 +25,12 @@ use_venv() {
   if [ ! -d "$dir" ]; then
     echo "$dir/ is not found. creating $dir/ ."
     local python="$PYENV_ROOT/versions/$version/bin/python" 
-    "$python" -m venv --system-site-packages "$dir"
+    "$python" -m venv "$dir"
   else
     echo "$dir/ already exists."
   fi
 
-  source "$dir/bin/activate"
+  PATH_add $dir
 }
 
 use_java() {

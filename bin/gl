@@ -1,0 +1,4 @@
+#!/bin/bash
+toplevel="$(git rev-parse --show-toplevel)"
+[ $? -ne 0 ] && exit 1
+open "https://rendezvous.m3.com/m3/$(basename "$toplevel")/"

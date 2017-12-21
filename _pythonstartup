@@ -21,7 +21,7 @@ else:
     try:
         readline.read_history_file(histfile)
     except IOError as e:
-        sys.stderr.write(e + "\n")
+        sys.stderr.write(str(e) + "\n")
         sys.stderr.write("readline is disabled")
     atexit.register(readline.write_history_file, histfile)
     del os, histfile, readline, rlcompleter, atexit

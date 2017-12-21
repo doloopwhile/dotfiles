@@ -9,20 +9,36 @@
         "**/*.un~": true,
         "**/.tmp.*": true,
         "**/coverage": true,
-        "**/doc": true
+        "**/doc": true,
+        "**/.venv": true,
+        "**/.eggs": true,
+        "**/.vscode": true,
+        "**/.mypy_cache": true,
+        "**/.envrc": true
     },
     "editor.fontFamily": "VL Gothic",
     "editor.fontSize": 16,
     "editor.fontWeight": "300",
     "workbench.colorTheme": "Solarized Dark",
-    "files.autoSave": "onFocusChange",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500,
     "editor.tabSize": 2,
     "workbench.editor.enablePreview": false,
     "window.zoomLevel": 0,
     "extensions.ignoreRecommendations": false,
-    "editor.renderWhitespace": "boundary",
+    "editor.renderWhitespace": "none",
     "editor.autoIndent": false,
     "[python]": {
         "editor.tabSize": 4
-    }
+    },
+    "python.linting.enabledWithoutWorkspace": false,
+    "python.disablePromptForFeatures": [
+        "pylint",
+        "mypy"
+    ],
+    "window.openFilesInNewWindow": "off",
+    "window.restoreWindows": "none",
+    "explorer.confirmDragAndDrop": false,
+    "python.linting.mypyEnabled": true,
+    "python.formatting.provider": "autopep8"
 }
