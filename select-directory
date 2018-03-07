@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euC
+
+list() {
+  echo 'Documents'
+  echo 'Downloads'
+  echo 'career-dev/career-admin'
+  echo 'career-dev/career-core'
+  find "$HOME/Documents/" -maxdepth 1 -type 'd' | tail -n +2 | sed -e 's|.*/||'
+}
+
+path() {
+  name="$1"
+  if [ "$name" = "Documents" ]; then
+    echo "$HOME/Documents"
+    return
+  fi
+  
+  if [ "$name" = "Downloads" ]; then
+    echo "$HOME/Downloads"
+    return
+  fi
+
+  echo "$HOME/Documents/$name"
+}
+
+name="$(list | sort | fzf)"
+path "$name"

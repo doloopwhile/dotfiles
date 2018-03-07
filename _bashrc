@@ -157,21 +157,11 @@ if which fzf &> /dev/null; then
   export FZF_DEFAULT_OPTS="--no-sort -i --multi --reverse --cycle --prompt='QUERY> ' --inline-info --color=16"
 
   p() {
-    local f;
-    f="$({ echo 'Documents'; echo -n 'Downloads'; find "$HOME/Documents/" -maxdepth 1 -type 'd' | sed -e 's|.*/||' | sort ; } | fzf)"
-    if [ -z "$f" ]; then
+    path="$(~/dotfiles/select-directory)"
+    if [ "$?" -ne 0 ]; then
       return 1
     fi
-    if [ "$f" = "Documents" ]; then
-      cd "$HOME/Documents"
-      return
-    fi
-    if [ "$f" = "Downloads" ]; then
-      cd "$HOME/Downloads"
-      return
-    fi
-
-    cd "${HOME}/Documents/$f"
+    cd -- "${path}" || return 1
   }
 
   d() {

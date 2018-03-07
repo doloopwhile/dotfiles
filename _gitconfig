@@ -41,7 +41,7 @@
   st = status -s
   updated=commit -a -m updated
   vimdiff=difftool --tool=gvimdiff
-# lo = log --pretty=format:'%C(auto)%h%C(reset) %s'
+  lo = log --oneline
   r = reset
   sh = show
   p = push

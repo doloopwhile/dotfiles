@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euC
-git fetch origin
 
 usage_and_abort() {
   echo 'usage: git latest [-f]' >&2
@@ -19,6 +18,8 @@ if [ "$#" -eq 1 ]; then
     usage_and_abort
   fi
 fi
+
+git fetch origin
 
 r="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}')"
 

@@ -25,12 +25,16 @@ use_venv() {
   if [ ! -d "$dir" ]; then
     echo "$dir/ is not found. creating $dir/ ."
     local python="$PYENV_ROOT/versions/$version/bin/python" 
-    "$python" -m venv "$dir"
+    if [[ "$version" < "3.3.0" ]]; then
+      "$python" -m virtualenv "$dir"
+    else
+      "$python" -m venv "$dir"
+    fi
   else
     echo "$dir/ already exists."
   fi
 
-  PATH_add $dir
+  PATH_add $dir/bin
 }
 
 use_java() {
@@ -44,4 +48,5 @@ use_java() {
     v="1.$v"
   fi
   export JAVA_HOME="$(/usr/libexec/java_home -v "$v")"
+  PATH_add $JAVA_HOME/bin
 }
