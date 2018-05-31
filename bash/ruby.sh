@@ -11,7 +11,7 @@ function install_rbenv() {
 PATH=$PATH:~/.rbenv/bin
 if which rbenv &> /dev/null; then
   eval "$(rbenv init -)"
-  PROMPT_COMMAND="${PROMPT_COMMAND};rm -f /Users/k-omoto/.rbenv/shims/rubocop"
 fi
 
-export RUBOCOP_OPTS='-D -S -E -P --color' # rubocopのおすすめ設定
+# export RUBOCOP_OPTS='-D -S -E -P --color' # rubocopのおすすめ設定
+export RUBOCOP_OPTS='-D -S -E --color' # rubocopのおすすめ設定
