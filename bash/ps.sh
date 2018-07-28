@@ -18,6 +18,7 @@ C() {
 MY_HOST_NAMES=(
   m3-2015159
   m3-2015mac03
+  kenjiomoto-macbook-pro
   omoto-xubuntu
 )
 MY_HOST_COLORS=(
