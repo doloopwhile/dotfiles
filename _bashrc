@@ -141,7 +141,13 @@ if which fzf &> /dev/null; then
       sed=gsed
     fi
     local l
-    l=$(HISTTIMEFORMAT='' history | sort -k1,1nr | $sed -e 's/^[[:space:]]*[0-9]\+[[:space:]]*//' | uniq-everseen | fzf --query "$READLINE_LINE")
+    l="$(
+      HISTTIMEFORMAT='' history \
+      | sort -k1,1nr \
+      | $sed -e 's/^ *[0-9]* *//' \
+      | uniq-everseen \
+      | fzf --query "$READLINE_LINE"
+    )"
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
   }
