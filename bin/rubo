@@ -1,0 +1,11 @@
+#!/bin/bash
+valid_file() {
+  while read -r f; do
+    if [ -e "$f" ]; then
+      echo "$f"
+    fi
+  done
+}
+
+git diff --name-only origin/master | grep -v db/schema.rb | valid_file | xargs rubocop --auto-correct "$@"
+

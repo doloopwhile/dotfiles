@@ -14,9 +14,10 @@
   globalconfiguration = config --edit --global
   chx = cherry-pick -x
   ci = commit
-  cin = commit --no-verify
+  ca = commit --amend
   co = checkout
   d = diff
+  dt = !git diff | te -e diff
   dc = diff --cached
   delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
   dr = diff --color-words --word-diff-regex='\\w+|[^[:space:]]'

@@ -25,7 +25,7 @@ r="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}')"
 
 if [ -n "$(git log -n 1 --oneline "$r"..)" ] && [ "$force" != "true" ]; then
   echo 'There are commits which have not been pushed.' >&2
-  echo 'Please run "git latest -f" when you ignore these commits.' >&2
+  echo 'Please run "git latest -f" to discard these commits.' >&2
   exit 1
 fi
 

@@ -1,11 +1,9 @@
 #!/bin/bash
-branch=$(git rev-parse --abbrev-ref HEAD)
-
-function git_branch_exists() {
+git_branch_exists() {
   git branch | cut -b 3- | grep -q "^${1}$" > /dev/null
 }
 
-function get_tmp_branch_name() {
+get_tmp_branch_name() {
   prefix='bak/'
   local b="${prefix}${1}"
   if ! git_branch_exists "${b}" ;then
@@ -24,10 +22,27 @@ function get_tmp_branch_name() {
   return 1
 }
 
-tmp_branch=$(get_tmp_branch_name "${branch}")
-if [ "$?" -ne 0 ]; then
-  echo "Could not allocate backup branch name" >&2
-  exit 1
-fi
+main() {
+  if [ $# -gt 2 ]; then
+    echo 'usage: git backup-branch [BACKUP_BRANCH_NAME]' >&2
+    exit 1
+  fi
 
-git branch "${tmp_branch}" && echo "Created backup branch '${tmp_branch}'"
+  branch=$(git rev-parse --abbrev-ref HEAD)
+
+  if [ $# -eq 0 ]; then
+    tmp_branch="$(get_tmp_branch_name "${branch}")"
+    if [ "$?" -ne 0 ]; then
+      echo "Could not allocate backup branch name" >&2
+      exit 1
+    fi
+  else
+    tmp_branch="$1"
+  fi
+
+  git branch "${tmp_branch}" && echo "Created backup branch '${tmp_branch}'"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi

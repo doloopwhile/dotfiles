@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e -u -C
+usage() {
+  echo 'git df BRANCH_OR_COMMIT'
+}
+
+if [[ "${1:-}" = '-h' ]] || [[ "${1:-}" = '--help' ]]; then
+  usage
+  exit
+fi
+
+git diff --name-only "${1:-origin/master}" || exit 1

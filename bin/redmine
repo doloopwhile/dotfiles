@@ -3,7 +3,7 @@ ISSUE_BASE_URL="https://redmine.m3.com/issues"
 
 if [ "$#" -eq 0 ]; then
   BRANCH="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
-  if [[ "$BRANCH" =~ ^feature/([0-9]+)-.*$ ]]; then
+  if [[ "$BRANCH" =~ ^feature/([0-9]+)(-.*)?$ ]]; then
     open "${ISSUE_BASE_URL}/${BASH_REMATCH[1]}"
   else
     echo 'Branch name does not match [feature/123456-some-description]' >&2

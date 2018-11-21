@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euC
+
+usage() {
+  echo "usage: git feature TICKET_ID"
+}
+
+if [ "$#" -ne 1 ]; then
+  usage >&2
+  exit 1
+fi
+
+ticket_id="$1"
+
+while read branch; do
+  prefix=feature/${ticket_id}-
+  if [ "${branch:0:${#prefix}}" = "${prefix}" ]; then
+    echo "git checkout $branch"
+    exit
+  fi
+done < <(git branch --no-abbrev | cut -b 3-)
+
+echo -n "description? "
+
+read description
+description="$(echo "$description" | tr [A-Z] [a-z] | tr ' ' '-' | tr -c -d [a-z0-9-])"
+git checkout -b "feature/${ticket_id}-${description}"

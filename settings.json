@@ -43,9 +43,16 @@
     "python.formatting.provider": "yapf",
     "python.linting.flake8Enabled": false,
     "python.linting.pylintEnabled": false,
-    "python.formatting.yapfArgs": [
-        "--style=pep8"
-    ],
     "ruby.rubocop.onSave": false,
-    "files.autoGuessEncoding": true
+    "files.autoGuessEncoding": true,
+    "[haml]": {},
+    "go.gopath": "/Users/k-omoto/gocode",
+    "go.formatTool": "goimports",
+    "editor.quickSuggestions": {
+        "other": false,
+        "comments": false,
+        "strings": false
+    },
+    "python.jediEnabled": false,
+    "importMagic.multiline": "parentheses",
 }

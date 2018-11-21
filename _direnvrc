@@ -2,14 +2,14 @@
 . ~/dotfiles/direnv/docker.direnvrc
 . ~/dotfiles/direnv/java.direnvrc
 
+
+binstubs() {
+  PATH_add './bin'
+}
+
+
 use_python() {
-  local version=$1
-  local d
-  d="$PYENV_ROOT/versions/$version/bin"
-  if ! [ -d "$d" ]; then
-    return 1
-  fi
-  PATH_add "$d"
+  use_venv "$@"
 }
 
 # pyenv shell 2.7.11 3.5.1 3.2.6 3.3.6 3.4.4
@@ -35,6 +35,7 @@ use_venv() {
   fi
 
   PATH_add $dir/bin
+  export PIPENV_VENV_IN_PROJECT=1
 }
 
 use_java() {

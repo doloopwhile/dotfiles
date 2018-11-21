@@ -15,54 +15,11 @@ C() {
   esac
 }
 
-MY_HOST_NAMES=(
-  m3-2015159
-  m3-2015mac03
-  omoto-xubuntu
-)
-MY_HOST_COLORS=(
-  cyan
-  cyan
-  green
-)
-
-HOST_COLOR=
-if [ 0 -lt "${#MY_HOST_NAMES[@]}" ]; then
-  for (( i=0; i < ${#MY_HOST_NAMES[@]}; i++ )); do
-    if [ "$(hostname -s)" = "${MY_HOST_NAMES[$i]}" ]; then
-      export HOST_COLOR=${MY_HOST_COLORS[$i]}
-      break
-    fi
-  done
-fi
-
 ps1_svn() {
   if ! svn info &> /dev/null; then
     return
   fi
-
-  local modified=0
-  local untracked=0
-
-  while read line; do
-    if [ "${line}" = '?' ]; then
-      untracked=1
-      continue
-    fi
-    if [ -n "${line}" ]; then
-      modified=1
-    fi
-  done < <(svn status | cut -b 1)
-
-  echo -n ' svn['
-  if [ $modified -ne 0 ]; then
-    echo -n "$(C red)M$(C reset)"
-  fi
-
-  if [ $untracked -ne 0 ]; then
-    echo -n "$(C red)?$(C reset)"
-  fi
-  echo -n ']'
+  echo -n ' svn'
 }
 
 ps1_rails() {
@@ -88,7 +45,7 @@ ps1_skinny() {
 
 ps1_login() {
   echo -n "${USER}@"
-  echo -n -e "$(C "${HOST_COLOR}")$(hostname -s)$(C reset)"
+  echo -n -e "$(C "cyan")$(hostname -s)$(C reset)"
 }
 
 ps1_date() {
@@ -109,68 +66,14 @@ ps1_git() {
   if ! git status --ignore-submodules &>/dev/null; then
     return
   fi
-
-  echo -n ' git['
-
-  local modified=0
-  local cached=0
-  local untracked=0
-
-  while read line; do
-    if [ "$line" = '_?_?_' ]; then
-      untracked=1
-      continue
-    fi
-
-    if [[ "$line" =~ ^_[^[:space:]]_.?_ ]]; then
-      cached=1
-    fi
-
-    if [[ "$line" =~ ^_._[^[:space:]]_ ]]; then
-      modified=1
-    fi
-  done < <(git status --short | cut -b -2 | sed -e 's/\(.\)\(.*\)/_\1_\2_/')
-
-  if [ $modified -ne 0 ]; then
-    echo -n "$(C red)M$(C reset)"
-  fi
-
-  if [ $cached -ne 0 ]; then
-    echo -n "$(C green)C$(C reset)"
-  fi
-
-  if [ $untracked -ne 0 ]; then
-    echo -n "$(C red)?$(C reset)"
-  fi
-
-  if [ "$(git stash list | wc -l)" -gt 0 ]; then
-    echo -n "$(C cyan)S$(C reset)"
-  fi
-
-  echo -n ']='
-
-  local branch
-  branch="$(git branch 2>/dev/null | grep '^\*' | sed -e "s/^* //")"
-  if [[ "${branch}" =~ ^bug- ]]; then
-    C green
-  elif [[ "${branch}" =~ ^atc- ]]; then
-    C cyan
-  elif [[ "${branch}" =~ ^tmp ]]; then
-    C magenta
-  elif [[ "${branch}" = "(detached from hde/master)" ]]; then
-    C yellow
-  else
-    C white
-  fi
-  echo -n "${branch}"
-  C reset
-  echo -n ":$(git log --pretty=format:'%h' -n 1)"
+  echo -n ' '
+  git-ps
 }
 
 ps1_java() {
   if [ -n "${JAVA_HOME}" ]; then
     local version
-    version=$(java -version |& head -1 | grep -o '".*"' | tr -d '"' | grep -o '.\..')
+    version=$(java -version |& head -1 | cut -d ' ' -f 3 | tr -d '"')
     echo -n " java=$(C white)${version}$(C reset)"
   fi
 }
@@ -183,7 +86,6 @@ ps1_docker() {
   local docker_host_ip
   docker_host_ip="${DOCKER_HOST/tcp:\/\//}"
   docker_host_ip="${docker_host_ip/:*/}"
-  # echo -n " docker=$(C white)${DOCKER_MACHINE_NAME}$(C reset)[${docker_host_ip}]"
   echo -n " docker=[${docker_host_ip}]"
 
   if [ -n "${COMPOSE_FILE}" ]; then
@@ -217,7 +119,7 @@ PS1='$(ps1_info)'
 if [ "$(id -u)" -eq 0 ]; then
   PS1="${PS1}\n\[$(C red)\]#\[$(red)\] " # rootの場合はシャープ
 else
-  PS1="${PS1}\n\[$(C "${HOST_COLOR}")\]\$\[$(C reset)\] " # 非rootユーザの場合はドル
+  PS1="${PS1}\n\[$(C cyan)\]\$\[$(C reset)\] " # 非rootユーザの場合はドル
 fi
 
 export PS1

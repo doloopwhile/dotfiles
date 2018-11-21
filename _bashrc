@@ -72,14 +72,6 @@ alias nob='diff2html | html2browse'
 alias escape='python ~/dotfiles/escape.py'
 alias mime='~/dotfiles/mime.py'
 
-function te {
-  cat - \
-    | sed -e "s/\e\\[[0-9;]*m//g" \
-    | col -b -p \
-    | sed -e 's/\t/    /g' \
-    | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix='.txt' -c code
-}
-
 alias colorize='python3 ~/dotfiles/colorize.py'
 alias findall='~/dotfiles/findall'
 
