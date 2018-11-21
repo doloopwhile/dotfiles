@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 set -x
 cd "$HOME/dotfiles"
 
@@ -13,9 +13,7 @@ function backup() {
 }
 
 names=(
-  SciTEUser.properties
   bashrc
-  bash.d
   dircolors
   direnvrc
   gitconfig
@@ -25,13 +23,6 @@ names=(
   inputrc
   irbrc
   pythonstartup
-  tmux.conf
-  vim
-  vimrc
-  zshrc
-  cheatsheets
-  peco
-  npmrc
 )
 
 

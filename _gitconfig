@@ -4,9 +4,9 @@
     ui = auto
 
 [pager]
-	log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
+#	log = diff-highlight | less
+#  show = diff-highlight | less
+#  diff = diff-highlight | less
 
 [alias]
   b = branch -v
@@ -96,3 +96,6 @@
 	helper = store
 [pull]
 	rebase = true
+[user]
+	name = Omoto Kenji
+	email = doloopwhile@gmail.com
