@@ -2,8 +2,12 @@
 code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
 
 if [ ! -e "$code" ]; then
-  echo 'code command not found' >&2
-  exit 1
+  code=/usr/share/code/code
+
+  if [ ! -e "$code" ]; then
+    echo 'code command not found' >&2
+    exit 1
+  fi
 fi
 
 if [ "$#" -eq 0 ]; then
