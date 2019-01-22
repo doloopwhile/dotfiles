@@ -1,6 +1,7 @@
 #!/usr/bin/env python3 -u
 import os
 import sys
+import subprocess
 
 def exclude_dir(dir_name):
   return (
@@ -12,14 +13,36 @@ def exclude_dir(dir_name):
 def exclude_file(file_name):
   return file_name.startswith('.')
 
+def ls_files():
+  for root, dirs, files in os.walk(top):
+    for f in files:
+      yield os.path.relpath(os.path.join(root, f), top)
+    dirs[:] = [d for d in dirs if not exclude_dir(d)]
+
+def git_ls_files(top):
+  p = subprocess.run(
+    ['git', 'ls-files'],
+    check=True,
+    stderr=subprocess.DEVNULL,
+    stdout=subprocess.PIPE,
+    cwd=top
+  )
+  return p.stdout.decode(sys.getfilesystemencoding()).splitlines()
+
 def main():
-  try:
+  def _main():
     top = os.getcwd()
-    for root, dirs, files in os.walk(top):
-      for f in files:
-        if not exclude_file(f):
-          print(os.path.relpath(os.path.join(root, f), top))
-      dirs[:] = [d for d in dirs if not exclude_dir(d)]
+    try:
+      files = git_ls_files(top)
+    except Exception:
+      files = ls_files(top)
+
+    for f in files:
+      if not exclude_file(f):
+        print(f)
+
+  try:
+    _main()
   except KeyboardInterrupt:
     sys.exit(1)
 main()

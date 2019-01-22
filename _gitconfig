@@ -96,6 +96,5 @@
 	helper = store
 [pull]
 	rebase = true
-[user]
-	name = Omoto Kenji
-	email = doloopwhile@gmail.com
+[log]
+	date = iso-local

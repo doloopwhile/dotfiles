@@ -55,4 +55,10 @@
     },
     "python.jediEnabled": false,
     "importMagic.multiline": "parentheses",
+    "editor.renderControlCharacters": true,
+    "[scss]": {
+    
+},
+"tableformatter.markdown.tableEdgesType": "Normal",
+"tableformatter.markdown.oneSpacePadding": false,
 }

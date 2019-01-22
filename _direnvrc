@@ -20,21 +20,22 @@ use_venv() {
     return 1
   fi
 
+  unset PYTHONHOME
   local version=$1
-  local dir='.venv'
-  if [ ! -d "$dir" ]; then
-    echo "$dir/ is not found. creating $dir/ ."
+  export VIRTUAL_ENV="${PWD}/.venv"
+  if [ ! -d "$VIRTUAL_ENV" ]; then
+    echo "$VIRTUAL_ENV/ is not found. creating $VIRTUAL_ENV/ ."
     local python="$HOME/.pyenv/versions/$version/bin/python" 
     if [[ "$version" < "3.3.0" ]]; then
-      "$python" -m virtualenv "$dir"
+      "$python" -m virtualenv "$VIRTUAL_ENV"
     else
-      "$python" -m venv "$dir"
+      "$python" -m venv "$VIRTUAL_ENV"
     fi
   else
-    echo "$dir/ already exists."
+    echo "$VIRTUAL_ENV/ already exists."
   fi
 
-  PATH_add $dir/bin
+  PATH_add "$VIRTUAL_ENV/bin"
   export PIPENV_VENV_IN_PROJECT=1
 }
 

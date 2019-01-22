@@ -214,6 +214,34 @@ generate_password() {
   /usr/bin/ruby -e 'chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a; puts(32.times.map { chars.sample(1) }.join)'	
 }
 
+te() {
+  EXT='txt'
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      '-e' )
+        shift
+        EXT="$1"
+      ;;
+      '-h' )
+        echo 'usage: COMMAND | te [-e EXT]'
+        exit
+      ;;
+      * )
+        echo 'usage: COMMAND | te [-e EXT]' >&2
+        exit 1
+      ;;
+    esac
+    shift
+  done
+
+  cat - \
+    | sed -e "s/\\e\\[[0-9;]*m//g" \
+    | col -b -p \
+    | sed -e 's/\t/    /g' \
+    | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix=".${EXT}" -c code
+}
+
+
 alias ..='. ~/.bashrc'
 alias ...='$EDITOR ~/.bashrc'
 
