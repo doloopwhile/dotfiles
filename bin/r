@@ -1,0 +1,10 @@
+#!/bin/bash
+set -x
+set -u
+set -C
+
+if toplevel="$(git rev-parse --show-toplevel 2> /dev/null)"; then
+  cd -P -- "$toplevel" || exit 1
+fi
+
+bundle exec rspec --only-failures "$@"
