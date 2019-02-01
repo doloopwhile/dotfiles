@@ -250,3 +250,4 @@ if which gnome-open &> /dev/null; then
 fi
 export ANSIBLE_NOCOWS=yes
 export PATH="$PATH:~/Documents/m3kit/bin"
+export PATH="$HOME/.quarry/bin:$PATH"
