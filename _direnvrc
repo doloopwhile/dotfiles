@@ -14,30 +14,30 @@ use_python() {
 
 # pyenv shell 2.7.11 3.5.1 3.2.6 3.3.6 3.4.4
 
-use_venv() {
-  if [ "$#" -ne 1 ]; then
-    echo "usage: use venv VERSION" >&2
-    return 1
-  fi
+# use_venv() {
+#   if [ "$#" -ne 1 ]; then
+#     echo "usage: use venv VERSION" >&2
+#     return 1
+#   fi
 
-  unset PYTHONHOME
-  local version=$1
-  export VIRTUAL_ENV="${PWD}/.venv"
-  if [ ! -d "$VIRTUAL_ENV" ]; then
-    echo "$VIRTUAL_ENV/ is not found. creating $VIRTUAL_ENV/ ."
-    local python="$HOME/.pyenv/versions/$version/bin/python" 
-    if [[ "$version" < "3.3.0" ]]; then
-      "$python" -m virtualenv "$VIRTUAL_ENV"
-    else
-      "$python" -m venv "$VIRTUAL_ENV"
-    fi
-  else
-    echo "$VIRTUAL_ENV/ already exists."
-  fi
+#   unset PYTHONHOME
+#   local version=$1
+#   export VIRTUAL_ENV="${PWD}/.venv"
+#   if [ ! -d "$VIRTUAL_ENV" ]; then
+#     echo "$VIRTUAL_ENV/ is not found. creating $VIRTUAL_ENV/ ."
+#     local python="$HOME/.pyenv/versions/$version/bin/python" 
+#     if [[ "$version" < "3.3.0" ]]; then
+#       "$python" -m virtualenv "$VIRTUAL_ENV"
+#     else
+#       "$python" -m venv "$VIRTUAL_ENV"
+#     fi
+#   else
+#     echo "$VIRTUAL_ENV/ already exists."
+#   fi
 
-  PATH_add "$VIRTUAL_ENV/bin"
-  export PIPENV_VENV_IN_PROJECT=1
-}
+#   PATH_add "$VIRTUAL_ENV/bin"
+#   export PIPENV_VENV_IN_PROJECT=1
+# }
 
 use_java() {
     if [ "$#" -ne 1 ]; then

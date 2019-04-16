@@ -1,5 +1,8 @@
 #!/bin/bash
-export PATH="$PATH:$HOME/.gem/ruby/2.0.0/bin"
+for p in ~/.gem/ruby/*/bin; do
+  export PATH="$PATH:$p"
+done
+
 # rbenv
 function install_rbenv() {
   git clone https://github.com/sstephenson/rbenv.git ~/.rbenv

@@ -12,3 +12,5 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 # if which pyenv &> /dev/null; then
 #   eval "$(pyenv init -)"
 # fi
+
+eval "$(~/Documents/pungi/bin/pungi init -)"

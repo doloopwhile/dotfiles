@@ -13,7 +13,7 @@ def exclude_dir(dir_name):
 def exclude_file(file_name):
   return file_name.startswith('.')
 
-def ls_files():
+def ls_files(top):
   for root, dirs, files in os.walk(top):
     for f in files:
       yield os.path.relpath(os.path.join(root, f), top)
