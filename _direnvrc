@@ -7,10 +7,9 @@ binstubs() {
   PATH_add './bin'
 }
 
-
-use_python() {
-  use_venv "$@"
-}
+#use_python() {
+#  use_venv "$@"
+#}
 
 # pyenv shell 2.7.11 3.5.1 3.2.6 3.3.6 3.4.4
 

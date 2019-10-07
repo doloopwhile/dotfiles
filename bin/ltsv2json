@@ -1,9 +1,14 @@
-#!/bin/sh
-while read line; do
-  echo "$line" | jq -s -R '
-    sub("\n$"; "")
-    | split("\t")
-    | map(split(":") | { "key":.[0], "value":.[1:] | join(":") })
-    | from_entries
-  '
-done
+#!/usr/bin/ruby
+require 'json'
+STDIN.each_line do |l|
+  puts(Hash[l.split("\t").map { |t| t.split(":", 2) }].to_json)
+end
+
+# while read line; do
+#   echo "$line" | jq -s -R '
+#     sub("\n$"; "")
+#     | split("\t")
+#     | map(split(":") | { "key":.[0], "value":.[1:] | join(":") })
+#     | from_entries
+#   '
+# done

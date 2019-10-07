@@ -40,7 +40,7 @@
     "window.restoreWindows": "none",
     "explorer.confirmDragAndDrop": false,
     "python.linting.mypyEnabled": true,
-    "python.formatting.provider": "yapf",
+    "python.formatting.provider": "black",
     "python.linting.flake8Enabled": false,
     "python.linting.pylintEnabled": false,
     "ruby.rubocop.onSave": false,
@@ -63,5 +63,11 @@
 "shellcheck.customArgs": [
     "-x"
 ],
-"editor.suggestSelection": "first"
+"editor.suggestSelection": "first",
+"editor.gotoLocation.multiple": "goto",
+"markdown-table-formatter.markdownGrammarScopes": [
+    "markdown",
+    "plaintext"
+],
+"autoDocstring.docstringFormat": "google"
 }

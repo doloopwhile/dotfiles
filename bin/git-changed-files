@@ -1,0 +1,5 @@
+#!/bin/bash
+set -euC
+target_branch="${1:-origin/master}"
+source_branch="${2:-HEAD}"
+git diff --name-only "$source_branch..$target_branch"

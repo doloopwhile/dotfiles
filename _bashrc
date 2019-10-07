@@ -214,6 +214,10 @@ generate_password() {
   /usr/bin/ruby -e 'chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a; puts(32.times.map { chars.sample(1) }.join)'	
 }
 
+no_color() {
+  cat - | gsed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"
+}
+
 te() {
   EXT='txt'
   while [ $# -gt 0 ]; do
@@ -234,11 +238,14 @@ te() {
     shift
   done
 
+  export LANG=C
   cat - \
-    | sed -e "s/\\e\\[[0-9;]*m//g" \
-    | col -b -p \
-    | sed -e 's/\t/    /g' \
+    | no_color \
     | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix=".${EXT}" -c code
+}
+
+de() {
+  cat - | te -e diff
 }
 
 
@@ -250,4 +257,4 @@ if which gnome-open &> /dev/null; then
 fi
 export ANSIBLE_NOCOWS=yes
 export PATH="$PATH:~/Documents/m3kit/bin"
-export PATH="$HOME/.quarry/bin:$PATH"
+export PATH="$HOME/.quarry/bin:$PATH"export ORACLE_HOME=~/oracle_client/

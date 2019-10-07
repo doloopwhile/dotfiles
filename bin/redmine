@@ -11,6 +11,6 @@ if [ "$#" -eq 0 ]; then
     exit 1
   fi
 else
-  open "${REDMINE_URL}/${1}"
+  open "${REDMINE_URL}/issues/${1}"
 fi
 
