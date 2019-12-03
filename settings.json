@@ -69,5 +69,6 @@
     "markdown",
     "plaintext"
 ],
-"autoDocstring.docstringFormat": "google"
+"autoDocstring.docstringFormat": "google",
+"python.dataScience.askForKernelRestart": false
 }

@@ -49,6 +49,7 @@ source ~/dotfiles/bash/python.sh
 source ~/dotfiles/bash/resin.sh
 source ~/dotfiles/bash/ruby.sh
 source ~/dotfiles/bash/vi.sh
+source ~/dotfiles/bash/google.sh
 
 # Lang
 export LAMG=en_US.UTF-8
