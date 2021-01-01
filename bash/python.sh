@@ -13,4 +13,4 @@ if command -v pyenv &> /dev/null; then
   eval "$(pyenv init -)"
 fi
 
-eval "$(~/Documents/pungi/bin/pungi init -)"
+# eval "$(~/Documents/pungi/bin/pungi init -)"
