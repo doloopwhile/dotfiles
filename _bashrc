@@ -245,7 +245,7 @@ te() {
     | ~/dotfiles/bin/save-tempfile --abort-if-empty --prefix='.tmp.' --suffix=".${EXT}" -c code
 }
 
-de() {
+td() {
   cat - | te -e diff
 }
 

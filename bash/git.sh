@@ -7,3 +7,4 @@ export GITHUB_USER=doloopwhile
 
 # git
 alias c=git-c
+alias git=hub

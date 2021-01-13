@@ -22,14 +22,8 @@ if command -v brew &> /dev/null; then
   # done
 
 
-  libs=(
-     zlib
-     readline
-     openssl
-     sqlite3
-  )
-  for lib in "${libs[@]}"; do
-    export LDFLAGS="$LDFLAGS -L/usr/local/opt/zlib/lib"
-    export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/zlib/include"
+  for l in zlib readline openssl sqlite3; do
+    export LDFLAGS="$LDFLAGS -L/usr/local/opt/$l/lib"
+    export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/$l/include"
   done
 fi

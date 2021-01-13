@@ -12,16 +12,3 @@ function ghql() {
   fi
   ghq look "$p"
 }
-#
-# function gt() {
-#   PGUSER=postgres go test "$@" |\
-#     colorize RUN --bold |\
-#     colorize PASS -f green --bold |\
-#     colorize SKIP -f cyan --bold
-# }
-
-# gotest-color() {
-#   colorize --bold -f green '\bPASS\b' | \
-#     colorize --bold -f cyan '\bRUN\b' | \
-#     colorize --bold -f red '\bFAIL\b'
-# }
