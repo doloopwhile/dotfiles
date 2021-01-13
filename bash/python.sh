@@ -13,4 +13,3 @@ export PATH="$PYENV_ROOT/bin:$PATH"
   # eval "$(pyenv init -)"
 #fi
 
-#eval "$(~/Documents/pungi/bin/pungi init -)"
