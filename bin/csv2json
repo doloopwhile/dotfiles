@@ -1,0 +1,10 @@
+#!/usr/local/bin/python3
+import fileinput
+import csv
+import json
+
+def main():
+    for row in csv.reader(fileinput.input(), dialect='excel'):
+        print(json.dumps(row))
+
+main()
